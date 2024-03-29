@@ -30,4 +30,25 @@
     <!-- Style CSS -->
     <link rel="stylesheet" href="{{url('assets/css/style.min.css')}}">
 
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <style>
+        .toast-container {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 9999;
+        }
+
+        .toast {
+            background-color: #333;
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+
+
+    </style>
+
 </head>
