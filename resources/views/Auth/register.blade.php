@@ -165,19 +165,31 @@
                         <div class="my-account-item-wrap">
                             <h3 class="title">Register</h3>
                             <div class="my-account-form">
-                                <form action="#" method="post">
+                                <!--== Toast container ==-->
+                                <div id="toast-container" class="toast-container"></div>
+                                <form id="register-form" action="{{ url('/api/auth/register') }}" method="post">
+                                    @csrf
                                     <div class="form-group mb-6">
                                         <label for="name">Username <sup>*</sup></label>
                                         <input type="name" id="name" name="name">
+                                        @error('name')
+                                        <span class="text-danger">{{ $message }}</span>
+                                        @enderror
                                     </div>
                                     <div class="form-group mb-6">
                                         <label for="email">Email Address <sup>*</sup></label>
                                         <input type="email" id="email" name="email">
+                                        @error('email')
+                                        <span class="text-danger">{{ $message }}</span>
+                                        @enderror
                                     </div>
 
                                     <div class="form-group mb-6">
                                         <label for="password">Password <sup>*</sup></label>
                                         <input type="password" id="password" name="password">
+                                        @error('password')
+                                        <span class="text-danger">{{ $message }}</span>
+                                        @enderror
                                     </div>
                                     <div class="form-group mb-6">
                                         <label for="password_confirmation">Confirm Password <sup>*</sup></label>
@@ -186,9 +198,10 @@
 
                                     <div class="form-group">
                                         <p class="desc mb-4">Your personal data will be used to support your experience throughout this website, to manage access to your account, and for other purposes described in our privacy policy.</p>
-                                        <a class="btn" href="#">Register</a>
+                                        <button type="submit" class="btn">Register</button>
                                     </div>
                                 </form>
+
                             </div>
                         </div>
                         <!--== End Register Area Wrapper ==-->
@@ -443,6 +456,51 @@
 
 </div>
 <!--== Wrapper End ==-->
+
+<script>
+    $(document).ready(function() {
+        function showToast(message, style) {
+            var toastContainer = document.getElementById("toast-container");
+            var toast = document.createElement('div');
+            toast.textContent = message;
+            toast.style.padding = '0.75rem';
+            toast.style.marginBottom = '0.5rem';
+            toast.style.borderRadius = '0.375rem';
+            toast.style.border = style === 'success' ? '1px solid #34D399' : '1px solid #EF4444';
+            toast.style.backgroundColor = style === 'success' ? '#ECFDF5' : '#FEE2E2';
+            toast.style.color = style === 'success' ? '#059669' : '#DC2626';
+            toastContainer.appendChild(toast);
+
+            setTimeout(() => {
+                toastContainer.removeChild(toast);
+                window.location.href = '{{ route("login") }}';
+            }, 5000);
+
+        }
+
+        $('#register-form').submit(function(event) {
+            event.preventDefault();
+            $('.text-danger').remove();
+            var formData = $(this).serialize();
+            $.ajax({
+                type: 'POST',
+                url: $(this).attr('action'),
+                data: formData,
+                success: function(response) {
+                     console.log(response.message);
+                    showToast('Success! : ' + response.message, 'success');
+                },
+                error: function(xhr, textStatus, errorThrown) {
+                    $.each(xhr.responseJSON.errors, function(key, value) {
+                        $('#' + key).after('<span class="text-danger">' + value + '</span>');
+                    });
+                    showToast('Registration failed. Please check the form for errors.', 'error');
+                }
+            });
+        });
+    });
+</script>
+
 
 
 <!-- JS Vendor, Plugins & Activation Script Files -->
