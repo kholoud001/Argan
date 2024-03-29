@@ -23,6 +23,8 @@ return new class extends Migration
             $table->string('address')->nullable();
             $table->string('cell')->nullable();
             $table->string('google_id')->nullable();
+            $table->string('facebook_id')->nullable();
+
             $table->foreignId('role_id')->constrained()->cascadeOnDelete();
 
             $table->timestamps();
