@@ -1,7 +1,11 @@
 <?php
 
+use App\Http\Controllers\API\LoginController;
+use App\Http\Controllers\API\RegisterController;
+use App\Http\Controllers\Auth\FacebookController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\ForgotPasswordLinkController;
+use App\Http\Controllers\Auth\GoogleController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -28,18 +32,24 @@ Route::get('/', function () {
 | login Page
 |--------------------------------------------------------------------------
 */
-Route::get('/login', function () {
-    return view('Auth/login');
-})->name('login');
+Route::get('/login', [LoginController::class, 'show'])->name('login');
+
+
+//Google login
+Route::get('auth/google', [GoogleController::class, 'redirect'])->name('google-auth');
+Route::get('auth/google/callback', [GoogleController::class, 'callbackGoogle']);
+// Facebook
+// Route for redirecting to Facebook for authentication
+Route::get('auth/facebook', [FacebookController::class, 'redirect'])->name('facebook.redirect');
+// Route for handling Facebook callback after authentication
+Route::get('auth/facebook/callback', [FacebookController::class, 'callbackFacebook'])->name('facebook.callback');
 
 /*
 |--------------------------------------------------------------------------
 | register Page
 |--------------------------------------------------------------------------
 */
-Route::get('/register', function () {
-    return view('Auth/register');
-});
+Route::get('/register', [RegisterController::class, 'show']);
 
 /*
 |--------------------------------------------------------------------------
