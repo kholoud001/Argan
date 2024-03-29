@@ -164,7 +164,23 @@
                         <!--== Start Login Area Wrapper ==-->
                         <div class="my-account-item-wrap">
                             <h3 class="title">Login</h3>
+
                             <div class="my-account-form">
+                                <!-- Login with Gmail -->
+                                <form action="{{route('google-auth')}}" method="GET">
+                                    @csrf
+                                    <button type="submit" class="btn btn-primary mb-3 d-flex align-items-center" style="width: calc(100% - 24px);">
+                                        <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Gmail Logo" class="logo me-2" style="height: 24px;"> Login with Gmail
+                                    </button>
+                                </form>
+
+                                <!-- Login with Facebook -->
+{{--                                <form action="{{route('facebook.redirect')}}" method="GET">--}}
+{{--                                    @csrf--}}
+{{--                                    <button type="submit" class="btn btn-primary mb-3 d-flex align-items-center" style="width: calc(100% - 24px);">--}}
+{{--                                        <img src="https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg" alt="Facebook Logo" class="logo me-2" style="height: 24px;"> Login with Facebook--}}
+{{--                                    </button>--}}
+{{--                                </form>--}}
                                 <form action="#" method="post">
                                     <div class="form-group mb-6">
                                         <label for="email">Email Address <sup>*</sup></label>
