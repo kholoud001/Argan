@@ -91,16 +91,19 @@ Route::get('/dashboard', function () {
     return view('Admin.index');
 })->name('dashboard');
 
-//users table
+//users table (and trashed)
 Route::get('/admin/users', [UserController::class, 'show'])->name('users.show');
+
+
 
 //add user
 Route::post('/admin/add/users', [UserController::class, 'store'])->name('users.store');
+//Add user form
+Route::post('/users-add', [UserController::class, 'addForm'])->name('form');
+
+//delete user
+Route::delete('/admin/delete/users/{user}', [UserController::class, 'destroy'])->name('users.destroy');
 
 
-//add user form
-//users table
-Route::get('/users-add', function () {
-    return view('Admin.forms.add_user');
-})->name('form');
+
 

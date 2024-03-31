@@ -8,13 +8,22 @@ use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
-    public function show(){
+    public function show()
+    {
         $users = User::where('role_id', 2)
             ->orderByDesc('created_at')
             ->get();
-        return view('Admin.users', ['users' => $users]);
+
+        $trashedUsers = User::onlyTrashed()->get();
+
+        return view('Admin.users', ['users' => $users, 'trashedUsers' => $trashedUsers]);
     }
 
+
+
+    public function addForm(){
+        return view('Admin.forms.add_user');
+    }
 
     public function store(Request $request)
     {
@@ -34,6 +43,17 @@ class UserController extends Controller
 
         return redirect()->back()->with('success', 'User created successfully.');
     }
+
+    public function destroy($id)
+    {
+        $user = User::find($id);
+        if ($user) {
+            $user->delete();
+            return response()->json(['message' => 'User deleted successfully'], 200);
+        }
+        return response()->json(['message' => 'User not found'], 404);
+    }
+
 
 
 }

@@ -99,10 +99,15 @@
                                         </td>
                                         <td>{{$user->created_at->format('M d, Y')}}</td>
                                         <td><span class="label gradient-1 btn-rounded">70%</span>
-                                        </td>
-                                        <td><span><a href="#" data-toggle="tooltip" data-placement="top" title="Edit"><i class="fa fa-pencil color-muted m-r-5"></i> </a>
-                                                <a href="#" data-toggle="tooltip" data-placement="top" title="Delete"><i class="fa fa-close color-danger"></i></a></span>
-                                        </td>
+                                            <td>
+                                                <span>
+                                                    <a href="#" data-toggle="tooltip" data-placement="top" title="Edit"><i class="fa fa-pencil color-muted m-r-5"></i></a>
+                                                    <a href="#" onclick="deleteUser({{ $user->id }});" data-toggle="tooltip"
+                                                       data-placement="top" title="Delete"><i class="fa fa-close color-danger"></i></a>
+
+                                                </span>
+
+                                            </td>
                                     </tr>
                                     @endforeach
                                     </tbody>
@@ -111,6 +116,51 @@
                         </div>
                     </div>
                 </div>
+                {{-- Trashed users table --}}
+                <div class="col-lg-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="card-title">Trashed Users Table</h4>
+                            <div class="table-responsive">
+                                <table class="table table-bordered verticle-middle">
+                                    <thead>
+                                    <tr>
+                                        <th scope="col">User name</th>
+                                        <th scope="col">Email</th>
+                                        <th scope="col">Joining Date</th>
+                                        <th scope="col">Order Rate</th>
+                                        <th scope="col">Action</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    @foreach($trashedUsers as $trashedUser)
+                                        <tr>
+                                            <td>{{$trashedUser->name}}</td>
+                                            <td>
+                                                {{--                                            <div class="progress" style="height: 10px">--}}
+                                                {{$trashedUser->email}}
+                                                {{--                                                <div class="progress-bar gradient-1" style="width: 70%;" role="progressbar"><span class="sr-only">70% Complete</span>--}}
+                                                {{--                                                </div>--}}
+                                                {{--                                            </div>--}}
+                                            </td>
+                                            <td>{{$trashedUser->created_at->format('M d, Y')}}</td>
+                                            <td><span class="label gradient-1 btn-rounded">70%</span>
+                                            <td>
+                                                <span>
+                                                    <a href="#" data-toggle="tooltip" data-placement="top" title="Restore"><i class="fa fa-close color-danger"></i></a>
+
+                                                </span>
+
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
 
 
                 <!-- #/ container -->
@@ -136,14 +186,30 @@
 <!--**********************************
     Scripts
 ***********************************-->
-
+{{--Delete user--}}
 <script>
-    document.getElementById('createUserBtn').addEventListener('click', function() {
-        var form = document.getElementById('createUserForm');
-        form.style.display = form.style.display === 'none' ? 'block' : 'none';
-    });
-
+    function deleteUser(userId) {
+        if (confirm('Are you sure you want to delete this user?')) {
+            // Send AJAX request to delete the user
+            $.ajax({
+                url: '{{ route("users.destroy", ":userId") }}'.replace(':userId', userId),
+                type: 'DELETE',
+                headers: {
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                },
+                success: function(response) {
+                    // Handle successful deletion
+                    console.log(response.message); // Log success message
+                },
+                error: function(xhr, textStatus, errorThrown) {
+                    // Handle error
+                    console.error('Error:', errorThrown);
+                }
+            });
+        }
+    }
 </script>
+
 <script src="{{url('plugins/common/common.min.js')}}"></script>
 <script src="{{url('js/custom.min.js')}}"></script>
 <script src="{{url('js/settings.js')}}"></script>
