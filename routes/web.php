@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\API\LoginController;
 use App\Http\Controllers\API\RegisterController;
 use App\Http\Controllers\Auth\FacebookController;
@@ -91,7 +92,15 @@ Route::get('/dashboard', function () {
 })->name('dashboard');
 
 //users table
-Route::get('/users-table', function () {
-    return view('Admin.users');
-})->name('usersTable');
+Route::get('/admin/users', [UserController::class, 'show'])->name('users.show');
+
+//add user
+Route::post('/admin/add/users', [UserController::class, 'store'])->name('users.store');
+
+
+//add user form
+//users table
+Route::get('/users-add', function () {
+    return view('Admin.forms.add_user');
+})->name('form');
 

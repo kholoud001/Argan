@@ -26,7 +26,7 @@ return new class extends Migration
             $table->string('facebook_id')->nullable();
 
             $table->foreignId('role_id')->constrained()->cascadeOnDelete();
-
+            $table->softDeletes();
             $table->timestamps();
         });
     }

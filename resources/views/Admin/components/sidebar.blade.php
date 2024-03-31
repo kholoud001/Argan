@@ -10,7 +10,7 @@
             </li>
             {{--                Users table --}}
             <li>
-                <a  href="{{route('usersTable')}}" aria-expanded="false">
+                <a  href="{{route('users.show')}}" aria-expanded="false">
                     <i class="icon-note menu-icon"></i><span class="nav-text">Users</span>
                 </a>
 
