@@ -481,6 +481,7 @@
         })
             .then(response => response.json())
             .then(data => {
+                localStorage.setItem('access_token', data.token);
                 // Handle validation errors
                 if (data.errors && (data.errors.email || data.errors.password)) {
                     displayError('email', data.errors.email ? data.errors.email[0] : '');
