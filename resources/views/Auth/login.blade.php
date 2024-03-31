@@ -181,7 +181,7 @@
 {{--                                        <img src="https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg" alt="Facebook Logo" class="logo me-2" style="height: 24px;"> Login with Facebook--}}
 {{--                                    </button>--}}
 {{--                                </form>--}}
-                                <form  id="login-form" action="{{ url('/api/auth/login') }}"method="post">
+                                <form  id="login-form" action="{{ url('/api/auth/login') }}" method="post">
                                     @csrf
                                     <div class="form-group mb-6">
                                         <label for="email">Email Address <sup>*</sup></label>
@@ -465,12 +465,15 @@
 </div>
 <!--== Wrapper End ==-->
 
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <script>
     document.getElementById('login-form').addEventListener('submit', function(event) {
         event.preventDefault();
 
+        // Get form data
         var formData = new FormData(this);
+
         // Make login request
         fetch('/api/auth/login', {
             method: 'POST',
@@ -478,16 +481,31 @@
         })
             .then(response => response.json())
             .then(data => {
-                if (data.role === 1) {
-                    // console.log(data);
-                     window.location.href = data.redirect_url_admin;
+                // Handle validation errors
+                if (data.errors && (data.errors.email || data.errors.password)) {
+                    displayError('email', data.errors.email ? data.errors.email[0] : '');
+                    displayError('password', data.errors.password ? data.errors.password[0] : '');
+                    return;
+                }
+
+                // Handle other errors or successful login
+                if (data.message === 'Login successful') {
+                    var redirectUrl = data.role === 1 ? data.redirect_url_admin : data.redirect_url_user;
+                    window.location.href = redirectUrl;
                 } else {
-                    window.location.href = data.redirect_url_user;
+                    displayError('password', data.message);
                 }
             })
             .catch(error => {
                 console.error('Error:', error);
             });
+
+        function displayError(fieldId, errorMessage) {
+            var errorSpan = document.createElement('span');
+            errorSpan.classList.add('text-danger');
+            errorSpan.textContent = errorMessage;
+            document.getElementById(fieldId).parentNode.appendChild(errorSpan);
+        }
     });
 
 </script>

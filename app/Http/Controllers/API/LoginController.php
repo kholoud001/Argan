@@ -5,18 +5,30 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
+
 
 class LoginController extends Controller
 {
     public function show (){
         return view('Auth/login');
     }
+
     public function login(Request $request)
     {
-        $credentials = $request->validate([
+        $validator = Validator::make($request->all(), [
             'email' => 'required|email',
             'password' => 'required',
+        ], [
+            'email.required' => 'Email is required',
+            'password.required' => 'Password is required',
         ]);
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
+        }
+
+        $credentials = $request->only('email', 'password');
 
         if (!Auth::attempt($credentials)) {
             return response()->json([
@@ -27,7 +39,7 @@ class LoginController extends Controller
         $user = $request->user();
 
         // Determine user's role
-        $role = $user->role_id; // Assuming 'role_id' column holds the role ID of the user
+        $role = $user->role_id;
 
         // Generate token
         $token = $user->createToken('Access Token')->accessToken;
