@@ -181,19 +181,26 @@
 {{--                                        <img src="https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg" alt="Facebook Logo" class="logo me-2" style="height: 24px;"> Login with Facebook--}}
 {{--                                    </button>--}}
 {{--                                </form>--}}
-                                <form action="#" method="post">
+                                <form  id="login-form" action="{{ url('/api/auth/login') }}"method="post">
+                                    @csrf
                                     <div class="form-group mb-6">
                                         <label for="email">Email Address <sup>*</sup></label>
                                         <input type="email" id="email" name="email" class="form-control">
+                                        @error('email')
+                                        <span class="text-danger">{{ $message }}</span>
+                                        @enderror
                                     </div>
 
                                     <div class="form-group mb-6">
-                                        <label for="login_pwsd">Password <sup>*</sup></label>
-                                        <input type="password" id="login_pwsd" class="form-control">
+                                        <label for="password">Password <sup>*</sup></label>
+                                        <input type="password" id="password" name="password" class="form-control">
+                                        @error('password')
+                                        <span class="text-danger">{{ $message }}</span>
+                                        @enderror
                                     </div>
 
                                     <div class="form-group d-flex align-items-center mb-14">
-                                        <a class="btn" href="my-account.html">Login</a>
+                                        <button type="submit" class="btn">Login</button>
 
                                         <div class="form-check ms-3">
                                             <input type="checkbox" class="form-check-input" id="remember_pwsd">
@@ -459,7 +466,31 @@
 <!--== Wrapper End ==-->
 
 
-<!-- JS Vendor, Plugins & Activation Script Files -->
+<script>
+    document.getElementById('login-form').addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        var formData = new FormData(this);
+        // Make login request
+        fetch('/api/auth/login', {
+            method: 'POST',
+            body: formData
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.role === 1) {
+                    // console.log(data);
+                     window.location.href = data.redirect_url_admin;
+                } else {
+                    window.location.href = data.redirect_url_user;
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+    });
+
+</script>
 <!-- Vendors JS -->
 <script src="{{asset('assets/js/vendor/modernizr-3.11.7.min.js)')}}"></script>
 <script src="{{asset('assets/js/vendor/jquery-3.6.0.min.js')}}"></script>

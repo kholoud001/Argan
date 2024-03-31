@@ -11,21 +11,44 @@ class LoginController extends Controller
     public function show (){
         return view('Auth/login');
     }
-    public function login(Request $request){
-        $credentials = request(['email','password']);
+    public function login(Request $request)
+    {
+        $credentials = $request->validate([
+            'email' => 'required|email',
+            'password' => 'required',
+        ]);
 
-        if(!Auth::attempt($credentials)){
+        if (!Auth::attempt($credentials)) {
             return response()->json([
-                'message'=> 'Invalid email or password'
-            ],401);
+                'message' => 'Invalid email or password'
+            ], 401);
         }
-        $user= $request->user();
-        $token= $user->createToken('Access Token');
-        $user->access_token = $token->accessToken;
-        return response()->json([
-            'message' => 'Login successful',
-            ' user'=>$user,
-        ],200);
 
+        $user = $request->user();
+
+        // Determine user's role
+        $role = $user->role_id; // Assuming 'role_id' column holds the role ID of the user
+
+        // Generate token
+        $token = $user->createToken('Access Token')->accessToken;
+
+        // Redirect based on user's role
+        if ($role === 1) { // Assuming 1 represents the role ID for admin
+            return response()->json([
+                'message' => 'Login successful',
+                'user' => $user,
+                'role' => $role,
+                'token' => $token,
+                'redirect_url_admin' => route('dashboard')
+            ]);
+        } else {
+            return response()->json([
+                'message' => 'Login successful',
+                'user' => $user,
+                'role' => $role,
+                'token' => $token,
+                'redirect_url_user' => route('home')
+            ]);
+        }
     }
 }
