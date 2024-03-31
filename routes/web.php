@@ -89,3 +89,9 @@ Route::post('/reset-password/{token}', [ForgotPasswordController::class, 'reset'
 Route::get('/dashboard', function () {
     return view('Admin.index');
 })->name('dashboard');
+
+//users table
+Route::get('/users-table', function () {
+    return view('Admin.users');
+})->name('usersTable');
+

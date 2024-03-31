@@ -4,7 +4,6 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
 
     <!-- theme meta -->
-    <meta name="theme-name" content="quixlab" />
 
     <title>Admin Dashboard </title>
     <!-- Favicon icon -->
