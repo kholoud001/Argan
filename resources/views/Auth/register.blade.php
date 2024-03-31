@@ -471,10 +471,19 @@
             toast.style.color = style === 'success' ? '#059669' : '#DC2626';
             toastContainer.appendChild(toast);
 
-            setTimeout(() => {
-                toastContainer.removeChild(toast);
-                window.location.href = '{{ route("login") }}';
-            }, 5000);
+            if (style === 'success') {
+                setTimeout(() => {
+                    toastContainer.removeChild(toast);
+                    setTimeout(() => {
+                        window.location.href = '{{ route("login") }}';
+                    }, 1000);
+                }, 5000);
+            }
+            else {
+                setTimeout(() => {
+                    toastContainer.removeChild(toast);
+                }, 5000);
+            }
 
         }
 
