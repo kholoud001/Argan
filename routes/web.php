@@ -26,7 +26,7 @@ use Illuminate\Support\Facades\Route;
 */
 Route::get('/', function () {
     return view('home');
-});
+})->name('home');
 /*
 |--------------------------------------------------------------------------
 | login Page
@@ -80,3 +80,12 @@ Route::get('/reset/{token}', [ForgotPasswordController::class, 'showResetForm'])
 Route::post('/reset-password/{token}', [ForgotPasswordController::class, 'reset'])
     ->name('password.update');
 
+/*
+|--------------------------------------------------------------------------
+| Admin Pages
+|--------------------------------------------------------------------------
+*/
+
+Route::get('/dashboard', function () {
+    return view('Admin.index');
+})->name('dashboard');
