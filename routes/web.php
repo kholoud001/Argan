@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\API\LoginController;
 use App\Http\Controllers\API\RegisterController;
@@ -91,7 +92,7 @@ Route::post('/reset-password/{token}', [ForgotPasswordController::class, 'reset'
 Route::get('/dashboard', function () {
     return view('Admin.index');
 })->name('dashboard');
-
+////////////////////////             Users Management             //////////////////////////////
 //users table (and trashed)
 Route::get('/admin/users', [UserController::class, 'show'])->name('users.show');
 //add user
@@ -102,6 +103,13 @@ Route::post('/users-add', [UserController::class, 'addForm'])->name('form');
 Route::delete('/admin/delete/users/{user}', [UserController::class, 'destroy'])->name('users.destroy');
 // restore
 Route::put('/admin/users/restore/{id}', [UserController::class, 'restore'])->name('users.restore');
+
+////////////////////////            Products Management               //////////////////////////////
+Route::get('/admin/products', [ProductController::class, 'show'])->name('products.show');
+//add product
+Route::post('/products', [ProductController::class, 'store'])->name('products.store');
+//delete product
+Route::delete('/products/{product}', [ProductController::class, 'destroy'])->name('products.destroy');
 
 
 

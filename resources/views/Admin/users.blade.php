@@ -118,6 +118,8 @@
                                     @endforeach
                                     </tbody>
                                 </table>
+                                <!-- Pagination links -->
+                                {{ $users->links() }}
                             </div>
                         </div>
                     </div>

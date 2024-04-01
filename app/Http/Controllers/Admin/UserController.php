@@ -12,7 +12,7 @@ class UserController extends Controller
     {
         $users = User::where('role_id', 2)
             ->orderByDesc('created_at')
-            ->get();
+            ->paginate(4);
 
         $trashedUsers = User::onlyTrashed()->get();
 //        dd($trashedUsers);
@@ -45,7 +45,7 @@ class UserController extends Controller
         return redirect()->back()->with('success', 'User created successfully.');
     }
 
-    
+
 
 //    public function destroy($id)
 //    {

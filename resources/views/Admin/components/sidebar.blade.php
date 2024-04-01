@@ -17,7 +17,7 @@
             </li>
             {{--                Products--}}
             <li>
-                <a class= href="#" aria-expanded="false">
+                <a href="{{route('products.show')}}" aria-expanded="false">
                     <i class="icon-menu menu-icon"></i><span class="nav-text">Products</span>
                 </a>
             </li>
