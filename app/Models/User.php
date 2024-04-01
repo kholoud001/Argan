@@ -48,13 +48,13 @@ class User extends Authenticatable
     ];
     protected $dates = ['deleted_at'];
 
-    public function role()
-    {
-        return $this->belongsTo(Role::class);
-    }
+//    public function role()
+//    {
+//        return $this->belongsTo(Role::class);
+//    }
 
-    public function hasRole($role)
-    {
-        return $this->role()->where('name', $role)->exists();
-    }
+//    public function hasRole($role)
+//    {
+//        return $this->role()->where('name', $role)->exists();
+//    }
 }

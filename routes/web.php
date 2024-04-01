@@ -87,22 +87,22 @@ Route::post('/reset-password/{token}', [ForgotPasswordController::class, 'reset'
 |--------------------------------------------------------------------------
 */
 
+//should the admin be authentified
 Route::get('/dashboard', function () {
     return view('Admin.index');
 })->name('dashboard');
 
 //users table (and trashed)
 Route::get('/admin/users', [UserController::class, 'show'])->name('users.show');
-
-
-
 //add user
 Route::post('/admin/add/users', [UserController::class, 'store'])->name('users.store');
 //Add user form
 Route::post('/users-add', [UserController::class, 'addForm'])->name('form');
-
 //delete user
 Route::delete('/admin/delete/users/{user}', [UserController::class, 'destroy'])->name('users.destroy');
+// restore
+Route::put('/admin/users/restore/{id}', [UserController::class, 'restore'])->name('users.restore');
+
 
 
 

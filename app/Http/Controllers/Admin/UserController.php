@@ -15,6 +15,7 @@ class UserController extends Controller
             ->get();
 
         $trashedUsers = User::onlyTrashed()->get();
+//        dd($trashedUsers);
 
         return view('Admin.users', ['users' => $users, 'trashedUsers' => $trashedUsers]);
     }
@@ -44,16 +45,39 @@ class UserController extends Controller
         return redirect()->back()->with('success', 'User created successfully.');
     }
 
+    
+
+//    public function destroy($id)
+//    {
+//        $user = User::find($id);
+//        if ($user) {
+//            $user->delete();
+//            return response()->json(['message' => 'User deleted successfully'], 200);
+//        }
+//        return response()->json(['message' => 'User not found'], 404);
+//    }
     public function destroy($id)
     {
         $user = User::find($id);
+
         if ($user) {
             $user->delete();
-            return response()->json(['message' => 'User deleted successfully'], 200);
+            return redirect()->back()->with('success', 'User deleted successfully.');
         }
-        return response()->json(['message' => 'User not found'], 404);
+
+        return redirect()->back()->with('error', 'User not found.');
     }
 
+    public function restore($id)
+    {
+        $user = User::withTrashed()->find($id);
+
+        if ($user) {
+            $user->restore();
+            return redirect()->back()->with('success', 'User restored successfully.');
+        }
+        return redirect()->back()->with('error', 'User not found.');
+    }
 
 
 }

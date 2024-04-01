@@ -66,12 +66,20 @@
 
         <div class="container-fluid">
             <div class="row">
-{{--                form--}}
-                <div class="col-lg-6">
-                    @include('Admin/forms/add_user')
-                </div>
+
                 {{-- users table --}}
                 <div class="col-lg-6">
+                    @if(session('success'))
+                        <div id="success-message" class="alert alert-success">
+                            {{ session('success') }}
+                        </div>
+                    @endif
+
+                    @if(session('error'))
+                        <div id="error-message" class="alert alert-danger">
+                            {{ session('error') }}
+                        </div>
+                    @endif
                     <div class="card">
                         <div class="card-body">
                             <h4 class="card-title">Users Table</h4>
@@ -90,21 +98,19 @@
                                     @foreach($users as $user)
                                         <tr>
                                             <td>{{$user->name}}</td>
-                                        <td>
-{{--                                            <div class="progress" style="height: 10px">--}}
-                                                {{$user->email}}
-{{--                                                <div class="progress-bar gradient-1" style="width: 70%;" role="progressbar"><span class="sr-only">70% Complete</span>--}}
-{{--                                                </div>--}}
-{{--                                            </div>--}}
-                                        </td>
+                                        <td>{{$user->email}}</td>
                                         <td>{{$user->created_at->format('M d, Y')}}</td>
                                         <td><span class="label gradient-1 btn-rounded">70%</span>
                                             <td>
                                                 <span>
-                                                    <a href="#" data-toggle="tooltip" data-placement="top" title="Edit"><i class="fa fa-pencil color-muted m-r-5"></i></a>
-                                                    <a href="#" onclick="deleteUser({{ $user->id }});" data-toggle="tooltip"
-                                                       data-placement="top" title="Delete"><i class="fa fa-close color-danger"></i></a>
-
+                                                   <form action="{{ route('users.destroy', $user->id) }}" method="post">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="submit" onclick="deleteUser({{ $user->id }});" data-toggle="tooltip"
+                                                                data-placement="top" title="Delete" class="btn btn-link">
+                                                            <i class="fa fa-trash color-danger"></i>
+                                                        </button>
+                                                    </form>
                                                 </span>
 
                                             </td>
@@ -115,6 +121,10 @@
                             </div>
                         </div>
                     </div>
+                </div>
+                {{-- form--}}
+                <div class="col-lg-6">
+                    @include('Admin/forms/add_user')
                 </div>
                 {{-- Trashed users table --}}
                 <div class="col-lg-6">
@@ -133,24 +143,24 @@
                                     </tr>
                                     </thead>
                                     <tbody>
+
                                     @foreach($trashedUsers as $trashedUser)
                                         <tr>
                                             <td>{{$trashedUser->name}}</td>
-                                            <td>
-                                                {{--                                            <div class="progress" style="height: 10px">--}}
-                                                {{$trashedUser->email}}
-                                                {{--                                                <div class="progress-bar gradient-1" style="width: 70%;" role="progressbar"><span class="sr-only">70% Complete</span>--}}
-                                                {{--                                                </div>--}}
-                                                {{--                                            </div>--}}
-                                            </td>
+                                            <td>{{$trashedUser->email}}</td>
                                             <td>{{$trashedUser->created_at->format('M d, Y')}}</td>
                                             <td><span class="label gradient-1 btn-rounded">70%</span>
                                             <td>
                                                 <span>
-                                                    <a href="#" data-toggle="tooltip" data-placement="top" title="Restore"><i class="fa fa-close color-danger"></i></a>
+                                                    <form action="{{ route('users.restore', $trashedUser->id) }}" method="post">
+                                                        @csrf
+                                                        @method('PUT')
+                                                        <button type="submit" class="btn btn-link" data-toggle="tooltip" data-placement="top" title="Restore">
+                                                            <i class="fa fa-close color-danger"></i>
+                                                        </button>
+                                                    </form>
 
                                                 </span>
-
                                             </td>
                                         </tr>
                                     @endforeach
@@ -160,8 +170,6 @@
                         </div>
                     </div>
                 </div>
-
-
 
                 <!-- #/ container -->
     </div>
@@ -184,31 +192,18 @@
 ***********************************-->
 
 <!--**********************************
+    My Scripts
+***********************************-->
+{{--logout--}}
+<script src="{{url('myJs/logout.js')}}"></script>
+{{--Flash message--}}
+<script src="{{url('myJs/Admin/flashMsg.js')}}"></script>
+
+
+
+<!--**********************************
     Scripts
 ***********************************-->
-{{--Delete user--}}
-<script>
-    function deleteUser(userId) {
-        if (confirm('Are you sure you want to delete this user?')) {
-            // Send AJAX request to delete the user
-            $.ajax({
-                url: '{{ route("users.destroy", ":userId") }}'.replace(':userId', userId),
-                type: 'DELETE',
-                headers: {
-                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                },
-                success: function(response) {
-                    // Handle successful deletion
-                    console.log(response.message); // Log success message
-                },
-                error: function(xhr, textStatus, errorThrown) {
-                    // Handle error
-                    console.error('Error:', errorThrown);
-                }
-            });
-        }
-    }
-</script>
 
 <script src="{{url('plugins/common/common.min.js')}}"></script>
 <script src="{{url('js/custom.min.js')}}"></script>

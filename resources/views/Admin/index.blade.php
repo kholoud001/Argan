@@ -571,37 +571,14 @@
 ***********************************-->
 
 <!--**********************************
-    Scripts
+    My Scripts
 ***********************************-->
 {{--logout--}}
-<script>
-    document.getElementById('logout-btn').addEventListener('click', function(event) {
-        event.preventDefault();
-        var token =  localStorage.getItem('access_token');
-        //console.log(token)
+<script src="myJs/logout.js"></script>
 
-        fetch('/api/logout', {
-            method: 'POST',
-            headers: {
-                'Authorization': 'Bearer ' + token,
-                'Content-Type': 'application/json',
-            },
-        })
-            .then(response => response.json())
-            .then(data => {
-                // Handle logout success
-                console.log(data.message);
-                window.location.href = data.redirect_url;
-
-            })
-            .catch(error => {
-                console.error('Error:', error);
-            });
-    });
-
-
-
-</script>
+<!--**********************************
+    Scripts
+***********************************-->
 
 <script src="plugins/common/common.min.js"></script>
 <script src="js/custom.min.js"></script>

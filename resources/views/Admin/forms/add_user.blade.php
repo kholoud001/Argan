@@ -2,6 +2,8 @@
 
             <div class="card">
                 <div class="card-body">
+                    <h4 class="card-title">Add user</h4>
+
                     <div class="form-validation">
                         <form class="form-valide" action="{{ route('users.store') }}" method="post">
                             @csrf
