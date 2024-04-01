@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Http\Request;
 
@@ -11,7 +12,8 @@ class ProductController extends Controller
     public function show(){
 
         $products = Product::all();
-        return view('Admin.products',compact('products'));
+        $categories= Category::all();
+        return view('Admin.products',compact('products','categories'));
     }
 
     public function store(Request $request)
@@ -21,6 +23,7 @@ class ProductController extends Controller
             'description' => 'nullable|string',
             'price' => 'required|numeric|min:0',
             'quantity' => 'required|integer|min:0',
+            'category_id' => 'required|exists:categories,id',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 

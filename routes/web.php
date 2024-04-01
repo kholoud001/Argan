@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\API\LoginController;
@@ -103,6 +104,17 @@ Route::post('/users-add', [UserController::class, 'addForm'])->name('form');
 Route::delete('/admin/delete/users/{user}', [UserController::class, 'destroy'])->name('users.destroy');
 // restore
 Route::put('/admin/users/restore/{id}', [UserController::class, 'restore'])->name('users.restore');
+
+////////////////////////            Categories Management               //////////////////////////////
+Route::get('/admin/categories',[CategoryController::class,'show'])->name('categories.show');
+//add category
+Route::post('/categories',[CategoryController::class,'store'])->name('categories.store');
+//update category
+Route::put('/categories/{category}',[CategoryController::class,'update'])->name('categories.update');
+
+//delete category
+Route::delete('/categories/{category}',[CategoryController::class,'destroy'])->name('categories.destroy');
+
 
 ////////////////////////            Products Management               //////////////////////////////
 Route::get('/admin/products', [ProductController::class, 'show'])->name('products.show');
