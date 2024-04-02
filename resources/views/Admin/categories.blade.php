@@ -113,7 +113,6 @@
                                                                 data-placement="top" title="Update" class="btn btn-link">
                                                             <i class="fa fa-pencil-square-o color-danger"></i>
                                                         </button>
-
                                                   </div>
                                                 </span>
 
@@ -122,6 +121,7 @@
                                     @endforeach
                                     </tbody>
                                 </table>
+                                {{$categories->links()}}
                             </div>
                         </div>
                     </div>
@@ -131,7 +131,6 @@
                     @include('Admin/forms/add_category')
                 </div>
                 <!-- #/ container -->
-
 {{--                <!-- Main modal -->--}}
                 <div id="crud-modal" tabindex="-1" aria-hidden="true" class=" bg-gray-300 bg-opacity-50 hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
                     <div class="relative p-4 w-full max-w-md max-h-full">
@@ -156,7 +155,7 @@
                                 <div class="form-group row">
                                     <label class="col-lg-3 col-form-label" for="name">Category Name <span class="text-danger">*</span></label>
                                     <div class="col-lg-9">
-                                        <input type="text" class="form-control" id="name" name="name" value="{{ $category->name }}" required>
+                                        <input type="text" class="form-control" id="name" name="name" value="{{ old('name', $category->name) }}" required>
                                     </div>
                                 </div>
                                 <div class="form-group row">

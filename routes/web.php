@@ -111,7 +111,6 @@ Route::get('/admin/categories',[CategoryController::class,'show'])->name('catego
 Route::post('/categories',[CategoryController::class,'store'])->name('categories.store');
 //update category
 Route::put('/categories/{category}',[CategoryController::class,'update'])->name('categories.update');
-
 //delete category
 Route::delete('/categories/{category}',[CategoryController::class,'destroy'])->name('categories.destroy');
 
@@ -120,6 +119,8 @@ Route::delete('/categories/{category}',[CategoryController::class,'destroy'])->n
 Route::get('/admin/products', [ProductController::class, 'show'])->name('products.show');
 //add product
 Route::post('/products', [ProductController::class, 'store'])->name('products.store');
+//update product
+Route::put('/products/{product}', [ProductController::class, 'update'])->name('products.update');
 //delete product
 Route::delete('/products/{product}', [ProductController::class, 'destroy'])->name('products.destroy');
 

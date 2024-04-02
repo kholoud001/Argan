@@ -11,7 +11,7 @@ class CategoryController extends Controller
 
     public function show(){
 
-        $categories= Category::all();
+        $categories= Category::orderByDesc('created_at')->paginate(8);
 
         return view('Admin.categories',compact('categories'));
     }
