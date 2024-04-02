@@ -35,9 +35,17 @@
                     </div>
                     <div class="drop-down dropdown-profile animated fadeIn dropdown-menu">
                         <div class="dropdown-content-body">
+                {{--  Logout--}}
                             <ul>
-                                <li><a  id="logout-btn"><i class="icon-key"></i> <span>Logout</span></a></li>
+                                <li>
+                                    <form id="logout-form" action="{{ url('/api/logout') }}" method="POST">
+                                        @csrf
+                                        <button type="submit"><i class="icon-key"></i> <span>Logout</span></button>
+                                    </form>
+
+                                </li>
                             </ul>
+
                         </div>
                     </div>
                 </li>

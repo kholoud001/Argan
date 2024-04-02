@@ -27,17 +27,24 @@ class CategoryController extends Controller
         return redirect()->route('categories.show')->with('success', 'Category created successfully.');
     }
 
-
-    public function update(Request $request, Category $category)
+    public function update(Request $request, $id)
     {
-        $request->validate([
+        $category = Category::find($id);
+        if (!$category) {
+            return redirect()->back()->with('error', 'Category not found.');
+        }
+
+        $validatedData = $request->validate([
             'name' => 'required|string|max:255|unique:categories,name,' . $category->id,
         ]);
 
-        $category->update($request->all());
+        $category->update($validatedData);
 
-        return redirect()->route('categories.show')->with('success', 'Category updated successfully.');
+        return redirect()->route('categories.show', $category->id)->with('success', 'Category updated successfully.');
     }
+
+
+
 
     public function destroy(Category $category)
     {

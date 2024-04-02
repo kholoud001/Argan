@@ -110,7 +110,7 @@ Route::get('/admin/categories',[CategoryController::class,'show'])->name('catego
 //add category
 Route::post('/categories',[CategoryController::class,'store'])->name('categories.store');
 //update category
-Route::put('/categories/{category}',[CategoryController::class,'update'])->name('categories.update');
+Route::put('/categories/{id}',[CategoryController::class,'update'])->name('categories.update');
 //delete category
 Route::delete('/categories/{category}',[CategoryController::class,'destroy'])->name('categories.destroy');
 
