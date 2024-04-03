@@ -23,10 +23,6 @@
                     <div class="header-navigation">
                         <ul class="main-nav justify-content-start">
                             <li class="has-submenu"><a href="index.html">home</a>
-                                <ul class="submenu-nav">
-                                    <li><a href="index.html">Home One</a></li>
-                                    <li><a href="index-two.html">Home Two</a></li>
-                                </ul>
                             </li>
                             <li><a href="about-us.html">about</a></li>
                             <li class="has-submenu position-static"><a href="product.html">shop</a>

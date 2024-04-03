@@ -137,7 +137,9 @@
                                                         </button>
                                                     </div>
                                                     <!-- Modal body -->
-                                                    <form class="p-4 md:p-5" action="{{ route('categories.update', $category->id) }}" method="POST">
+                                                    <div class="col-lg-12">
+
+                                                        <form class="p-4 md:p-5" action="{{ route('categories.update', $category->id) }}" method="POST">
                                                         @csrf
                                                         @method('PUT')
                                                         <div class="form-group row">
@@ -148,10 +150,11 @@
                                                         </div>
                                                         <div class="form-group row">
                                                             <div class="col-lg-9 offset-lg-3">
-                                                                <button type="submit" class="btn btn-primary">Submit</button>
+                                                                <button type="submit" class="mb-3 btn btn-primary">Submit</button>
                                                             </div>
                                                         </div>
                                                     </form>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>

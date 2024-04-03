@@ -130,8 +130,9 @@
                                                 </span>
                                             </td>
                                     </tr>
-                                        <!-- Main modal -->--}}
-                                        <div id="crud-modal-{{ $product->id }}" tabindex="-1" aria-hidden="true" class=" bg-gray-300 bg-opacity-50 hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+                                        <!-- Main modal -->
+                                        <div id="crud-modal-{{ $product->id }}" tabindex="-1" aria-hidden="true"
+                                             class=" bg-gray-300 bg-opacity-50 hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
                                             <div class="relative p-4 w-full max-w-md max-h-full">
                                                 <!-- Modal content -->
                                                 <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
@@ -147,7 +148,7 @@
                                                             <span class="sr-only">Close modal</span>
                                                         </button>
                                                     </div>
-                                                    <div class="col-lg-8"> 
+                                                    <div class="col-lg-12">
                                                         <!-- Modal body -->
                                                         <form class="p-4 md:p-5" action="{{ route('products.update', $product->id) }}" method="POST">
                                                         @csrf
@@ -199,7 +200,7 @@
                                                         <!-- Submit-->
                                                         <div class="form-group row">
                                                             <div class="col-lg-9 offset-lg-3">
-                                                                <button type="submit" class="btn btn-primary">Submit</button>
+                                                                <button type="submit" class="mb-3 btn btn-primary">Submit</button>
                                                             </div>
                                                         </div>
                                                     </form>
