@@ -124,6 +124,8 @@ Route::post('/products', [ProductController::class, 'store'])->name('products.st
 Route::put('/products/{product}', [ProductController::class, 'update'])->name('products.update');
 //delete product
 Route::delete('/products/{product}', [ProductController::class, 'destroy'])->name('products.destroy');
+//restore post
+Route::put('/products/{id}/restore', [ProductController::class, 'restore'])->name('products.restore');
 
 
 ////////////////////////            Blogs Management               //////////////////////////////

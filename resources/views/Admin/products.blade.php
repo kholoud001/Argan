@@ -224,40 +224,47 @@
                 <div class="col-lg-6">
                     <div class="card">
                         <div class="card-body">
-                            <h4 class="card-title">Trashed Users Table</h4>
+                            <h4 class="card-title">Soldout Products Table</h4>
                             <div class="table-responsive">
                                 <table class="table table-bordered verticle-middle">
                                     <thead>
                                     <tr>
-                                        <th scope="col">User name</th>
-                                        <th scope="col">Email</th>
-                                        <th scope="col">Joining Date</th>
-                                        <th scope="col">Order Rate</th>
+                                        <th scope="col">Product name</th>
+                                        <th scope="col">Price</th>
+                                        <th scope="col">Stock</th>
+                                        <th scope="col">Category</th>
                                         <th scope="col">Action</th>
                                     </tr>
                                     </thead>
                                     <tbody>
 
-{{--                                    @foreach($trashedUsers as $trashedUser)--}}
+                                    @foreach($trashedProducts as $trashedProduct)
                                         <tr>
-{{--                                            <td>{{$trashedUser->name}}</td>--}}
-{{--                                            <td>{{$trashedUser->email}}</td>--}}
-{{--                                            <td>{{$trashedUser->created_at->format('M d, Y')}}</td>--}}
-                                            <td><span class="label gradient-1 btn-rounded">70%</span>
+                                            <td>{{$trashedProduct->name}}</td>
+                                            <td>{{$trashedProduct->price}}</td>
+                                            <td>{{$trashedProduct->quantity}}</td>
+                                            <td>
+                                                @foreach($categories as $category)
+                                                    @if($category->id==$trashedProduct->category_id)
+                                                        {{$category->name}}
+                                                    @endif
+                                                @endforeach
+                                            </td>
                                             <td>
                                                 <span>
-{{--                                                    <form action="{{ route('users.restore', $trashedUser->id) }}" method="post">--}}
-{{--                                                        @csrf--}}
-{{--                                                        @method('PUT')--}}
-{{--                                                        <button type="submit" class="btn btn-link" data-toggle="tooltip" data-placement="top" title="Restore">--}}
-{{--                                                            <i class="fa fa-close color-danger"></i>--}}
-{{--                                                        </button>--}}
-{{--                                                    </form>--}}
+
+                                                    <form action="{{ route('products.restore', $trashedProduct->id) }}" method="post">
+                                                        @csrf
+                                                        @method('PUT')
+                                                        <button type="submit" class="btn btn-link" data-toggle="tooltip" data-placement="top" title="Restore">
+                                                            <i class="fa fa-close color-danger"></i>
+                                                        </button>
+                                                    </form>
 
                                                 </span>
                                             </td>
                                         </tr>
-{{--                                    @endforeach--}}
+                                    @endforeach
                                     </tbody>
                                 </table>
                             </div>

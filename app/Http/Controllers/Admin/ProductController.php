@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Blog;
 use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Http\Request;
@@ -12,8 +13,10 @@ class ProductController extends Controller
     public function show(){
 
         $products = Product::orderByDesc('created_at')->paginate(8);
+        $trashedProducts = Product::onlyTrashed()->get();
+
         $categories= Category::all();
-        return view('Admin.products',compact('products','categories'));
+        return view('Admin.products',compact('products','categories','trashedProducts'));
     }
 
     public function store(Request $request)
@@ -72,4 +75,13 @@ class ProductController extends Controller
 
         return redirect()->back()->with('success', 'Product deleted successfully.');
     }
+
+    public function restore($id)
+    {
+        $post = Product::withTrashed()->findOrFail($id);
+        $post->restore();
+
+        return redirect()->route('products.show')->with('success', 'Post restored successfully.');
+    }
+
 }
