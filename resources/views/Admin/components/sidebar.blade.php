@@ -29,7 +29,7 @@
             </li>
             {{--                Blog--}}
             <li>
-                <a  href="#" aria-expanded="false">
+                <a  href="{{route('posts.show')}}" aria-expanded="false">
                     <i class="icon-notebook menu-icon"></i><span class="nav-text">Blogs</span>
                 </a>
 

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\BlogController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\UserController;
@@ -123,6 +124,12 @@ Route::post('/products', [ProductController::class, 'store'])->name('products.st
 Route::put('/products/{product}', [ProductController::class, 'update'])->name('products.update');
 //delete product
 Route::delete('/products/{product}', [ProductController::class, 'destroy'])->name('products.destroy');
+
+
+////////////////////////            Blogs Management               //////////////////////////////
+Route::get('/admin/posts', [BlogController::class, 'show'])->name('posts.show');
+//add product
+Route::post('/products', [BlogController::class, 'store'])->name('posts.store');
 
 
 
