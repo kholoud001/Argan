@@ -98,21 +98,22 @@
                                         <tr>
                                             <td>{{$post->title}}</td>
                                             <td>{{$post->created_at->format('M d, Y')}}</td>
-                                            <td>@foreach($categories as $category)
-                                                @if($category->id==$post->category_id)
+                                            <td>
+                                                @foreach($post->categories as $category)
                                                     {{$category->name}}
-                                                @endif
+                                                    @if (!$loop->last)
+                                                        ,
+                                            @endif
                                             @endforeach
                                             <td>
                                                 <span>
-{{--                                                   <form action="{{ route('users.destroy', $user->id) }}" method="post">--}}
-{{--                                                        @csrf--}}
-{{--                                                       @method('DELETE')--}}
-{{--                                                        <button type="submit" onclick="deleteUser({{ $user->id }});" data-toggle="tooltip"--}}
-{{--                                                                data-placement="top" title="Delete" class="btn btn-link">--}}
-{{--                                                            <i class="fa fa-trash color-danger"></i>--}}
-{{--                                                        </button>--}}
-{{--                                                    </form>--}}
+                                                <form action="{{ route('posts.destroy', $post->id) }}" method="post">
+                                                    @csrf
+                                                     @method('DELETE')
+                                                    <button type="submit" onclick="return confirm('Are you sure you want to delete this post?');" data-toggle="tooltip" data-placement="top" title="Delete" class="btn btn-link">
+                                                        <i class="fa fa-trash color-danger"></i>
+                                                    </button>
+                                                </form>
                                                 </span>
 
                                             </td>
@@ -130,49 +131,52 @@
                     @include('Admin/forms/add_blog')
                 </div>
                 {{-- Archived Posts table --}}
-{{--                <div class="col-lg-6">--}}
-{{--                    <div class="card">--}}
-{{--                        <div class="card-body">--}}
-{{--                            <h4 class="card-title">Trashed Users Table</h4>--}}
-{{--                            <div class="table-responsive">--}}
-{{--                                <table class="table table-bordered verticle-middle">--}}
-{{--                                    <thead>--}}
-{{--                                    <tr>--}}
-{{--                                        <th scope="col">User name</th>--}}
-{{--                                        <th scope="col">Email</th>--}}
-{{--                                        <th scope="col">Joining Date</th>--}}
-{{--                                        <th scope="col">Order Rate</th>--}}
-{{--                                        <th scope="col">Action</th>--}}
-{{--                                    </tr>--}}
-{{--                                    </thead>--}}
-{{--                                    <tbody>--}}
+                <div class="col-lg-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="card-title">Archived Posts Table</h4>
+                            <div class="table-responsive">
+                                <table class="table table-bordered verticle-middle">
+                                    <thead>
+                                    <tr>
+                                        <th scope="col">Post Title</th>
+                                        <th scope="col">Creating Date</th>
+                                        <th scope="col">Action</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
 
-{{--                                    @foreach($trashedUsers as $trashedUser)--}}
-{{--                                        <tr>--}}
-{{--                                            <td>{{$trashedUser->name}}</td>--}}
-{{--                                            <td>{{$trashedUser->email}}</td>--}}
-{{--                                            <td>{{$trashedUser->created_at->format('M d, Y')}}</td>--}}
-{{--                                            <td><span class="label gradient-1 btn-rounded">70%</span>--}}
-{{--                                            <td>--}}
-{{--                                                <span>--}}
-{{--                                                    <form action="{{ route('users.restore', $trashedUser->id) }}" method="post">--}}
-{{--                                                        @csrf--}}
-{{--                                                        @method('PUT')--}}
-{{--                                                        <button type="submit" class="btn btn-link" data-toggle="tooltip" data-placement="top" title="Restore">--}}
-{{--                                                            <i class="fa fa-close color-danger"></i>--}}
-{{--                                                        </button>--}}
-{{--                                                    </form>--}}
+                                    @foreach($archivedPosts as $archivedPost)
+                                        <tr>
+                                            <td>{{$archivedPost->title}}</td>
+                                            <td>{{$archivedPost->created_at->format('M d, Y')}}</td>
+                                            <td>
+                                                @foreach($archivedPost->categories as $category)
+                                                    {{$category->name}}
+                                                    @if (!$loop->last)
+                                                        ,
+                                            @endif
+                                            @endforeach
+                                            <td>
+                                                <span>
+                                                    <form action="{{ route('posts.restore', $archivedPost->id) }}" method="post">
+                                                        @csrf
+                                                        @method('PUT')
+                                                        <button type="submit" class="btn btn-link" data-toggle="tooltip" data-placement="top" title="Restore">
+                                                            <i class="fa fa-close color-danger"></i>
+                                                        </button>
+                                                    </form>
 
-{{--                                                </span>--}}
-{{--                                            </td>--}}
-{{--                                        </tr>--}}
-{{--                                    @endforeach--}}
-{{--                                    </tbody>--}}
-{{--                                </table>--}}
-{{--                            </div>--}}
-{{--                        </div>--}}
-{{--                    </div>--}}
-{{--                </div>--}}
+                                                </span>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
                 <!-- #/ container -->
             </div>

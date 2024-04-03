@@ -16,12 +16,13 @@ class Blog extends Model
         'title',
         'picture',
         'content',
-        'category_id',
+
     ];
 
     public function categories()
     {
-        return $this->belongsToMany(Category::class);
+        return $this->belongsToMany(Category::class, 'category_post', 'blog_post_id', 'category_id');
     }
+
 
 }

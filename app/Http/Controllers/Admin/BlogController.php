@@ -7,31 +7,47 @@ use App\Models\Blog;
 use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class BlogController extends Controller
 {
     public function show(){
 
         $posts = Blog::orderByDesc('created_at')->get();
+        $archivedPosts = Blog::onlyTrashed()->get();
+
         $categories= Category::all();
-        return view('Admin.blogs',compact('posts','categories'));
+        return view('Admin.blogs',compact('posts','categories','archivedPosts'));
     }
+
+
 
     public function store(Request $request)
     {
+       // dd($request);
         // Validate the form data
-        $validatedData = $request->validate([
+        // Validate the form data
+        $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
-            'category_id' => 'required|exists:categories,id',
-            'content' => 'nullable|string',
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'content' => 'required|string',
+            'category_ids' => 'required|array',
+            'category_ids.*' => 'exists:categories,id',
+            'image' => 'required|image|max:2048',
         ]);
 
-        // Store the post in the database
+// Check if validation fails
+        if ($validator->fails()) {
+            dd($validator->errors());
+        }
+
+// If validation passes, retrieve validated data
+        $validatedData = $validator->validated();
+
+        // Create a new post instance
         $post = new Blog();
         $post->title = $validatedData['name'];
-        $post->category_id = $validatedData['category_id'];
         $post->content = $validatedData['content'];
+
 
         // Handle image upload
         if ($request->hasFile('image')) {
@@ -39,9 +55,34 @@ class BlogController extends Controller
             $post->picture = $imagePath;
         }
 
+        // Save the post
         $post->save();
+
+        // Attach categories to the post
+        foreach ($validatedData['category_ids'] as $categoryId) {
+            $post->categories()->attach($categoryId);
+        }
 
         // Redirect back or to a specific route
         return redirect()->route('posts.show')->with('success', 'Post created successfully!');
     }
+
+
+    public function destroy($id)
+    {
+        $post = Blog::findOrFail($id);
+        $post->delete();
+
+        return redirect()->route('posts.show')->with('success', 'Post deleted successfully.');
+    }
+
+
+    public function restore($id)
+    {
+        $post = Blog::withTrashed()->findOrFail($id);
+        $post->restore();
+
+        return redirect()->route('posts.show')->with('success', 'Post restored successfully.');
+    }
+
 }

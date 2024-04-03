@@ -18,13 +18,13 @@
                 <!-- Category and Image Fields -->
                 <div class="form-group row">
                     <div class="col-lg-6">
-                        <label class="col-form-label" for="category_id">Category <span class="text-danger">*</span></label>
-                        <select class="form-control" id="category_id" name="category_id" required>
-                            <option value="">Select Category</option>
-                            @foreach($categories as $category)
-                                <option value="{{ $category->id }}">{{ $category->name }}</option>
-                            @endforeach
-                        </select>
+                        <label class="col-form-label">Categories <span class="text-danger">*</span></label><br>
+                        @foreach($categories as $category)
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="category_{{ $category->id }}" name="category_ids[]" value="{{ $category->id }}">
+                                <label class="form-check-label" for="category_{{ $category->id }}">{{ $category->name }}</label>
+                            </div>
+                        @endforeach
                     </div>
                     <div class="col-lg-6">
                         <label class="col-form-label" for="image">Post Image</label>

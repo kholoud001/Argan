@@ -129,7 +129,13 @@ Route::delete('/products/{product}', [ProductController::class, 'destroy'])->nam
 ////////////////////////            Blogs Management               //////////////////////////////
 Route::get('/admin/posts', [BlogController::class, 'show'])->name('posts.show');
 //add product
-Route::post('/products', [BlogController::class, 'store'])->name('posts.store');
+Route::post('/posts', [BlogController::class, 'store'])->name('posts.store');
+//delete post
+Route::delete('/posts/{id}', [BlogController::class, 'destroy'])->name('posts.destroy');
+//restore post
+Route::put('/posts/{id}/restore', [BlogController::class, 'restore'])->name('posts.restore');
+
+
 
 
 
