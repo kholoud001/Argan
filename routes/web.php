@@ -10,6 +10,7 @@ use App\Http\Controllers\Auth\FacebookController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\ForgotPasswordLinkController;
 use App\Http\Controllers\Auth\GoogleController;
+use App\Http\Controllers\User\HomeController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -23,14 +24,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-/*
-|--------------------------------------------------------------------------
-| Home Page
-|--------------------------------------------------------------------------
-*/
-Route::get('/', function () {
-    return view('home');
-})->name('home');
+
+
 /*
 |--------------------------------------------------------------------------
 | login Page
@@ -137,7 +132,20 @@ Route::delete('/posts/{id}', [BlogController::class, 'destroy'])->name('posts.de
 //restore post
 Route::put('/posts/{id}/restore', [BlogController::class, 'restore'])->name('posts.restore');
 
-
+/*
+|--------------------------------------------------------------------------
+| Admin Pages
+|--------------------------------------------------------------------------
+*/
+////////////////////////////////       Products          ///////////////////////////////////////////////////
+ /*
+//|--------------------------------------------------------------------------
+//| Home Page
+//|--------------------------------------------------------------------------
+//*/
+///
+/// Show recent products in Homepage
+Route::get('/', [HomeController::class, 'index'])->name('products.homepage');
 
 
 

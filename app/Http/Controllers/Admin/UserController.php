@@ -12,7 +12,7 @@ class UserController extends Controller
     {
         $users = User::where('role_id', 2)
             ->orderByDesc('created_at')
-            ->paginate(4);
+            ->paginate(6);
 
         $trashedUsers = User::onlyTrashed()->get();
 //        dd($trashedUsers);

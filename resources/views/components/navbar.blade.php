@@ -97,8 +97,14 @@
                 </span>
                     </button>
 
-                    <a class="header-action-btn" href="account-login.html">
-                                <span class="icon">
+{{--                    Account--}}
+{{--                    @if(auth()->check())--}}
+                        <!-- If user is authenticated, redirect to a page -->
+{{--                        <a class="header-action-btn" href="{{ route('authenticated.page') }}">--}}
+{{--                            @else--}}
+                                <!-- If user is not authenticated, redirect to login page -->
+                                <a class="header-action-btn" href="{{ route('login') }}">
+{{--                                    @endif                                <span class="icon">--}}
                   <svg width="30" height="30" viewbox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                     <rect class="icon-rect" width="30" height="30" fill="url(#pattern3)"></rect>
                     <defs>

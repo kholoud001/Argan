@@ -27,11 +27,11 @@ class ProductController extends Controller
             'price' => 'required|numeric|min:0',
             'quantity' => 'required|integer|min:0',
             'category_id' => 'required|exists:categories,id',
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'image' => 'required|image',
         ], ['image.required' => 'The image field is required.']);
 
         // Upload image if provided
-        $imagePath = $request->file('image')->store('products');
+        $imagePath = $request->file('image')->store('products', 'public');
 
         Product::create(array_merge(
             $request->only(['name', 'description', 'price', 'quantity', 'category_id']),

@@ -13,7 +13,7 @@ class BlogController extends Controller
 {
     public function show(){
 
-        $posts = Blog::orderByDesc('created_at')->get();
+        $posts = Blog::orderByDesc('created_at')->paginate(6);;
         $archivedPosts = Blog::onlyTrashed()->get();
 
         $categories= Category::all();
