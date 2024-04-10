@@ -62,17 +62,13 @@
                                     <div class="form-group mb-6">
                                         <label for="email">Email Address <sup>*</sup></label>
                                         <input type="email" id="email" name="email" class="form-control">
-                                        @error('email')
-                                        <span class="text-danger">{{ $message }}</span>
-                                        @enderror
+                                        <span id="email-error" class="text-danger"></span> <!-- Error message placeholder -->
                                     </div>
 
                                     <div class="form-group mb-6">
                                         <label for="password">Password <sup>*</sup></label>
                                         <input type="password" id="password" name="password" class="form-control">
-                                        @error('password')
-                                        <span class="text-danger">{{ $message }}</span>
-                                        @enderror
+                                        <span id="password-error" class="text-danger"></span> <!-- Error message placeholder -->
                                     </div>
 
                                     <div class="form-group d-flex align-items-center mb-14">
@@ -242,40 +238,59 @@
 
 
 <script>
-   document.addEventListener("DOMContentLoaded",function () {
-    const form = document.getElementById('login-form');
+    document.addEventListener('DOMContentLoaded', function() {
+        document.getElementById('login-form').addEventListener('submit', function(event) {
+            event.preventDefault();
 
-    form.addEventListener('submit',function(event){
-        event.preventDefault();
+            var email = document.getElementById('email').value;
+            var password = document.getElementById('password').value;
 
-        const formData = new FormData(event.target);
+            // Clear previous errors
+            document.getElementById('email-error').textContent = '';
+            document.getElementById('password-error').textContent = '';
 
-        axios.post('{{url('/api/auth/login')}}',formData)
-            .then(response => {
-                if(response.data.token){
-                    console.log("Login successful");
-                    console.log(response);
-                
-                    localStorage.setItem('access_token',response.data.token);
-                    
-                    var redirectUrl = response.data.role === 1 ? response.data.redirect_url_admin : response.data.redirect_url_user;
-                    window.location.href = redirectUrl;
+            if (!email) {
+                document.getElementById('email-error').textContent = 'Email is required.';
+                return;
+            }
 
-                } else {
-                    console.error('Token not found in response:', response)
-                }
+            if (!password) {
+                document.getElementById('password-error').textContent = 'Password is required.';
+                return;
+            }
 
-            })
-            .catch(error => {
-                console.error('Login failed:', error);
+            // Form data
+            var formData = {
+                email: email,
+                password: password
+            };
 
-            });
+            axios.post('/api/auth/login', formData)
+                .then(response => {
+                    var data = response.data;
 
+                    if (data.errors && (data.errors.email || data.errors.password)) {
+                        document.getElementById('email-error').textContent = data.errors.email ? data.errors.email[0] : '';
+                        document.getElementById('password-error').textContent = data.errors.password ? data.errors.password[0] : '';
+                        return;
+                    }
+
+                    localStorage.setItem('access_token', data.token);
+
+                    if (data.message === 'Login successful') {
+                        var redirectUrl = data.role === 1 ? data.redirect_url_admin : data.redirect_url_user;
+                        window.location.href = redirectUrl;
+                    } else {
+                        document.getElementById('password-error').textContent = data.message;
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+        });
     });
-
-    
-   });
 </script>
+
 <!-- Vendors JS -->
 <script src="{{asset('assets/js/vendor/modernizr-3.11.7.min.js)')}}"></script>
 <script src="{{asset('assets/js/vendor/jquery-3.6.0.min.js')}}"></script>

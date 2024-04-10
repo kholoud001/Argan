@@ -59,7 +59,7 @@ class LoginController extends Controller
                 'user' => $user,
                 'role' => $role,
                 'token' => $token,
-                'redirect_url_user' => route('products.homepage')
+                'redirect_url_user' => route('home')
             ]);
         }
     }

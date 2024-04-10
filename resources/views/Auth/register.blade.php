@@ -43,29 +43,23 @@
                             <div class="my-account-form">
                                 <!--== Toast container ==-->
                                 <div id="toast-container" class="toast-container"></div>
-                                <form id="register-form" action="{{ url('/api/auth/register') }}" method="post">
+                                <form id="register-form">
                                     @csrf
                                     <div class="form-group mb-6">
                                         <label for="name">Username <sup>*</sup></label>
                                         <input type="name" id="name" name="name">
-                                        @error('name')
-                                        <span class="text-danger">{{ $message }}</span>
-                                        @enderror
+                                        <span id="name-error" class="text-danger"></span> <!-- Error message placeholder -->
                                     </div>
                                     <div class="form-group mb-6">
                                         <label for="email">Email Address <sup>*</sup></label>
                                         <input type="email" id="email" name="email">
-                                        @error('email')
-                                        <span class="text-danger">{{ $message }}</span>
-                                        @enderror
+                                        <span id="email-error" class="text-danger"></span> <!-- Error message placeholder -->
                                     </div>
 
                                     <div class="form-group mb-6">
                                         <label for="password">Password <sup>*</sup></label>
                                         <input type="password" id="password" name="password">
-                                        @error('password')
-                                        <span class="text-danger">{{ $message }}</span>
-                                        @enderror
+                                        <span id="password-error" class="text-danger"></span> <!-- Error message placeholder -->
                                     </div>
                                     <div class="form-group mb-6">
                                         <label for="password_confirmation">Confirm Password <sup>*</sup></label>
@@ -96,30 +90,6 @@
     <!--== Scroll Top Button ==-->
     <div id="scroll-to-top" class="scroll-to-top"><span class="fa fa-angle-up"></span></div>
 
-    <!--== Start Product Quick Wishlist Modal ==-->
-    <aside class="product-action-modal modal fade" id="action-WishlistModal" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-body">
-                    <div class="product-action-view-content">
-                        <button type="button" class="btn-close" data-bs-dismiss="modal">
-                            <i class="fa fa-times"></i>
-                        </button>
-                        <div class="modal-action-messages">
-                            <i class="fa fa-check-square-o"></i> Added to wishlist successfully!
-                        </div>
-                        <div class="modal-action-product">
-                            <div class="thumb">
-                                <img src="assets/images/shop/modal1.webp" alt="Organic Food Juice" width="466" height="320">
-                            </div>
-                            <h4 class="product-name"><a href="product-details.html">Readable content DX22</a></h4>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </aside>
-    <!--== End Product Quick Wishlist Modal ==-->
 
     <!--== Start Product Quick Add Cart Modal ==-->
     <aside class="product-action-modal modal fade" id="action-CartAddModal" tabindex="-1" aria-hidden="true">
@@ -171,62 +141,6 @@
     </aside>
     <!--== End Aside Search Form ==-->
 
-    <!--== Start Product Quick View Modal ==-->
-    <aside class="product-cart-view-modal modal fade" id="action-QuickViewModal" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-body">
-                    <div class="product-quick-view-content">
-                        <button type="button" class="btn-close" data-bs-dismiss="modal">
-                            <span class="fa fa-close"></span>
-                        </button>
-                        <div class="container">
-                            <div class="row">
-                                <div class="col-lg-6">
-                                    <!--== Start Product Thumbnail Area ==-->
-                                    <div class="product-single-thumb">
-                                        <img src="assets/images/shop/quick-view1.webp" width="544" height="560" alt="Image-HasTech">
-                                    </div>
-                                    <!--== End Product Thumbnail Area ==-->
-                                </div>
-                                <div class="col-lg-6">
-                                    <!--== Start Product Info Area ==-->
-                                    <div class="product-details-content">
-                                        <h5 class="product-details-collection">Premioum collection</h5>
-                                        <h3 class="product-details-title">Offbline Instant Age Rewind Eraser.</h3>
-                                        <div class="product-details-review mb-5">
-                                            <div class="product-review-icon">
-                                                <i class="fa fa-star-o"></i>
-                                                <i class="fa fa-star-o"></i>
-                                                <i class="fa fa-star-o"></i>
-                                                <i class="fa fa-star-o"></i>
-                                                <i class="fa fa-star-half-o"></i>
-                                            </div>
-                                            <button type="button" class="product-review-show">150 reviews</button>
-                                        </div>
-                                        <p class="mb-6">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Delectus, repellendus. Nam voluptate illo ut quia non sapiente provident alias quos laborum incidunt, earum accusamus, natus. Vero pariatur ut veniam sequi amet consectetur.</p>
-                                        <div class="product-details-pro-qty">
-                                            <div class="pro-qty">
-                                                <input type="text" title="Quantity" value="01">
-                                            </div>
-                                        </div>
-                                        <div class="product-details-action">
-                                            <h4 class="price">$254.22</h4>
-                                            <div class="product-details-cart-wishlist">
-                                                <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#action-CartAddModal">Add to cart</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!--== End Product Info Area ==-->
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </aside>
-    <!--== End Product Quick View Modal ==-->
 
     <!--== Start Aside Cart ==-->
     <aside class="aside-cart-wrapper offcanvas offcanvas-end" tabindex="-1" id="AsideOffcanvasCart" aria-labelledby="offcanvasRightLabel">
@@ -332,9 +246,58 @@
 
 </div>
 <!--== Wrapper End ==-->
-
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script>
-    $(document).ready(function() {
+    document.addEventListener('DOMContentLoaded', function() {
+        document.getElementById('register-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            // Clear previous errors
+            document.getElementById('name-error').textContent = '';
+            document.getElementById('email-error').textContent = '';
+            document.getElementById('password-error').textContent = '';
+
+            var name = document.getElementById('name').value;
+            var email = document.getElementById('email').value;
+            var password = document.getElementById('password').value;
+            var passwordConfirmation = document.getElementById('password_confirmation').value;
+
+            // Form data
+            var formData = {
+                name: name,
+                email: email,
+                password: password,
+                password_confirmation: passwordConfirmation
+            };
+
+            // Send registration request using Axios
+            axios.post('/api/auth/register', formData)
+                .then(response => {
+                    var data = response.data;
+
+                    if (data.errors) {
+                        if (data.errors.name) {
+                            document.getElementById('name-error').textContent = data.errors.name[0];
+                        }
+                        if (data.errors.email) {
+                            document.getElementById('email-error').textContent = data.errors.email[0];
+                        }
+                        if (data.errors.password) {
+                            document.getElementById('password-error').textContent = data.errors.password[0];
+                        }
+                        return;
+                    }
+
+                    showToast('Success! : ' + data.message, 'success');
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+
+                    // Handle registration failure
+                    showToast('Registration failed. Please check the form for errors.', 'error');
+                });
+        });
+
         function showToast(message, style) {
             var toastContainer = document.getElementById("toast-container");
             var toast = document.createElement('div');
@@ -360,31 +323,8 @@
                     toastContainer.removeChild(toast);
                 }, 5000);
             }
-
         }
-
-        $('#register-form').submit(function(event) {
-            event.preventDefault();
-            $('.text-danger').remove();
-            var formData = $(this).serialize();
-            $.ajax({
-                type: 'POST',
-                url: $(this).attr('action'),
-                data: formData,
-                success: function(response) {
-                     console.log(response.message);
-                    showToast('Success! : ' + response.message, 'success');
-                },
-                error: function(xhr, textStatus, errorThrown) {
-                    $.each(xhr.responseJSON.errors, function(key, value) {
-                        $('#' + key).after('<span class="text-danger">' + value + '</span>');
-                    });
-                    showToast('Registration failed. Please check the form for errors.', 'error');
-                }
-            });
-        });
-    });
-</script>
+    });</script>
 
 
 
