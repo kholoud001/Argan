@@ -57,7 +57,7 @@
 {{--                                        <img src="https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg" alt="Facebook Logo" class="logo me-2" style="height: 24px;"> Login with Facebook--}}
 {{--                                    </button>--}}
 {{--                                </form>--}}
-                                <form  id="login-form" action="{{ url('/api/auth/login') }}" method="post">
+                                <form  id="login-form">
                                     @csrf
                                     <div class="form-group mb-6">
                                         <label for="email">Email Address <sup>*</sup></label>
@@ -104,55 +104,7 @@
     <!--== Scroll Top Button ==-->
     <div id="scroll-to-top" class="scroll-to-top"><span class="fa fa-angle-up"></span></div>
 
-    <!--== Start Product Quick Wishlist Modal ==-->
-    <aside class="product-action-modal modal fade" id="action-WishlistModal" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-body">
-                    <div class="product-action-view-content">
-                        <button type="button" class="btn-close" data-bs-dismiss="modal">
-                            <i class="fa fa-times"></i>
-                        </button>
-                        <div class="modal-action-messages">
-                            <i class="fa fa-check-square-o"></i> Added to wishlist successfully!
-                        </div>
-                        <div class="modal-action-product">
-                            <div class="thumb">
-                                <img src="assets/images/shop/modal1.webp" alt="Organic Food Juice" width="466" height="320">
-                            </div>
-                            <h4 class="product-name"><a href="product-details.html">Readable content DX22</a></h4>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </aside>
-    <!--== End Product Quick Wishlist Modal ==-->
 
-    <!--== Start Product Quick Add Cart Modal ==-->
-    <aside class="product-action-modal modal fade" id="action-CartAddModal" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-body">
-                    <div class="product-action-view-content">
-                        <button type="button" class="btn-close" data-bs-dismiss="modal">
-                            <i class="fa fa-times"></i>
-                        </button>
-                        <div class="modal-action-messages">
-                            <i class="fa fa-check-square-o"></i> Added to cart successfully!
-                        </div>
-                        <div class="modal-action-product">
-                            <div class="thumb">
-                                <img src="assets/images/shop/modal1.webp" alt="Organic Food Juice" width="466" height="320">
-                            </div>
-                            <h4 class="product-name"><a href="product-details.html">Readable content DX22</a></h4>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </aside>
-    <!--== End Product Quick Add Cart Modal ==-->
 
     <!--== Start Aside Search Form ==-->
     <aside class="aside-search-box-wrapper offcanvas offcanvas-top" tabindex="-1" id="AsideOffcanvasSearch" aria-labelledby="offcanvasTopLabel">
@@ -179,62 +131,6 @@
     </aside>
     <!--== End Aside Search Form ==-->
 
-    <!--== Start Product Quick View Modal ==-->
-    <aside class="product-cart-view-modal modal fade" id="action-QuickViewModal" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-body">
-                    <div class="product-quick-view-content">
-                        <button type="button" class="btn-close" data-bs-dismiss="modal">
-                            <span class="fa fa-close"></span>
-                        </button>
-                        <div class="container">
-                            <div class="row">
-                                <div class="col-lg-6">
-                                    <!--== Start Product Thumbnail Area ==-->
-                                    <div class="product-single-thumb">
-                                        <img src="assets/images/shop/quick-view1.webp" width="544" height="560" alt="Image-HasTech">
-                                    </div>
-                                    <!--== End Product Thumbnail Area ==-->
-                                </div>
-                                <div class="col-lg-6">
-                                    <!--== Start Product Info Area ==-->
-                                    <div class="product-details-content">
-                                        <h5 class="product-details-collection">Premioum collection</h5>
-                                        <h3 class="product-details-title">Offbline Instant Age Rewind Eraser.</h3>
-                                        <div class="product-details-review mb-5">
-                                            <div class="product-review-icon">
-                                                <i class="fa fa-star-o"></i>
-                                                <i class="fa fa-star-o"></i>
-                                                <i class="fa fa-star-o"></i>
-                                                <i class="fa fa-star-o"></i>
-                                                <i class="fa fa-star-half-o"></i>
-                                            </div>
-                                            <button type="button" class="product-review-show">150 reviews</button>
-                                        </div>
-                                        <p class="mb-6">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Delectus, repellendus. Nam voluptate illo ut quia non sapiente provident alias quos laborum incidunt, earum accusamus, natus. Vero pariatur ut veniam sequi amet consectetur.</p>
-                                        <div class="product-details-pro-qty">
-                                            <div class="pro-qty">
-                                                <input type="text" title="Quantity" value="01">
-                                            </div>
-                                        </div>
-                                        <div class="product-details-action">
-                                            <h4 class="price">$254.22</h4>
-                                            <div class="product-details-cart-wishlist">
-                                                <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#action-CartAddModal">Add to cart</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!--== End Product Info Area ==-->
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </aside>
-    <!--== End Product Quick View Modal ==-->
 
     <!--== Start Aside Cart ==-->
     <aside class="aside-cart-wrapper offcanvas offcanvas-end" tabindex="-1" id="AsideOffcanvasCart" aria-labelledby="offcanvasRightLabel">
@@ -342,49 +238,43 @@
 <!--== Wrapper End ==-->
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
 
 <script>
-    document.getElementById('login-form').addEventListener('submit', function(event) {
+   document.addEventListener("DOMContentLoaded",function () {
+    const form = document.getElementById('login-form');
+
+    form.addEventListener('submit',function(event){
         event.preventDefault();
 
-        // Get form data
-        var formData = new FormData(this);
+        const formData = new FormData(event.target);
 
-        // Make login request
-        fetch('/api/auth/login', {
-            method: 'POST',
-            body: formData
-        })
-            .then(response => response.json())
-            .then(data => {
-                localStorage.setItem('access_token', data.token);
-                // Handle validation errors
-                if (data.errors && (data.errors.email || data.errors.password)) {
-                    displayError('email', data.errors.email ? data.errors.email[0] : '');
-                    displayError('password', data.errors.password ? data.errors.password[0] : '');
-                    return;
-                }
-
-                // Handle other errors or successful login
-                if (data.message === 'Login successful') {
-                    var redirectUrl = data.role === 1 ? data.redirect_url_admin : data.redirect_url_user;
+        axios.post('{{url('/api/auth/login')}}',formData)
+            .then(response => {
+                if(response.data.token){
+                    console.log("Login successful");
+                    console.log(response);
+                
+                    localStorage.setItem('access_token',response.data.token);
+                    
+                    var redirectUrl = response.data.role === 1 ? response.data.redirect_url_admin : response.data.redirect_url_user;
                     window.location.href = redirectUrl;
+
                 } else {
-                    displayError('password', data.message);
+                    console.error('Token not found in response:', response)
                 }
+
             })
             .catch(error => {
-                console.error('Error:', error);
+                console.error('Login failed:', error);
+
             });
 
-        function displayError(fieldId, errorMessage) {
-            var errorSpan = document.createElement('span');
-            errorSpan.classList.add('text-danger');
-            errorSpan.textContent = errorMessage;
-            document.getElementById(fieldId).parentNode.appendChild(errorSpan);
-        }
     });
 
+    
+   });
 </script>
 <!-- Vendors JS -->
 <script src="{{asset('assets/js/vendor/modernizr-3.11.7.min.js)')}}"></script>
