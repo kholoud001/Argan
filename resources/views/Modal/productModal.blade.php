@@ -1,4 +1,5 @@
-<aside class="product-cart-view-modal modal fade" id="action-QuickViewModal-{{$product->id}}" tabindex="-1" aria-hidden="true">
+<aside class="product-cart-view-modal modal fade"
+       id="action-QuickViewModal-{{$product->id}}" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-body">
@@ -18,8 +19,8 @@
                             <div class="col-lg-6">
                                 <!--== Start Product Info Area ==-->
                                 <div class="product-details-content">
-                                    <h5 class="product-details-collection">Premioum collection</h5>
-                                    <h3 class="product-details-title">Offbline Instant Age Rewind Eraser.</h3>
+                                    <h5 class="product-details-collection">{{ $product->category->name }}</h5>
+                                    <h3 class="product-details-title">{{$product->name}}</h3>
                                     <div class="product-details-review mb-5">
                                         <div class="product-review-icon">
                                             <i class="fa fa-star-o"></i>
@@ -30,14 +31,16 @@
                                         </div>
                                         <button type="button" class="product-review-show">150 reviews</button>
                                     </div>
-                                    <p class="mb-6">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Delectus, repellendus. Nam voluptate illo ut quia non sapiente provident alias quos laborum incidunt, earum accusamus, natus. Vero pariatur ut veniam sequi amet consectetur.</p>
+                                    <p class="mb-6">
+                                        {{$product->description}}
+                                    </p>
                                     <div class="product-details-pro-qty">
                                         <div class="pro-qty">
                                             <input type="text" title="Quantity" value="01">
                                         </div>
                                     </div>
                                     <div class="product-details-action">
-                                        <h4 class="price">$254.22</h4>
+                                        <h4 class="price">{{$product->price}} Dhs</h4>
                                         <div class="product-details-cart-wishlist">
                                             <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#action-CartAddModal-{{$product->id}}">Add to cart</button>
                                         </div>

@@ -148,11 +148,10 @@
                                             <span>Add to cart</span>
                                         </button>
                                         <!-- Expand product details -->
-                                        <button  class="product-action-btn action-btn-quick-view"
-                                                 data-bs-toggle="modal"
-                                                 data-bs-target="#action-CartAddModal-{{$product->id}}">
+                                        <button type="button" class="product-action-btn action-btn-quick-view"
+                                                data-bs-toggle="modal"
+                                                data-bs-target="#action-QuickViewModal-{{$product->id}}">
                                             <i class="fa fa-expand"></i>
-                                            {{$product->id}}
                                         </button>
                                         <!--Add to wishlist-->
                                         <button type="button" class="product-action-btn action-btn-wishlist" data-bs-toggle="modal" data-bs-target="#action-WishlistModal">
@@ -391,6 +390,8 @@
 
 
         <!--== Start Blog Area Wrapper ==-->
+
+        <!-- Blogs -->
         <section class="section-space pt-0">
             <div class="container">
                 <div class="row">
@@ -408,7 +409,7 @@
                                 <!--== Start Blog Item ==-->
                                 <div class="post-item">
                                     <a href="blog-details.html" class="thumb">
-                                        <img src="{{ $post->picture }}" width="370" height="320" alt="{{ $post->picture }}">
+                                        <img src="{{ asset('storage/' . $post->picture) }}" width="370" height="320" alt="{{ $post->picture }}">
                                     </a>
                                     <div class="content">
                                         <a class="post-category" href="blog.html">{{ $post->category }}</a>
@@ -702,7 +703,7 @@
 <script src="{{asset('assets/js/vendor/modernizr-3.11.7.min.js)')}}"></script>
 <script src="{{asset('assets/js/vendor/jquery-3.6.0.min.js')}}"></script>
 <script src="{{asset('assets/js/vendor/jquery-migrate-3.3.2.min.js')}}"></script>
-<script src="{{asset('assets/js/vendor/bootstrap.bundle.min.js')}}"></script>
+{{--<script src="{{asset('assets/js/vendor/bootstrap.bundle.min.js')}}"></script>--}}
 
 <!-- Plugins JS -->
 <script src="{{asset('assets/js/plugins/swiper-bundle.min.js')}}"></script>
