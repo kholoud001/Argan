@@ -36,13 +36,18 @@
                                     </p>
                                     <div class="product-details-pro-qty">
                                         <div class="pro-qty">
-                                            <input type="text" title="Quantity" value="01">
+                                            <input type="text" id="quantityInput" title="Quantity" value="01">
                                         </div>
                                     </div>
                                     <div class="product-details-action">
                                         <h4 class="price">{{$product->price}} Dhs</h4>
                                         <div class="product-details-cart-wishlist">
-                                            <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#action-CartAddModal-{{$product->id}}">Add to cart</button>
+                                            <button type="button" class="btn"
+                                                    onclick="addToCart('{{ $product->id }}')"
+                                                    data-bs-toggle="modal"
+                                                    data-bs-target="#action-CartAddModal1-{{$product->id}}">
+                                                Add to cart
+                                            </button>
                                         </div>
                                     </div>
                                 </div>

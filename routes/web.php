@@ -11,6 +11,7 @@ use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\ForgotPasswordLinkController;
 use App\Http\Controllers\Auth\GoogleController;
 use App\Http\Controllers\User\HomeController;
+use App\Http\Controllers\User\OrderController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -137,7 +138,6 @@ Route::put('/posts/{id}/restore', [BlogController::class, 'restore'])->name('pos
 | Admin Pages
 |--------------------------------------------------------------------------
 */
-////////////////////////////////       Products          ///////////////////////////////////////////////////
  /*
 //|--------------------------------------------------------------------------
 //| Home Page
@@ -146,10 +146,15 @@ Route::put('/posts/{id}/restore', [BlogController::class, 'restore'])->name('pos
 ///
 /// Show recent products in Homepage
 Route::get('/', [HomeController::class, 'index'])->name('home');
+////////////////////////////////       Products          ///////////////////////////////////////////////////
+
 //product details page
 Route::get('/products/{id}', [HomeController::class, 'getProductDetails'])->name('product.details');
 //Blog details page
 Route::get('/blogs/{id}',[HomeController::class,'getBlogDetails'])->name('blog.details');
+
+////////////////////////////////       Orders          ///////////////////////////////////////////////////
+//Route::post('/product/{id}/addToCart', [OrderController::class, 'addToCart'])->name('product.addToCart');
 
 
 

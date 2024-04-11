@@ -3,6 +3,7 @@
 use App\Http\Controllers\API\LoginController;
 use App\Http\Controllers\API\LogoutController;
 use App\Http\Controllers\API\RegisterController;
+use App\Http\Controllers\User\OrderController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -38,4 +39,8 @@ Route::group([
     'middleware'=> 'auth:api'
 ],function (){
     Route::post('logout',[LogoutController::class,'logout']);
+
+////////////////////////////////       Orders          ///////////////////////////////////////////////////
+    Route::post('/product/{id}/addToCart', [OrderController::class, 'addToCart'])->name('product.addToCart');
+
 });

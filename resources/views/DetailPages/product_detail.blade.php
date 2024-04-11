@@ -60,11 +60,25 @@
                                 <button type="button" class="product-review-show">150 reviews</button>
                             </div>
                             <p class="mb-7">{{ $productDetails->description }}</p>
+                            <div class="product-details-pro-qty">
+                                <div class="pro-qty">
+                                    <input type="text" id="quantityInput" title="Quantity" value="01">
+                                </div>
+                            </div>
                             <div class="product-details-action">
                                 <h4 class="price">{{ $productDetails->price }} Dhs</h4>
                                 <div class="product-details-cart-wishlist">
-                                    <button type="button" class="btn-wishlist" data-bs-toggle="modal" data-bs-target="#action-WishlistModal"><i class="fa fa-heart-o"></i></button>
-                                    <button type="button" class="btn ps-5" data-bs-toggle="modal" data-bs-target="#action-CartAddModal">Buy Now</button>
+                                    <button type="button" class="btn-wishlist"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#action-WishlistModal">
+                                        <i class="fa fa-heart-o"></i>
+                                    </button>
+                                    <button type="button" class="btn ps-5"
+                                            onclick="addToCart('{{ $productDetails->id }}')"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#action-CartAddModal">
+                                        Buy Now
+                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -168,7 +182,8 @@
                             </div>
                         </div>
                     </div>
-{{--                    reviews--}}
+
+{{--                    Reviews--}}
                     <div class="col-lg-5">
                         <div class="product-reviews-form-wrap">
                             <h4 class="product-form-title">Leave a replay</h4>
@@ -254,7 +269,7 @@
                                 <div class="col-lg-4 col-md-6 col-sm-6 col-12 mb-4">
                                     <div class="product-item product-st2-item">
                                         <div class="product-thumb">
-                                            <a class="d-block" href="product-details.html">
+                                            <a class="d-block" href="{{route('product.details',$product->id)}}">
                                                 <img src="{{ asset('storage/' . $product->image) }}" width="370" height="450" alt="{{$product->image}}">
                                             </a>
                                             <span class="flag-new">{{ $product->category->name }}</span>
@@ -277,7 +292,13 @@
                                             </div>
                                             <div class="product-action">
                                                 <!--add to cart button -->
-                                                <button type="button" class="product-action-btn action-btn-cart" data-bs-toggle="modal" data-bs-target="#action-CartAddModal">
+                                                <button type="button"
+                                                        class="product-action-btn action-btn-cart"
+                                                        data-bs-toggle="modal"
+                                                        data-bs-target="#action-CartAddModal1-{{$product->id}}"
+                                                        onclick="addToCart('{{ $product->id }}')"
+                                                >
+
                                                     <span>Add to cart</span>
                                                 </button>
                                                 <!-- Expand product details -->
@@ -299,6 +320,11 @@
                                 <!--== Start Product Quick View Modal ==-->
                                 @include('Modal/productModal')
                                 <!--== End Product Quick View Modal ==-->
+
+                                <!--== Start Product Quick Add Cart Modal ==-->
+                                @include('Modal/cartModal1')
+                                <!--== End Product Quick Add Cart Modal ==-->
+
                                 @endforeach
                                 <!--== End prPduct Item ==-->
                             </div>
@@ -343,29 +369,9 @@
     <!--== End Product Quick Wishlist Modal ==-->
 
     <!--== Start Product Quick Add Cart Modal ==-->
-    <aside class="product-action-modal modal fade" id="action-CartAddModal" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-body">
-                    <div class="product-action-view-content">
-                        <button type="button" class="btn-close" data-bs-dismiss="modal">
-                            <i class="fa fa-times"></i>
-                        </button>
-                        <div class="modal-action-messages">
-                            <i class="fa fa-check-square-o"></i> Added to cart successfully!
-                        </div>
-                        <div class="modal-action-product">
-                            <div class="thumb">
-                                <img src="assets/images/shop/modal1.webp" alt="Organic Food Juice" width="466" height="320">
-                            </div>
-                            <h4 class="product-name"><a href="product-details.html">Readable content DX22</a></h4>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </aside>
+    @include('Modal/cartModal')
     <!--== End Product Quick Add Cart Modal ==-->
+
 
     <!--== Start Aside Search Form ==-->
     <aside class="aside-search-box-wrapper offcanvas offcanvas-top" tabindex="-1" id="AsideOffcanvasSearch" aria-labelledby="offcanvasTopLabel">
@@ -501,6 +507,32 @@
 
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+<!-- MyJS -->
+<script>
+    function addToCart(productId) {
+        var quantity = document.getElementById('quantityInput').value;
+        console.log(quantity);
+        var token = localStorage.getItem("access_token");
+
+        axios.post(`/api/product/${productId}/addToCart`, {
+            _token: '{{ csrf_token() }}',
+            quantity: quantity
+            }, {
+            headers: {
+                'Authorization': 'Bearer ' + token
+            }
+        })
+            .then(function (response) {
+                console.log(response);
+            })
+            .catch(function (error) {
+                console.error(error);
+            });
+    }
+</script>
+
 
 <!-- JS Vendor, Plugins & Activation Script Files -->
 <!-- Vendors JS -->

@@ -121,7 +121,7 @@
                         <div class="col-lg-4 col-md-6 col-sm-6 col-12 mb-4">
                             <div class="product-item product-st2-item">
                                 <div class="product-thumb">
-                                    <a class="d-block" href="product-details.html">
+                                    <a class="d-block" href="{{route('product.details',$product->id)}}">
                                         <img src="{{ asset('storage/' . $product->image) }}" width="370" height="450" alt="{{$product->image}}">
                                     </a>
                                     <span class="flag-new">{{ $product->category->name }}</span>
@@ -144,7 +144,12 @@
                                     </div>
                                     <div class="product-action">
                                         <!--add to cart button -->
-                                        <button type="button" class="product-action-btn action-btn-cart" data-bs-toggle="modal" data-bs-target="#action-CartAddModal">
+                                        <button type="button"
+                                                class="product-action-btn action-btn-cart"
+                                                data-bs-toggle="modal"
+                                                onclick="addToCart('{{ $product->id }}')"
+                                                data-bs-target="#action-CartAddModal1-{{$product->id}}">
+
                                             <span>Add to cart</span>
                                         </button>
                                         <!-- Expand product details -->
@@ -166,6 +171,9 @@
                         <!--== Start Product Quick View Modal ==-->
                         @include('Modal/productModal')
                         <!--== End Product Quick View Modal ==-->
+                        <!--== Start Product Quick Add Cart Modal ==-->
+                        @include('Modal/cartModal1')
+                        <!--== End Product Quick Add Cart Modal ==-->
                         @endforeach
                         <!--== End prPduct Item ==-->
                     </div>
@@ -642,13 +650,39 @@
 
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+<!-- MyJS -->
+<script>
+    function addToCart(productId) {
+        var quantity = document.getElementById('quantityInput').value;
+        console.log(quantity);
+        var token = localStorage.getItem("access_token");
+
+        axios.post(`/api/product/${productId}/addToCart`, {
+            _token: '{{ csrf_token() }}',
+            quantity: quantity
+        }, {
+            headers: {
+                'Authorization': 'Bearer ' + token
+            }
+        })
+            .then(function (response) {
+                console.log(response);
+            })
+            .catch(function (error) {
+                console.error(error);
+            });
+    }
+</script>
+
 
 <!-- JS Vendor, Plugins & Activation Script Files -->
 <!-- Vendors JS -->
 <script src="{{asset('assets/js/vendor/modernizr-3.11.7.min.js)')}}"></script>
 <script src="{{asset('assets/js/vendor/jquery-3.6.0.min.js')}}"></script>
 <script src="{{asset('assets/js/vendor/jquery-migrate-3.3.2.min.js')}}"></script>
-{{--<script src="{{asset('assets/js/vendor/bootstrap.bundle.min.js')}}"></script>--}}
+<script src="{{asset('assets/js/vendor/bootstrap.bundle.min.js')}}"></script>
 
 <!-- Plugins JS -->
 <script src="{{asset('assets/js/plugins/swiper-bundle.min.js')}}"></script>
