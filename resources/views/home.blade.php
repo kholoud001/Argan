@@ -408,12 +408,12 @@
                             <div class="col-sm-6 col-lg-4 mb-8">
                                 <!--== Start Blog Item ==-->
                                 <div class="post-item">
-                                    <a href="blog-details.html" class="thumb">
+                                    <a href="{{route('blog.details',$post->id)}}" class="thumb">
                                         <img src="{{ asset('storage/' . $post->picture) }}" width="370" height="320" alt="{{ $post->picture }}">
                                     </a>
                                     <div class="content">
                                         <a class="post-category" href="blog.html">{{ $post->category }}</a>
-                                        <h4 class="title"><a href="blog-details.html">{{ $post->title }}</a></h4>
+                                        <h4 class="title"><a href="{{route('blog.details',$post->id)}}">{{ $post->title }}</a></h4>
                                         <ul class="meta">
                                             <li class="author-info"><span>By:</span> <a href="blog.html"></a></li>
                                             <li class="post-date">{{ $post->created_at->format('F d, Y') }}</li>

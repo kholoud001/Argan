@@ -24,4 +24,13 @@ class HomeController extends Controller
 
         return view('DetailPages.product_detail', compact('productDetails','latestProducts'));
     }
+
+    public function getBlogDetails($id){
+
+        $blogDetails = Blog::with('categories')->findOrFail($id);
+        $posts=Blog::with('categories')->orderBy('created_at','desc')->take(3)->get();
+
+
+        return view('DetailPages.blog_detail', compact('blogDetails','posts'));
+    }
 }

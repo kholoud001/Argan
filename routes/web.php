@@ -146,8 +146,10 @@ Route::put('/posts/{id}/restore', [BlogController::class, 'restore'])->name('pos
 ///
 /// Show recent products in Homepage
 Route::get('/', [HomeController::class, 'index'])->name('home');
-//product details
+//product details page
 Route::get('/products/{id}', [HomeController::class, 'getProductDetails'])->name('product.details');
+//Blog details page
+Route::get('/blogs/{id}',[HomeController::class,'getBlogDetails'])->name('blog.details');
 
 
 
