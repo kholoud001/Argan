@@ -4,6 +4,7 @@ use App\Http\Controllers\API\LoginController;
 use App\Http\Controllers\API\LogoutController;
 use App\Http\Controllers\API\RegisterController;
 use App\Http\Controllers\User\OrderController;
+use App\Http\Controllers\User\WishlistController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -42,5 +43,9 @@ Route::group([
 
 ////////////////////////////////       Orders          ///////////////////////////////////////////////////
     Route::post('/product/{id}/addToCart', [OrderController::class, 'addToCart'])->name('product.addToCart');
+
+////////////////////////////////       Wishlists          ///////////////////////////////////////////////////
+
+    Route::post('/wishlist/{productId}/add', [WishlistController::class, 'addToWishlist'])->name('wishlist.add');
 
 });

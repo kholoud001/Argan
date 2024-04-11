@@ -159,7 +159,10 @@
                                             <i class="fa fa-expand"></i>
                                         </button>
                                         <!--Add to wishlist-->
-                                        <button type="button" class="product-action-btn action-btn-wishlist" data-bs-toggle="modal" data-bs-target="#action-WishlistModal">
+                                        <button type="button" class="product-action-btn action-btn-wishlist"
+                                                data-bs-toggle="modal"
+                                                onclick="addToWishList('{{ $product->id }}')"
+                                                data-bs-target="#action-WishlistModal-{{$product->id}}">
                                             <i class="fa fa-heart-o"></i>
                                         </button>
                                     </div>
@@ -174,7 +177,12 @@
                         <!--== Start Product Quick Add Cart Modal ==-->
                         @include('Modal/cartModal1')
                         <!--== End Product Quick Add Cart Modal ==-->
-                        @endforeach
+                        <!--== Start Product Quick Wishlist Modal ==-->
+                        @include('Modal/wishlistModal')
+                        <!--== End Product Quick Wishlist Modal ==-->
+
+
+                    @endforeach
                         <!--== End prPduct Item ==-->
                     </div>
 
@@ -466,55 +474,9 @@
     <!--== Scroll Top Button ==-->
     <div id="scroll-to-top" class="scroll-to-top"><span class="fa fa-angle-up"></span></div>
 
-    <!--== Start Product Quick Wishlist Modal ==-->
-    <aside class="product-action-modal modal fade" id="action-WishlistModal" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-body">
-                    <div class="product-action-view-content">
-                        <button type="button" class="btn-close" data-bs-dismiss="modal">
-                            <i class="fa fa-times"></i>
-                        </button>
-                        <div class="modal-action-messages">
-                            <i class="fa fa-check-square-o"></i> Added to wishlist successfully!
-                        </div>
-                        <div class="modal-action-product">
-                            <div class="thumb">
-                                <img src="assets/images/shop/modal1.webp" alt="Organic Food Juice" width="466" height="320">
-                            </div>
-                            <h4 class="product-name"><a href="product-details.html">Readable content DX22</a></h4>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </aside>
-    <!--== End Product Quick Wishlist Modal ==-->
 
-    <!--== Start Product Quick Add Cart Modal ==-->
-    <aside class="product-action-modal modal fade" id="action-CartAddModal" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-body">
-                    <div class="product-action-view-content">
-                        <button type="button" class="btn-close" data-bs-dismiss="modal">
-                            <i class="fa fa-times"></i>
-                        </button>
-                        <div class="modal-action-messages">
-                            <i class="fa fa-check-square-o"></i> Added to cart successfully!
-                        </div>
-                        <div class="modal-action-product">
-                            <div class="thumb">
-                                <img src="assets/images/shop/modal1.webp" alt="Organic Food Juice" width="466" height="320">
-                            </div>
-                            <h4 class="product-name"><a href="product-details.html">Readable content DX22</a></h4>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </aside>
-    <!--== End Product Quick Add Cart Modal ==-->
+
+
 
     <!--== Start Aside Search Form ==-->
     <aside class="aside-search-box-wrapper offcanvas offcanvas-top" tabindex="-1" id="AsideOffcanvasSearch" aria-labelledby="offcanvasTopLabel">
@@ -653,6 +615,7 @@
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
 <!-- MyJS -->
+//add to cart
 <script>
     function addToCart(productId) {
         var quantity = document.getElementById('quantityInput').value;
@@ -662,6 +625,26 @@
         axios.post(`/api/product/${productId}/addToCart`, {
             _token: '{{ csrf_token() }}',
             quantity: quantity
+        }, {
+            headers: {
+                'Authorization': 'Bearer ' + token
+            }
+        })
+            .then(function (response) {
+                console.log(response);
+            })
+            .catch(function (error) {
+                console.error(error);
+            });
+    }
+</script>
+//Add to wishlist
+<script>
+    function addToWishList(productId) {
+        var token = localStorage.getItem("access_token");
+
+        axios.post(`/api/wishlist/${productId}/add`, {
+            _token: '{{ csrf_token() }}',
         }, {
             headers: {
                 'Authorization': 'Bearer ' + token
