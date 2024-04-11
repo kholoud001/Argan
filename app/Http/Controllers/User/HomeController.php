@@ -19,8 +19,9 @@ class HomeController extends Controller
 
     public function getProductDetails($id)
     {
-        $productModal = Product::findOrFail($id);
+        $productDetails = Product::with('category')->findOrFail($id);
+        $latestProducts = Product::with('category')->orderBy('created_at', 'desc')->take(3)->get();
 
-        return view('Modal.productModal', compact('productModal'));
+        return view('DetailPages.product_detail', compact('productDetails','latestProducts'));
     }
 }

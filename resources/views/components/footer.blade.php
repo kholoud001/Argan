@@ -6,8 +6,8 @@
                 <div class="col-md-6 col-lg-4">
                     <div class="widget-item">
                         <div class="widget-about">
-                            <a class="widget-logo" href="index.html">
-                                <img src="assets/images/logo.webp" width="95" height="68" alt="Logo">
+                            <a class="widget-logo" href="{{route('home')}}">
+                                <img src="{{url('assets/images/logo.webp')}}" width="95" height="68" alt="Logo">
                             </a>
                             <p class="desc">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been.</p>
                         </div>
@@ -47,7 +47,7 @@
     <div class="footer-bottom">
         <div class="container pt-0 pb-0">
             <div class="footer-bottom-content">
-                <p class="copyright">© 2024 Brancy. Made with <i class="fa fa-heart"></i> by <a target="_blank" href="https://themeforest.net/user/codecarnival">Codecarnival.</a></p>
+                <p class="copyright">© 2024 ArganBeauty. Made with <i class="fa fa-heart"></i> by Lilly</p>
             </div>
         </div>
     </div>

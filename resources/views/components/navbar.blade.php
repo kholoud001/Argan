@@ -4,23 +4,23 @@
         <div class="row align-items-center">
             <div class="col-5 col-sm-6 col-lg-3">
                 <div class="header-logo">
-                    <a href="index.html">
-                        <img class="logo-main" src="assets/images/logo.webp" width="95" height="68" alt="Logo">
+                    <a href="{{route('home')}}">
+                        <img class="logo-main" src="{{url('assets/images/logo.webp')}}" width="95" height="68" alt="Logo">
                     </a>
                 </div>
             </div>
             <div class="col-lg-6 d-none d-lg-block">
                 <div class="header-navigation">
                     <ul class="main-nav justify-content-start">
-                        <li class="has-submenu"><a href="index.html">home</a>
+                        <li class="has-submenu"><a href="i{{route('home')}}">home</a>
 
                         </li>
                         <li><a href="about-us.html">about</a></li>
                         <li class="has-submenu position-static"><a href="product.html">shop</a>
-                            
+
                         </li>
                         <li class="has-submenu"><a href="blog.html">Blog</a>
-                            
+
                         </li>
                         <li class="has-submenu"><a href="account-login.html">Pages</a>
                             <ul class="submenu-nav">

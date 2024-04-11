@@ -146,8 +146,8 @@ Route::put('/posts/{id}/restore', [BlogController::class, 'restore'])->name('pos
 ///
 /// Show recent products in Homepage
 Route::get('/', [HomeController::class, 'index'])->name('home');
-//product Modal
-//Route::get('/products/{id}', [HomeController::class, 'getProductDetails'])->name('products.details');
+//product details
+Route::get('/products/{id}', [HomeController::class, 'getProductDetails'])->name('product.details');
 
 
 
