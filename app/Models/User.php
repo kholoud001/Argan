@@ -52,6 +52,15 @@ class User extends Authenticatable
 //    {
 //        return $this->belongsTo(Role::class);
 //    }
+    public function shoppingCart()
+    {
+        return $this->hasOne(ShoppingCart::class);
+    }
+
+    public function cartItems()
+    {
+        return $this->hasManyThrough(CartItem::class, ShoppingCart::class);
+    }
 
 //    public function hasRole($role)
 //    {

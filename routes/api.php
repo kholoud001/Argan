@@ -3,7 +3,7 @@
 use App\Http\Controllers\API\LoginController;
 use App\Http\Controllers\API\LogoutController;
 use App\Http\Controllers\API\RegisterController;
-use App\Http\Controllers\User\OrderController;
+use App\Http\Controllers\User\CartController;
 use App\Http\Controllers\User\WishlistController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -42,7 +42,10 @@ Route::group([
     Route::post('logout',[LogoutController::class,'logout']);
 
 ////////////////////////////////       Orders          ///////////////////////////////////////////////////
-    Route::post('/product/{id}/addToCart', [OrderController::class, 'addToCart'])->name('product.addToCart');
+    Route::post('/product/{id}/addToCart', [CartController::class, 'addToCart'])->name('product.addToCart');
+    //display my cart items
+    Route::get('/cart/items', [CartController::class, 'getCartItems']);
+
 
 ////////////////////////////////       Wishlists          ///////////////////////////////////////////////////
 

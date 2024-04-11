@@ -501,11 +501,16 @@
             </div>
         </div>
     </aside>
+
     <!--== End Aside Search Form ==-->
 
 
 
     <!--== Start Aside Cart ==-->
+    @include('components/cartAside')
+    <!--== End Aside Cart ==-->
+
+
     <aside class="aside-cart-wrapper offcanvas offcanvas-end" tabindex="-1" id="AsideOffcanvasCart" aria-labelledby="offcanvasRightLabel">
         <div class="offcanvas-header">
             <h1 class="d-none" id="offcanvasRightLabel">Shopping Cart</h1>
@@ -657,6 +662,51 @@
                 console.error(error);
             });
     }
+</script>
+
+//display cart items
+<script>
+    var token = localStorage.getItem("access_token");
+
+    axios.get('/api/cart/items', {
+        headers: {
+            'Authorization': 'Bearer ' + token
+        }
+    })
+        .then(response => {
+            const cartItems = response.data.cartItems;
+            const totalPrice = response.data.totalPrice.toFixed(2);
+
+            // Update cart items
+            const cartList = document.querySelector('.aside-cart-product-list');
+            const cartItemTemplate = document.getElementById('cart-item-template');
+
+            cartItems.forEach(item => {
+                const listItem = cartItemTemplate.content.cloneNode(true);
+                listItem.querySelector('.product-title').textContent = item.product.name;
+                listItem.querySelector('.product-price').textContent = `${item.quantity} ×  ${item.product.price} Dhs`;
+                listItem.querySelector('img').src = '{{ asset("storage/") }}/' + item.product.image;
+                console.log('Image Source:', '{{ asset("storage/") }}' + item.product.image);
+
+                listItem.querySelector('img').alt = item.product.name;
+
+                cartList.appendChild(listItem);
+            });
+
+            // Update subtotal
+            const subtotalElement = document.querySelector('.cart-total .amount');
+            subtotalElement.textContent = `${totalPrice} Dhs`;
+
+            // Update View cart and Checkout links
+            const viewCartLink = document.querySelector('.btn-total[href="product-cart.html"]');
+            viewCartLink.href = "product-cart.html";
+
+            const checkoutLink = document.querySelector('.btn-total[href="product-checkout.html"]');
+            checkoutLink.href = "product-checkout.html";
+        })
+        .catch(error => {
+            console.error('Error fetching cart items:', error);
+        });
 </script>
 
 

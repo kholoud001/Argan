@@ -33,4 +33,7 @@ class HomeController extends Controller
 
         return view('DetailPages.blog_detail', compact('blogDetails','posts'));
     }
+
+
+
 }

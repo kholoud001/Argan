@@ -388,35 +388,7 @@
 
 
     <!--== Start Aside Cart ==-->
-    <aside class="aside-cart-wrapper offcanvas offcanvas-end" tabindex="-1" id="AsideOffcanvasCart" aria-labelledby="offcanvasRightLabel">
-        <div class="offcanvas-header">
-            <h1 class="d-none" id="offcanvasRightLabel">Shopping Cart</h1>
-            <button class="btn-aside-cart-close" data-bs-dismiss="offcanvas" aria-label="Close">Shopping Cart <i class="fa fa-chevron-right"></i></button>
-        </div>
-        <div class="offcanvas-body">
-            <ul class="aside-cart-product-list">
-                <li class="aside-product-list-item">
-                    <a href="#/" class="remove">×</a>
-                    <a href="product-details.html">
-                        <img src="assets/images/shop/cart1.webp" width="68" height="84" alt="Image">
-                        <span class="product-title">Leather Mens Slipper</span>
-                    </a>
-                    <span class="product-price">1 × £69.99</span>
-                </li>
-                <li class="aside-product-list-item">
-                    <a href="#/" class="remove">×</a>
-                    <a href="product-details.html">
-                        <img src="assets/images/shop/cart2.webp" width="68" height="84" alt="Image">
-                        <span class="product-title">Quickiin Mens shoes</span>
-                    </a>
-                    <span class="product-price">1 × £20.00</span>
-                </li>
-            </ul>
-            <p class="cart-total"><span>Subtotal:</span><span class="amount">£89.99</span></p>
-            <a class="btn-total" href="product-cart.html">View cart</a>
-            <a class="btn-total" href="product-checkout.html">Checkout</a>
-        </div>
-    </aside>
+    @include('components/cartAside')
     <!--== End Aside Cart ==-->
 
     <!--== Start Aside Menu ==-->
@@ -539,6 +511,51 @@
             });
     }
 </script>
+//display cart items
+<script>
+    var token = localStorage.getItem("access_token");
+
+    axios.get('/api/cart/items', {
+        headers: {
+            'Authorization': 'Bearer ' + token
+        }
+    })
+        .then(response => {
+            const cartItems = response.data.cartItems;
+            const totalPrice = response.data.totalPrice.toFixed(2);
+
+            // Update cart items
+            const cartList = document.querySelector('.aside-cart-product-list');
+            const cartItemTemplate = document.getElementById('cart-item-template');
+
+            cartItems.forEach(item => {
+                const listItem = cartItemTemplate.content.cloneNode(true);
+                listItem.querySelector('.product-title').textContent = item.product.name;
+                listItem.querySelector('.product-price').textContent = `${item.quantity} ×  ${item.product.price} Dhs`;
+                listItem.querySelector('img').src = '{{ asset("storage/") }}/' + item.product.image;
+                console.log('Image Source:', '{{ asset("storage/") }}' + item.product.image);
+
+                listItem.querySelector('img').alt = item.product.name;
+
+                cartList.appendChild(listItem);
+            });
+
+            // Update subtotal
+            const subtotalElement = document.querySelector('.cart-total .amount');
+            subtotalElement.textContent = `${totalPrice} Dhs`;
+
+            // Update View cart and Checkout links
+            const viewCartLink = document.querySelector('.btn-total[href="product-cart.html"]');
+            viewCartLink.href = "product-cart.html";
+
+            const checkoutLink = document.querySelector('.btn-total[href="product-checkout.html"]');
+            checkoutLink.href = "product-checkout.html";
+        })
+        .catch(error => {
+            console.error('Error fetching cart items:', error);
+        });
+</script>
+
 
 
 
@@ -547,7 +564,7 @@
 <script src="{{asset('assets/js/vendor/modernizr-3.11.7.min.js)')}}"></script>
 <script src="{{asset('assets/js/vendor/jquery-3.6.0.min.js')}}"></script>
 <script src="{{asset('assets/js/vendor/jquery-migrate-3.3.2.min.js')}}"></script>
-{{--<script src="{{asset('assets/js/vendor/bootstrap.bundle.min.js')}}"></script>--}}
+<script src="{{asset('assets/js/vendor/bootstrap.bundle.min.js')}}"></script>
 
 <!-- Plugins JS -->
 <script src="{{asset('assets/js/plugins/swiper-bundle.min.js')}}"></script>
