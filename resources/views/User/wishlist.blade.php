@@ -91,7 +91,7 @@
 
 
     <!--== Start Aside Cart ==-->
-{{--        @include('components/cartAside')--}}
+        @include('components/cartAside')
     <!--== End Aside Cart ==-->
 
     <!--== Start Aside Menu ==-->
@@ -217,13 +217,13 @@
                 </td>
                 <td class="product-thumbnail">
                     <div class="thumb">
-                        <a href="${item.product.url}">
+                        <a href="{{ route('product.details', '') }}/${item.product.id}">
                             <img src="{{ asset('storage/') }}/${item.product.image}"width="68" height="84" alt="${item.product.name}">
                         </a>
                     </div>
                 </td>
                 <td class="product-name">
-                    <a class="title" href="${item.product.url}">${item.product.name}</a>
+                    <a class="title" href="{{ route('product.details', '') }}/${item.product.id}">${item.product.name}</a>
                 </td>
                 <td class="product-price">
                     <span class="price">${item.product.price}</span>
@@ -269,6 +269,63 @@
         });
 
 </script>
+
+//display cart items
+<script>
+    var token = localStorage.getItem("access_token");
+
+    axios.get('/api/cart/items', {
+        headers: {
+            'Authorization': 'Bearer ' + token
+        }
+    })
+        .then(response => {
+            const cartItems = response.data.cartItems;
+            const totalPrice = response.data.totalPrice.toFixed(2);
+
+            // Update cart items
+            const cartList = document.querySelector('.aside-cart-product-list');
+            const cartItemTemplate = document.getElementById('cart-item-template');
+
+            cartItems.forEach(item => {
+                const listItem = cartItemTemplate.content.cloneNode(true);
+                listItem.querySelector('.product-title').textContent = item.product.name;
+                listItem.querySelector('.product-price').textContent = `${item.quantity} ×  ${item.product.price} Dhs`;
+                listItem.querySelector('img').src = '{{ asset("storage/") }}/' + item.product.image;
+                console.log('Image Source:', '{{ asset("storage/") }}' + item.product.image);
+
+                listItem.querySelector('img').alt = item.product.name;
+
+                // Set the product link dynamically
+                const productLink = listItem.querySelector('.product-link');
+                if (productLink) {
+                    productLink.href = '{{ route('product.details', '') }}/' + item.product.id;
+                }
+
+
+                cartList.appendChild(listItem);
+            });
+
+            // Update subtotal
+            const subtotalElement = document.querySelector('.cart-total .amount');
+            subtotalElement.textContent = `${totalPrice} Dhs`;
+
+            //   View cart
+            const viewCartLink = document.querySelector('.btn-total[href="{{route('cart.view')}}"]');
+            viewCartLink.addEventListener('click', function(event) {
+                event.preventDefault();
+                window.location.href = "{{ route('cart.view') }}";
+            });
+
+
+            const checkoutLink = document.querySelector('.btn-total[href="product-checkout.html"]');
+            checkoutLink.href = "product-checkout.html";
+        })
+        .catch(error => {
+            console.error('Error fetching cart items:', error);
+        });
+</script>
+
 
 
 

@@ -143,7 +143,7 @@
 
 
     <!--== Start Aside Cart ==-->
-{{--    @include('components/cartAside')--}}
+    @include('components/cartAside')
     <!--== End Aside Cart ==-->
 
     <!--== Start Aside Menu ==-->
