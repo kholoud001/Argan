@@ -224,7 +224,7 @@
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
 <!-- MyJS -->
-//display cart items
+//display cart items page
 <script>
     var token = localStorage.getItem("access_token");
 
@@ -235,6 +235,7 @@
     })
         .then(response => {
             const cartItems = response.data.cartItems;
+            //console.log(cartItems);
             let totalPrice = response.data.totalPrice.toFixed(2);
             let subtotal = parseFloat(totalPrice);
 
@@ -251,13 +252,13 @@
                 </td>
                 <td class="product-thumbnail">
                     <div class="thumb">
-                        <a href="${item.product.url}">
+                        <a href="{{ route('product.details', '') }}/${item.product.id}">
                             <img src="{{ asset('storage/') }}/${item.product.image}" width="68" height="84" alt="${item.product.name}">
                         </a>
                     </div>
                 </td>
                 <td class="product-name">
-                    <a class="title" href="${item.product.url}">${item.product.name}</a>
+                    <a class="title" href="{{ route('product.details', '') }}/${item.product.id}">${item.product.name}</a>
                 </td>
                 <td class="product-price">
                     <span class="price">${item.product.price}</span>

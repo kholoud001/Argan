@@ -161,6 +161,9 @@ Route::get('/cart/view',[CartController::class,'viewCart'])->name('cart.view');
 Route::get('/wishlist/view',[WishlistController::class,'index']);
 
 
+Route::get('/checkout/view',[CartController::class,'checkoutview']);
+
+
 
 
 

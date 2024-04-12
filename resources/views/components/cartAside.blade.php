@@ -18,8 +18,7 @@
 <!-- Template for cart item -->
 <template id="cart-item-template">
     <li class="aside-product-list-item">
-        <a href="#/" class="remove">×</a>
-        <a href="{{route('product.details',$product->id)}}"">
+        <a href="" class="product-link">
             <img src="" alt="">
             <span class="product-title"></span>
         </a>

@@ -538,6 +538,13 @@
 
                 listItem.querySelector('img').alt = item.product.name;
 
+                // Set the product link dynamically
+                const productLink = listItem.querySelector('.product-link');
+                if (productLink) {
+                    productLink.href = '{{ route('product.details', '') }}/' + item.product.id;
+                }
+
+
                 cartList.appendChild(listItem);
             });
 
@@ -545,9 +552,13 @@
             const subtotalElement = document.querySelector('.cart-total .amount');
             subtotalElement.textContent = `${totalPrice} Dhs`;
 
-            // Update View cart and Checkout links
-            const viewCartLink = document.querySelector('.btn-total[href="product-cart.html"]');
-            viewCartLink.href = "product-cart.html";
+            //   View cart
+            const viewCartLink = document.querySelector('.btn-total[href="{{route('cart.view')}}"]');
+            viewCartLink.addEventListener('click', function(event) {
+                event.preventDefault();
+                window.location.href = "{{ route('cart.view') }}";
+            });
+
 
             const checkoutLink = document.querySelector('.btn-total[href="product-checkout.html"]');
             checkoutLink.href = "product-checkout.html";

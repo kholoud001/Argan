@@ -13,53 +13,14 @@
     <!--== End Header Wrapper ==-->
 
 
-    <main class="main-content">
-
-        <!--== Start Page Header Area Wrapper ==-->
-        <nav aria-label="breadcrumb" class="breadcrumb-style1">
-            <div class="container">
-                <ol class="breadcrumb justify-content-center">
-                    <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Wishlist</li>
-                </ol>
-            </div>
-        </nav>
-        <!--== End Page Header Area Wrapper ==-->
-
-        <!--== Start Wishlist Area Wrapper ==-->
-        <section class="section-space">
-            <div class="container">
-                <div class="shopping-wishlist-form table-responsive">
-                    <table class="table text-center">
-                        <thead>
-                        <tr>
-                            <th class="product-remove">&nbsp;</th>
-                            <th class="product-thumbnail">&nbsp;</th>
-                            <th class="product-name">Product name</th>
-                            <th class="product-price">Unit price</th>
-                            <th class="product-stock-status">Stock status</th>
-                            <th class="product-add-to-cart">&nbsp;</th>
-                        </tr>
-                        </thead>
-                        <tbody id="wishlistTableBody">
-                        <!-- Wishlist items  -->
-                        </tbody>
-                    </table>
-                </div>
-
-            </div>
-        </section>
-        <!--== End Wishlist Area Wrapper ==-->
-
-    </main>
-
-
     <!--== Start Footer Area Wrapper ==-->
     @include('components/footer')
     <!--== End Footer Area Wrapper ==-->
 
     <!--== Scroll Top Button ==-->
     <div id="scroll-to-top" class="scroll-to-top"><span class="fa fa-angle-up"></span></div>
+
+
 
 
 
@@ -86,12 +47,45 @@
             </div>
         </div>
     </aside>
+
     <!--== End Aside Search Form ==-->
 
 
 
     <!--== Start Aside Cart ==-->
-{{--        @include('components/cartAside')--}}
+    @include('components/cartAside')
+    <!--== End Aside Cart ==-->
+
+
+    <aside class="aside-cart-wrapper offcanvas offcanvas-end" tabindex="-1" id="AsideOffcanvasCart" aria-labelledby="offcanvasRightLabel">
+        <div class="offcanvas-header">
+            <h1 class="d-none" id="offcanvasRightLabel">Shopping Cart</h1>
+            <button class="btn-aside-cart-close" data-bs-dismiss="offcanvas" aria-label="Close">Shopping Cart <i class="fa fa-chevron-right"></i></button>
+        </div>
+        <div class="offcanvas-body">
+            <ul class="aside-cart-product-list">
+                <li class="aside-product-list-item">
+                    <a href="#/" class="remove">×</a>
+                    <a href="product-details.html">
+                        <img src="assets/images/shop/cart1.webp" width="68" height="84" alt="Image">
+                        <span class="product-title">Leather Mens Slipper</span>
+                    </a>
+                    <span class="product-price">1 × £69.99</span>
+                </li>
+                <li class="aside-product-list-item">
+                    <a href="#/" class="remove">×</a>
+                    <a href="product-details.html">
+                        <img src="assets/images/shop/cart2.webp" width="68" height="84" alt="Image">
+                        <span class="product-title">Quickiin Mens shoes</span>
+                    </a>
+                    <span class="product-price">1 × £20.00</span>
+                </li>
+            </ul>
+            <p class="cart-total"><span>Subtotal:</span><span class="amount">£89.99</span></p>
+            <a class="btn-total" href="product-cart.html">View cart</a>
+            <a class="btn-total" href="product-checkout.html">Checkout</a>
+        </div>
+    </aside>
     <!--== End Aside Cart ==-->
 
     <!--== Start Aside Menu ==-->
@@ -170,109 +164,56 @@
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
 <!-- MyJS -->
-
-//add to cart
+//display cart items
 <script>
-    function addToCart(productId) {
-
-        var token = localStorage.getItem("access_token");
-
-        axios.post(`/api/product/${productId}/addToCart`, {
-            _token: '{{ csrf_token() }}',
-        }, {
-            headers: {
-                'Authorization': 'Bearer ' + token
-            }
-        })
-            .then(function (response) {
-                console.log(response);
-            })
-            .catch(function (error) {
-                console.error(error);
-            });
-    }
-
-////////////////         wishlist management
     var token = localStorage.getItem("access_token");
-    axios.get('/api/wishlist/items', {
+
+    axios.get('/api/cart/items', {
         headers: {
             'Authorization': 'Bearer ' + token
         }
     })
         .then(response => {
-            const wishlistItems = response.data;
+            const cartItems = response.data.cartItems;
+            const totalPrice = response.data.totalPrice.toFixed(2);
 
-            const tableBody = document.getElementById('wishlistTableBody');
+            // Update cart items
+            const cartList = document.querySelector('.aside-cart-product-list');
+            const cartItemTemplate = document.getElementById('cart-item-template');
 
-            wishlistItems.forEach(item => {
-                // Create a new table row
-                const row = document.createElement('tr');
-                row.classList.add('tbody-item');
+            cartItems.forEach(item => {
+                const listItem = cartItemTemplate.content.cloneNode(true);
+                listItem.querySelector('.product-title').textContent = item.product.name;
+                listItem.querySelector('.product-price').textContent = `${item.quantity} ×  ${item.product.price} Dhs`;
+                listItem.querySelector('img').src = '{{ asset("storage/") }}/' + item.product.image;
+                console.log('Image Source:', '{{ asset("storage/") }}' + item.product.image);
 
-                // Populate the row with item details
-                row.innerHTML = `
-                <td class="product-remove">
-                    <a class="remove" href="javascript:void(0)" data-id="${item.id}">×</a>
-                </td>
-                <td class="product-thumbnail">
-                    <div class="thumb">
-                        <a href="${item.product.url}">
-                            <img src="{{ asset('storage/') }}/${item.product.image}"width="68" height="84" alt="${item.product.name}">
-                        </a>
-                    </div>
-                </td>
-                <td class="product-name">
-                    <a class="title" href="${item.product.url}">${item.product.name}</a>
-                </td>
-                <td class="product-price">
-                    <span class="price">${item.product.price}</span>
-                </td>
-                <td class="product-stock-status">
-                    <span class="wishlist-in-stock">In Stock</span>
-                </td>
-                <td class="product-add-to-cart">
-                    <a class="btn-shop-cart" href="javascript:void(0)" onclick="addToCart(${item.product.id})">Add to Cart</a>
-                </td>
-            `;
+                listItem.querySelector('img').alt = item.product.name;
 
-                tableBody.appendChild(row);
+                cartList.appendChild(listItem);
+            });
+
+            // Update subtotal
+            const subtotalElement = document.querySelector('.cart-total .amount');
+            subtotalElement.textContent = `${totalPrice} Dhs`;
+
+            //   View cart
+            const viewCartLink = document.querySelector('.btn-total[href="{{route('cart.view')}}"]');
+            viewCartLink.addEventListener('click', function(event) {
+                event.preventDefault();
+                window.location.href = "{{ route('cart.view') }}";
             });
 
 
-            //remove item from wishlist
-            const removeButtons = document.querySelectorAll('.product-remove a');
-            removeButtons.forEach(button => {
-                button.addEventListener('click', function (event) {
-                    event.preventDefault();
-                    const itemId = button.getAttribute('data-id');
-                    console.log(itemId);
-                    var token = localStorage.getItem("access_token");
-
-                    axios.delete(`/api/wishlist/items/${itemId}`, {
-                        headers: {
-                            'Authorization': 'Bearer ' + token
-                        }
-                    })
-                        .then(response => {
-                            button.closest('.tbody-item').remove();
-                        })
-                        .catch(error => {
-                            console.error('Error removing item from wishlist:', error);
-                        });
-                });
-            });
-
+            const checkoutLink = document.querySelector('.btn-total[href="product-checkout.html"]');
+            checkoutLink.href = "product-checkout.html";
         })
         .catch(error => {
-            console.error('Error fetching wishlist items:', error);
+            console.error('Error fetching cart items:', error);
         });
-
 </script>
-
-
-
-
 
 
 <!-- JS Vendor, Plugins & Activation Script Files -->

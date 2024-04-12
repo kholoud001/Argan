@@ -122,4 +122,10 @@ class CartController extends Controller
             return response()->json(['error' => 'An error occurred while updating the cart item quantity.'], 500);
         }
     }
+
+    public  function checkoutview(){
+
+        return view('User.checkout');
+
+    }
 }
