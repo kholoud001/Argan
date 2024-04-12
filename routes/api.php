@@ -46,6 +46,9 @@ Route::group([
     Route::get('/cart/items', [CartController::class, 'getCartItems']);
     //delete cart item
     Route::delete('/cart/items/{id}', [CartController::class,'removeCartItem'])->name('api.cart.items.remove');
+    //update quantity
+    Route::patch('/cart/items/{id}', [CartController::class, 'updateCartItemQuantity'])->name('api.cart.items.updateQuantity');
+
 
 
 ////////////////////////////////       Wishlists          ///////////////////////////////////////////////////

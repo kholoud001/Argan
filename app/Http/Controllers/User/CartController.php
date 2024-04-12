@@ -92,12 +92,34 @@ class CartController extends Controller
                 return response()->json(['error' => 'Unauthorized action.'], 403);
             }
 
-            // Delete the cart item
             $cartItem->delete();
 
             return response()->json(['message' => 'Cart item removed successfully.'], 200);
         } catch (\Exception $e) {
             return response()->json(['error' => 'An error occurred while removing the cart item.'], 500);
+        }
+    }
+
+    public function updateCartItemQuantity(Request $request, $id)
+    {
+        try {
+            // Find the cart item
+            $cartItem = CartItem::findOrFail($id);
+
+            if (Auth::id() !== $cartItem->cart->user_id) {
+                return response()->json(['error' => 'Unauthorized action.'], 403);
+            }
+
+            $validatedData = $request->validate([
+                'quantity' => 'required|integer|min:1'
+            ]);
+
+            // Update the quantity of the cart item
+            $cartItem->update(['quantity' => $validatedData['quantity']]);
+
+            return response()->json(['message' => 'Cart item quantity updated successfully.'], 200);
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'An error occurred while updating the cart item quantity.'], 500);
         }
     }
 }

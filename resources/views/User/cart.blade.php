@@ -335,6 +335,66 @@
             });
 
 
+            // Get all quantity input fields
+            const quantityInputs = document.querySelectorAll('.pro-qty input[type="text"]');
+
+            // Attach event listeners to each input field
+            quantityInputs.forEach(input => {
+                // Add event listener for when the input value changes
+                input.addEventListener('change', function(event) {
+                    // Get the new quantity value
+                    const newQuantity = parseInt(event.target.value);
+                    console.log(newQuantity);
+
+                    // Ensure the quantity is a positive integer
+                    if (newQuantity > 0 && Number.isInteger(newQuantity)) {
+                        // Find the closest parent element with the class .tbody-item
+                        const tbodyItem = input.closest('.tbody-item');
+                        console.log(tbodyItem);
+
+                        // Check if the .tbody-item element exists
+                        if (tbodyItem) {
+                            // Get the corresponding cart item ID from the data-item-id attribute
+                            const itemId = tbodyItem.querySelector('.remove').getAttribute('data-id');
+                            console.log('Item ID:', itemId);
+
+                            // Send a request to update the quantity via AJAX
+                            updateCartItemQuantity(itemId, newQuantity);
+                        } else {
+                            console.error('Error: Parent element with class .tbody-item not found.');
+                        }
+                    } else {
+                        // Revert the input value to the previous quantity if invalid input is entered
+                        input.value = parseInt(input.value);
+                    }
+                });
+            });
+
+
+            // Function to send a request to update the quantity via AJAX
+            function updateCartItemQuantity(itemId, newQuantity) {
+                // Send a PATCH request to the API endpoint to update the quantity
+                axios.patch(`/api/cart/items/${itemId}`, {
+                    quantity: newQuantity
+                }, {
+                    headers: {
+                        'Authorization': 'Bearer ' + token
+                    }
+                })
+                    .then(response => {
+                        // Update the UI with the new quantity if the request is successful
+                        // (You may need to reload the cart items or update specific elements depending on your UI)
+                    })
+                    .catch(error => {
+                        // Handle any errors if the request fails
+                        console.error('Error updating quantity:', error);
+                    });
+            }
+
+
+
+
+
 
             //View cart
             const viewCartLink = document.querySelector('.btn-total[href="{{route('cart.view')}}"]');
