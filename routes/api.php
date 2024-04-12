@@ -40,11 +40,12 @@ Route::group([
     'middleware'=> 'auth:api'
 ],function (){
     Route::post('logout',[LogoutController::class,'logout']);
-
 ////////////////////////////////       Orders          ///////////////////////////////////////////////////
     Route::post('/product/{id}/addToCart', [CartController::class, 'addToCart'])->name('product.addToCart');
     //display my cart items
     Route::get('/cart/items', [CartController::class, 'getCartItems']);
+    //delete cart item
+    Route::delete('/cart/items/{id}', [CartController::class,'removeCartItem'])->name('api.cart.items.remove');
 
 
 ////////////////////////////////       Wishlists          ///////////////////////////////////////////////////

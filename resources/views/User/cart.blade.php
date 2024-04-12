@@ -247,7 +247,7 @@
 
                 row.innerHTML = `
                 <td class="product-remove">
-                    <a class="remove" href="javascript:void(0)">×</a>
+                        <a class="remove" href="javascript:void(0)" data-id="${item.id}">×</a>
                 </td>
                 <td class="product-thumbnail">
                     <div class="thumb">
@@ -296,7 +296,47 @@
             });
 
 
-           //View cart
+            // Remove item logic
+            const removeButtons = document.querySelectorAll('.product-remove a');
+            removeButtons.forEach(button => {
+                button.addEventListener('click', function (event) {
+                    const itemId = button.getAttribute('data-id');
+                    var token = localStorage.getItem("access_token");
+
+                    axios.delete(`/api/cart/items/${itemId}`, {
+                        headers: {
+                            'Authorization': 'Bearer ' + token
+                        }
+                    })
+                        .then(response => {
+                            const removedRow = button.closest('tr');
+                            const subtotalElement = document.querySelector('.cart-subtotal .amount');
+                            const totalAmountElement = document.querySelector('.order-total .amount');
+
+                            removedRow.remove();
+
+                            // Recalculate subtotal and total
+                            let subtotal = parseFloat(subtotalElement.textContent.replace(' Dhs', ''));
+                            const itemSubtotal = parseFloat(removedRow.querySelector('.product-subtotal .price').textContent);
+                            subtotal -= itemSubtotal;
+                            subtotalElement.textContent = subtotal.toFixed(2) + ' Dhs';
+
+                            // Update total amount if needed
+                            const shippingCheckbox = document.getElementById('radio3');
+                            if (shippingCheckbox.checked) {
+                                subtotal += 10;
+                            }
+                            totalAmountElement.textContent = (subtotal + 0).toFixed(2) + ' Dhs';
+                        })
+                        .catch(error => {
+                            console.error('Error removing item:', error);
+                        });
+                });
+            });
+
+
+
+            //View cart
             const viewCartLink = document.querySelector('.btn-total[href="{{route('cart.view')}}"]');
             viewCartLink.addEventListener('click', function(event) {
                 event.preventDefault();

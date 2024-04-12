@@ -80,4 +80,24 @@ class CartController extends Controller
 
             return view('User.cart');
         }
+
+    public function removeCartItem($id)
+    {
+        try {
+            // Find the cart item
+            $cartItem = CartItem::findOrFail($id);
+
+            // Check if the authenticated user owns the shopping cart associated with the cart item
+            if (Auth::id() !== $cartItem->cart->user_id) {
+                return response()->json(['error' => 'Unauthorized action.'], 403);
+            }
+
+            // Delete the cart item
+            $cartItem->delete();
+
+            return response()->json(['message' => 'Cart item removed successfully.'], 200);
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'An error occurred while removing the cart item.'], 500);
+        }
+    }
 }
