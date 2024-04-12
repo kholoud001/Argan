@@ -48,10 +48,12 @@ class User extends Authenticatable
     ];
     protected $dates = ['deleted_at'];
 
-//    public function role()
-//    {
-//        return $this->belongsTo(Role::class);
-//    }
+
+    public function wishlistItems()
+    {
+        return $this->hasMany(Wishlist::class);
+    }
+
     public function shoppingCart()
     {
         return $this->hasOne(ShoppingCart::class);
@@ -61,6 +63,11 @@ class User extends Authenticatable
     {
         return $this->hasManyThrough(CartItem::class, ShoppingCart::class);
     }
+
+    //    public function role()
+//    {
+//        return $this->belongsTo(Role::class);
+//    }
 
 //    public function hasRole($role)
 //    {

@@ -42,4 +42,40 @@ class WishlistController extends Controller
         }
     }
 
+    public function getWishlistItems(Request $request)
+    {
+        try {
+            $user = Auth::user();
+            $wishlistItems = $user->wishlistItems()->with('product')->get();
+
+            return response()->json($wishlistItems, 200);
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'An error occurred while fetching wishlist items.'], 500);
+        }
+    }
+
+    public function removeWishlistItem($id)
+    {
+        try {
+            // Find the wishlist item
+            $wishlistItem = Wishlist::findOrFail($id);
+
+            // Check if the authenticated user owns the wishlist item
+            if (Auth::user()->id !== $wishlistItem->user_id) {
+                return response()->json(['error' => 'Unauthorized action.'], 403);
+            }
+
+            // Delete the wishlist item
+            $wishlistItem->delete();
+
+            return response()->json(['message' => 'Wishlist item removed successfully.'], 200);
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'An error occurred while removing the wishlist item.'], 500);
+        }
+    }
+
+    public function index(){
+        return view('User.wishlist');
+    }
+
 }

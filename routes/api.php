@@ -54,5 +54,9 @@ Route::group([
 ////////////////////////////////       Wishlists          ///////////////////////////////////////////////////
 
     Route::post('/wishlist/{productId}/add', [WishlistController::class, 'addToWishlist'])->name('wishlist.add');
+    Route::get('/wishlist/items', [WishlistController::class, 'getWishlistItems']);
+    Route::delete('/wishlist/items/{id}', [WishlistController::class, 'removeWishlistItem'])->name('api.wishlist.items.remove');
+
+
 
 });
