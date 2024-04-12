@@ -172,7 +172,28 @@
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <!-- MyJS -->
 
+//add to cart
 <script>
+    function addToCart(productId) {
+       
+        var token = localStorage.getItem("access_token");
+
+        axios.post(`/api/product/${productId}/addToCart`, {
+            _token: '{{ csrf_token() }}',
+        }, {
+            headers: {
+                'Authorization': 'Bearer ' + token
+            }
+        })
+            .then(function (response) {
+                console.log(response);
+            })
+            .catch(function (error) {
+                console.error(error);
+            });
+    }
+
+////////////////         wishlist management
     var token = localStorage.getItem("access_token");
     axios.get('/api/wishlist/items', {
         headers: {
@@ -218,6 +239,8 @@
                 tableBody.appendChild(row);
             });
 
+
+            //remove item from wishlist
             const removeButtons = document.querySelectorAll('.product-remove a');
             removeButtons.forEach(button => {
                 button.addEventListener('click', function (event) {
