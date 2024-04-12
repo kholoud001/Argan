@@ -10,6 +10,7 @@ use App\Http\Controllers\Auth\FacebookController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\ForgotPasswordLinkController;
 use App\Http\Controllers\Auth\GoogleController;
+use App\Http\Controllers\User\CartController;
 use App\Http\Controllers\User\HomeController;
 use App\Http\Controllers\User\OrderController;
 use Illuminate\Support\Facades\Route;
@@ -155,7 +156,7 @@ Route::get('/blogs/{id}',[HomeController::class,'getBlogDetails'])->name('blog.d
 
 ////////////////////////////////       Orders          ///////////////////////////////////////////////////
 //Route::post('/product/{id}/addToCart', [OrderController::class, 'addToCart'])->name('product.addToCart');
-
+Route::get('/cart/view',[CartController::class,'viewCart'])->name('cart.view');
 
 
 

@@ -75,4 +75,9 @@ class CartController extends Controller
             return response()->json(['error' => 'An error occurred while fetching cart items.'], 500);
         }
     }
+
+    public function viewCart(){
+
+            return view('User.cart');
+        }
 }

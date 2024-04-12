@@ -469,6 +469,7 @@
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
 <!-- MyJS -->
+//add to cart
 <script>
     function addToCart(productId) {
         var quantity = document.getElementById('quantityInput').value;

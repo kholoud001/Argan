@@ -9,7 +9,7 @@
             <!-- Cart items will be dynamically inserted here -->
         </ul>
         <p class="cart-total"><span>Subtotal:</span><span class="amount"></span></p>
-        <a class="btn-total" >View cart</a>
+        <a class="btn-total"  href="{{route('cart.view')}}">View cart</a>
         <a class="btn-total">Checkout</a>
     </div>
 </aside>
