@@ -11,6 +11,7 @@ use App\Models\ShoppingCart;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Validation\ValidationException;
 
 class CartController extends Controller
 {
@@ -138,25 +139,39 @@ class CartController extends Controller
     {
         try {
             // Validate the request data
-//                $validatedData = $request->validate([
-//                    'f_name' => 'required|string',
-//                    'l_name' => 'required|string',
-//                    'country' => 'required|string',
-//                    'street-address' => 'required|string',
-//                    'pz-code' => 'nullable|string',
-//                    'phone' => 'nullable|string',
-//                    'email' => 'required|email',
-//                    ]);
+            $validatedData = $request->validate([
+                'f_name' => 'required|string',
+                'l_name' => 'required|string',
+                'country' => 'required|string',
+                'street_address' => 'required|string',
+                'street_address2' => 'nullable|string',
+                'pz_code' => 'nullable|string',
+                'phone' => 'required|string',
+                'email' => 'required|email',
+                'order_notes' => 'nullable|string',
+            ]);
 
             // Start a transaction to ensure data consistency
             DB::beginTransaction();
 
-
-            if (!Auth::check()) {
-                return response()->json(['success' => false, 'error' => 'User not authenticated.'], 401);
-            }
-            // Process the checkout
+            // Get the authenticated user
             $userId = Auth::id();
+
+            // Create the order
+            $order = new Order([
+                'user_id' => $userId,
+                'status' => 'pending',
+                'first_name' => $request->input('f_name'),
+                'last_name' => $request->input('l_name'),
+                'city' => $request->input('country'),
+                'street_address' => $request->input('street-address'),
+                'street_address2' => $request->input('street-address2'),
+                'postcode' => $request->input('pz-code'),
+                'email' => $request->input('email'),
+                'phone' => $request->input('phone'),
+                'order_notes' => $request->input('order-notes'),
+            ]);
+            $order->save();
 
             // Get the user's shopping cart
             $cart = ShoppingCart::where('user_id', $userId)->first();
@@ -177,7 +192,7 @@ class CartController extends Controller
 
                 // Create an order item
                 $orderItem = new OrderItem([
-                    'order_id' => null,
+                    'order_id' => $order->id,
                     'product_id' => $product->id,
                     'quantity' => $cartItem->quantity,
                     'price' => $product->price,
@@ -185,26 +200,18 @@ class CartController extends Controller
                 $orderItem->save();
             }
 
-            // Create an order
-            $order = new Order([
-                'user_id' => $userId,
-                'status' => 'pending',
-            ]);
-            $order->save();
-
-            // Update order_id in order items
-            OrderItem::where('order_id', null)->update(['order_id' => $order->id]);
-
+            // Clear the user's shopping cart
             $cart->items()->delete();
 
             DB::commit();
 
-            return response()->json(['message' => 'Checkout successful.'], 200);
+            return response()->json(['message' => 'Checkout successful'], 200);
+        } catch (ValidationException $e) {
+            return response()->json(['error' => $e->validator->errors()], 422);
         } catch (\Exception $e) {
-            DB::rollBack();
-
-            return response()->json(['error' => 'An error occurred during checkout: ' . $e->getMessage()], 500);
+            return response()->json(['error' => 'An error occurred during checkout'], 500);
         }
     }
+
 
 }

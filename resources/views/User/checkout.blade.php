@@ -65,18 +65,22 @@
                         <div class="checkout-billing-details-wrap">
                             <h2 class="title">Billing details</h2>
                             <div class="billing-form-wrap">
-                                <form action="#" method="post">
+                                <form >
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label for="f_name">First name <abbr class="required" title="required">*</abbr></label>
                                                 <input id="f_name" type="text" class="form-control">
+                                                <div id="f_name_error" class="text-danger"></div> <!-- Error message container -->
+
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label for="l_name">Last name <abbr class="required" title="required">*</abbr></label>
                                                 <input id="l_name" type="text" class="form-control">
+                                                <div id="l_name_error" class="text-danger"></div> <!-- Error message container -->
+
                                             </div>
                                         </div>
 
@@ -95,16 +99,20 @@
                                                     <option>Kenitra</option>
                                                     <option>Fez</option>
                                                 </select>
+                                                <div id="country_error" class="text-danger"></div> <!-- Error message container -->
                                             </div>
                                         </div>
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 <label for="street-address">Street address <abbr class="required" title="required">*</abbr></label>
                                                 <input id="street-address" type="text" class="form-control" placeholder="House number and street name">
+                                                <div id="street-address_error" class="text-danger"></div> <!-- Error message container -->
+
                                             </div>
                                             <div class="form-group">
                                                 <label for="street-address2" class="visually-hidden">Street address 2 <abbr class="required" title="required">*</abbr></label>
                                                 <input id="street-address2" type="text" class="form-control" placeholder="Apartment, suite, unit etc. (optional)">
+
                                             </div>
                                         </div>
 
@@ -118,69 +126,14 @@
                                             <div class="form-group">
                                                 <label for="phone">Phone (optional)</label>
                                                 <input id="phone" type="text" class="form-control">
+                                                <div id="phone_error" class="text-danger"></div> <!-- Error message container -->
                                             </div>
                                         </div>
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 <label for="email">Email address <abbr class="required" title="required">*</abbr></label>
                                                 <input id="email" type="text" class="form-control">
-                                            </div>
-                                        </div>
-                                        <div id="CheckoutBillingAccordion2" class="col-md-12">
-                                            <div class="checkout-box" data-bs-toggle="collapse" data-bs-target="#CheckoutTwo" aria-expanded="false" role="toolbar">
-                                                <div class="custom-control custom-checkbox">
-                                                    <input type="checkbox" class="custom-control-input visually-hidden" id="ship-to-different-address">
-                                                    <label class="custom-control-label" for="ship-to-different-address">Ship to a different address?</label>
-                                                </div>
-                                            </div>
-                                            <div id="CheckoutTwo" class="collapse" data-bs-parent="#CheckoutBillingAccordion2">
-                                                <div class="row">
-                                                    <div class="col-md-6">
-                                                        <div class="form-group">
-                                                            <label for="f_name2">First name <abbr class="required" title="required">*</abbr></label>
-                                                            <input id="f_name2" type="text" class="form-control">
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-6">
-                                                        <div class="form-group">
-                                                            <label for="l_name2">Last name <abbr class="required" title="required">*</abbr></label>
-                                                            <input id="l_name2" type="text" class="form-control">
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-12 mb-4">
-                                                        <div class="form-group">
-                                                            <label for="country2">City <abbr class="required" title="required">*</abbr></label>
-                                                            <select id="country2" class="form-control wide">
-                                                                <option>Casablanca</option>
-                                                                <option>Rabat</option>
-                                                                <option>Fes</option>
-                                                                <option>Marrakech</option>
-                                                                <option>Tangier</option>
-                                                                <option>Agadir</option>
-                                                                <option>Meknes</option>
-                                                                <option>Oujda</option>
-                                                                <option>Kenitra</option>
-                                                                <option>Fez</option>
-                                                            </select>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-12">
-                                                        <div class="form-group">
-                                                            <label for="street-address2-3">Street address <abbr class="required" title="required">*</abbr></label>
-                                                            <input id="street-address2-3" type="text" class="form-control" placeholder="House number and street name">
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label for="street-address2-2" class="visually-hidden">Street address 2 <abbr class="required" title="required">*</abbr></label>
-                                                            <input id="street-address2-2" type="text" class="form-control" placeholder="Apartment, suite, unit etc. (optional)">
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-12">
-                                                        <div class="form-group">
-                                                            <label for="pz-code2">Postcode / ZIP (optional)</label>
-                                                            <input id="pz-code2" type="text" class="form-control">
-                                                        </div>
-                                                    </div>
-                                                </div>
+                                                <div id="email_error" class="text-danger"></div> <!-- Error message container -->
                                             </div>
                                         </div>
                                         <div class="col-md-12">
@@ -521,27 +474,54 @@
 
 //order post checkout:
 <script>
-        var token = localStorage.getItem("access_token");
+    var token = localStorage.getItem("access_token");
 
-        function placeOrder() {
-        checkout();
+    function placeOrder() {
+        var formData = {
+            f_name: document.getElementById('f_name').value,
+            l_name: document.getElementById('l_name').value,
+            country: document.getElementById('country').value,
+            street_address: document.getElementById('street-address').value,
+            street_address2: document.getElementById('street-address2').value,
+            pz_code: document.getElementById('pz-code').value,
+            phone: document.getElementById('phone').value,
+            email: document.getElementById('email').value,
+            order_notes: document.getElementById('order-notes').value
+        };
+        checkout(formData);
     }
 
-        function checkout() {
-        axios.post('/api/checkout', {}, {
+    function checkout(formData) {
+        axios.post('/api/checkout', formData, {
             headers: {
                 'Authorization': 'Bearer ' + token
             }
         })
             .then(response => {
-                // Handle successful response
                 console.log("Checkout successful");
                 // window.location.href = "account.html";
             })
             .catch(error => {
-                console.error("Checkout failed:", error);
+                console.error("Checkout failed:", error.response.data.error);
+                if (error.response.data.error) {
+                    displayErrors(error.response.data.error);
+                }
             });
     }
+
+    function displayErrors(errors) {
+        Object.keys(errors).forEach(field => {
+            let errorMessage = errors[field];
+            if (Array.isArray(errorMessage)) {
+                errorMessage = errorMessage.join('<br>');
+            }
+            const errorContainer = document.getElementById(field + '_error');
+            if (errorContainer) {
+                errorContainer.innerHTML = errorMessage;
+            }
+        });
+    }
+
 </script>
 
 
