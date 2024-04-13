@@ -286,8 +286,12 @@
                 let totalAmount = document.querySelector('.order-total .amount');
                 console.log("changed");
                 if (shippingCheckbox.checked) {
+                    var shippingCost = 10;
+                    localStorage.setItem('shippingCost', shippingCost);
                     subtotal += 10;
                 } else {
+                    var shippingCost1 = 0;
+                    localStorage.setItem('shippingCost', shippingCost1);
                     subtotal += 0;
                 }
 
@@ -353,13 +357,11 @@
                         const tbodyItem = input.closest('.tbody-item');
                         console.log(tbodyItem);
 
-                        // Check if the .tbody-item element exists
                         if (tbodyItem) {
                             // Get the corresponding cart item ID from the data-item-id attribute
                             const itemId = tbodyItem.querySelector('.remove').getAttribute('data-id');
                             console.log('Item ID:', itemId);
 
-                            // Send a request to update the quantity via AJAX
                             updateCartItemQuantity(itemId, newQuantity);
                         } else {
                             console.error('Error: Parent element with class .tbody-item not found.');
@@ -383,8 +385,7 @@
                     }
                 })
                     .then(response => {
-                        // Update the UI with the new quantity if the request is successful
-                        // (You may need to reload the cart items or update specific elements depending on your UI)
+
                     })
                     .catch(error => {
                         // Handle any errors if the request fails

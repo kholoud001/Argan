@@ -48,6 +48,8 @@ Route::group([
     Route::delete('/cart/items/{id}', [CartController::class,'removeCartItem'])->name('api.cart.items.remove');
     //update quantity
     Route::patch('/cart/items/{id}', [CartController::class, 'updateCartItemQuantity'])->name('api.cart.items.updateQuantity');
+    //checkout
+    Route::post('/checkout', [CartController::class, 'checkout'])->name('api.checkout');
 
 
 

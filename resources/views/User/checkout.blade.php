@@ -212,10 +212,6 @@
                                         <td class="product-name">Satin gown <span class="product-quantity">× 1</span></td>
                                         <td class="product-total">£69.99</td>
                                     </tr>
-                                    <tr class="cart-item">
-                                        <td class="product-name">Printed cotton t-shirt <span class="product-quantity">× 1</span></td>
-                                        <td class="product-total">£20.00</td>
-                                    </tr>
                                     </tbody>
                                     <tfoot class="table-foot">
                                     <tr class="cart-subtotal">
@@ -235,18 +231,8 @@
                                 <div class="shop-payment-method">
                                     <div id="PaymentMethodAccordion">
                                         <div class="card">
-                                            <div class="card-header" id="check_payments">
-                                                <h5 class="title" data-bs-toggle="collapse" data-bs-target="#itemOne" aria-controls="itemOne" aria-expanded="true">Direct bank transfer</h5>
-                                            </div>
-                                            <div id="itemOne" class="collapse show" aria-labelledby="check_payments" data-bs-parent="#PaymentMethodAccordion">
-                                                <div class="card-body">
-                                                    <p>Make your payment directly into our bank account. Please use your Order ID as the payment reference. Your order will not be shipped until the funds have cleared in our account.</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="card">
                                             <div class="card-header" id="check_payments3">
-                                                <h5 class="title" data-bs-toggle="collapse" data-bs-target="#itemThree" aria-controls="itemTwo" aria-expanded="false">Cash on delivery</h5>
+                                                <h5 class="title" data-bs-toggle="collapse" data-bs-target="#itemThree" aria-controls="itemTwo" aria-expanded="true">Cash on delivery</h5>
                                             </div>
                                             <div id="itemThree" class="collapse" aria-labelledby="check_payments3" data-bs-parent="#PaymentMethodAccordion">
                                                 <div class="card-body">
@@ -315,7 +301,7 @@
 
 
     <!--== Start Aside Cart ==-->
-{{--    @include('components/cartAside')--}}
+    @include('components/cartAside')
     <!--== End Aside Cart ==-->
 
 
@@ -423,6 +409,13 @@
 
                 listItem.querySelector('img').alt = item.product.name;
 
+                // Set the product link dynamically
+                const productLink = listItem.querySelector('.product-link');
+                if (productLink) {
+                    productLink.href = '{{ route('product.details', '') }}/' + item.product.id;
+                }
+
+
                 cartList.appendChild(listItem);
             });
 
@@ -445,6 +438,87 @@
             console.error('Error fetching cart items:', error);
         });
 </script>
+
+
+//order get checkout:
+<script>
+    var token = localStorage.getItem("access_token");
+
+    axios.get('/api/cart/items', {
+        headers: {
+            'Authorization': 'Bearer ' + token
+        }
+    })
+        .then(response => {
+            const cartItems = response.data.cartItems;
+            let subtotal = 0;
+            const shippingCost = localStorage.getItem('shippingCost');
+            console.log(shippingCost)
+
+
+            // Calculate subtotal
+            cartItems.forEach(item => {
+                subtotal += item.quantity * item.product.price;
+            });
+            console.log('Subtotal:', subtotal);
+            const total = (parseFloat(subtotal) + parseFloat(shippingCost)).toFixed(2);
+            console.log(total)
+
+
+            // Update cart items
+            const tableBody = document.querySelector('.table-body');
+            tableBody.innerHTML = ''; // Clear existing items
+
+            cartItems.forEach(item => {
+                const row = document.createElement('tr');
+                row.classList.add('cart-item');
+
+
+
+                const productNameCell = document.createElement('td');
+                productNameCell.classList.add('product-name');
+                productNameCell.textContent = item.product.name;
+
+                const quantitySpan = document.createElement('span');
+                quantitySpan.classList.add('product-quantity');
+                quantitySpan.textContent = '× ' + item.quantity;
+
+                productNameCell.appendChild(quantitySpan);
+
+                const productTotalCell = document.createElement('td');
+                productTotalCell.classList.add('product-total');
+                productTotalCell.textContent =  (item.quantity * item.product.price).toFixed(2)+ ' Dhs '  ;
+
+                row.appendChild(productNameCell);
+                row.appendChild(productTotalCell);
+
+
+
+                tableBody.appendChild(row);
+            });
+
+            // Update subtotal
+            const subtotalElement = document.querySelector(' .cart-subtotal');
+            if (subtotalElement) {
+                subtotalElement.textContent = '=' + '\t '+ subtotal.toFixed(2) +' Dhs ';
+            } else {
+                console.error('Subtotal element not found.');
+            }
+
+            // Update shipping
+            const shippingElement = document.querySelector(' .shipping ');
+            shippingElement.textContent = 'Shipping:' + shippingCost +' Dhs ';
+
+            // Update total
+            const totalElement = document.querySelector('.order-total ');
+            totalElement.textContent = 'Total:   ' + total +' Dhs ';
+
+        })
+        .catch(error => {
+            console.error('Error fetching cart items:', error);
+        });
+</script>
+
 
 
 <!-- JS Vendor, Plugins & Activation Script Files -->
