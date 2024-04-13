@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->string('status')->default('pending');
+            $table->enum('status', ['pending', 'on hold', 'approved'])->default('pending');
             $table->softDeletes();
             $table->timestamps();
         });

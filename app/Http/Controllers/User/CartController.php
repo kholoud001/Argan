@@ -4,10 +4,13 @@ namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
 use App\Models\CartItem;
+use App\Models\Order;
+use App\Models\OrderItem;
 use App\Models\Product;
 use App\Models\ShoppingCart;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class CartController extends Controller
 {
@@ -128,4 +131,77 @@ class CartController extends Controller
         return view('User.checkout');
 
     }
+
+
+
+    public function checkout(Request $request)
+    {
+        try {
+            // Validate the request data
+                $validatedData = $request->validate([
+                    'f_name' => 'required|string',
+                    'l_name' => 'required|string',
+                    'country' => 'required|string',
+                    'street-address' => 'required|string',
+                    'pz-code' => 'nullable|string',
+                    'phone' => 'nullable|string',
+                    'email' => 'required|email',
+                    ]);
+
+            // Start a transaction to ensure data consistency
+            DB::beginTransaction();
+
+            // Process the checkout
+
+            $userId = auth()->user()->id;
+
+            // Get the user's shopping cart
+            $cart = ShoppingCart::where('user_id', $userId)->first();
+
+            // Loop through each cart item
+            foreach ($cart->items as $cartItem) {
+                // Retrieve the product
+                $product = $cartItem->product;
+
+                // Check if the requested quantity is available
+                if ($product->quantity < $cartItem->quantity) {
+                    throw new \Exception('Insufficient stock for product: ' . $product->name);
+                }
+
+                // Decrement the product quantity
+                $product->quantity -= $cartItem->quantity;
+                $product->save();
+
+                // Create an order item
+                $orderItem = new OrderItem([
+                    'order_id' => null, // Will be updated after order creation
+                    'product_id' => $product->id,
+                    'quantity' => $cartItem->quantity,
+                    'price' => $product->price,
+                ]);
+                $orderItem->save();
+            }
+
+            // Create an order
+            $order = new Order([
+                'user_id' => $userId,
+                'status' => 'pending',
+            ]);
+            $order->save();
+
+            // Update order_id in order items
+            OrderItem::where('order_id', null)->update(['order_id' => $order->id]);
+
+            $cart->items()->delete();
+
+            DB::commit();
+
+            return response()->json(['message' => 'Checkout successful.'], 200);
+        } catch (\Exception $e) {
+            DB::rollBack();
+
+            return response()->json(['error' => 'An error occurred during checkout: ' . $e->getMessage()], 500);
+        }
+    }
+
 }
