@@ -10,7 +10,7 @@
         </ul>
         <p class="cart-total"><span>Subtotal:</span><span class="amount"></span></p>
         <a class="btn-total"  href="{{route('cart.view')}}">View cart</a>
-        <a class="btn-total">Checkout</a>
+        <a class="btn-total" href="{{route('get.checkout')}}">Checkout</a>
     </div>
 </aside>
 <!-- End Aside Cart -->

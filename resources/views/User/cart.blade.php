@@ -93,7 +93,7 @@
                                 </tbody>
                             </table>
                             <div class="text-end">
-                                <a href="shop-checkout.html" class="checkout-button">Proceed to checkout</a>
+                                <a href="{{route('get.checkout')}}" class="checkout-button">Proceed to checkout</a>
                             </div>
                         </div>
                     </div>

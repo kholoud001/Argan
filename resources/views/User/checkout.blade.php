@@ -248,7 +248,7 @@
                                             <label for="privacy" class="custom-control-label">I have read and agree to the website terms and conditions <span class="required">*</span></label>
                                         </div>
                                     </div>
-                                    <a href="account.html" class="btn-place-order">Place order</a>
+                                    <a href="#" class="btn-place-order" onclick="placeOrder()">Place order</a>
                                 </div>
                             </div>
                         </div>
@@ -519,9 +519,35 @@
         });
 </script>
 
+//order post checkout:
+<script>
+        var token = localStorage.getItem("access_token");
+
+        function placeOrder() {
+        checkout();
+    }
+
+        function checkout() {
+        axios.post('/api/checkout', {}, {
+            headers: {
+                'Authorization': 'Bearer ' + token
+            }
+        })
+            .then(response => {
+                // Handle successful response
+                console.log("Checkout successful");
+                // window.location.href = "account.html";
+            })
+            .catch(error => {
+                console.error("Checkout failed:", error);
+            });
+    }
+</script>
 
 
-<!-- JS Vendor, Plugins & Activation Script Files -->
+
+
+    <!-- JS Vendor, Plugins & Activation Script Files -->
 <!-- Vendors JS -->
 <script src="{{asset('assets/js/vendor/modernizr-3.11.7.min.js)')}}"></script>
 <script src="{{asset('assets/js/vendor/jquery-3.6.0.min.js')}}"></script>

@@ -138,22 +138,25 @@ class CartController extends Controller
     {
         try {
             // Validate the request data
-                $validatedData = $request->validate([
-                    'f_name' => 'required|string',
-                    'l_name' => 'required|string',
-                    'country' => 'required|string',
-                    'street-address' => 'required|string',
-                    'pz-code' => 'nullable|string',
-                    'phone' => 'nullable|string',
-                    'email' => 'required|email',
-                    ]);
+//                $validatedData = $request->validate([
+//                    'f_name' => 'required|string',
+//                    'l_name' => 'required|string',
+//                    'country' => 'required|string',
+//                    'street-address' => 'required|string',
+//                    'pz-code' => 'nullable|string',
+//                    'phone' => 'nullable|string',
+//                    'email' => 'required|email',
+//                    ]);
 
             // Start a transaction to ensure data consistency
             DB::beginTransaction();
 
-            // Process the checkout
 
-            $userId = auth()->user()->id;
+            if (!Auth::check()) {
+                return response()->json(['success' => false, 'error' => 'User not authenticated.'], 401);
+            }
+            // Process the checkout
+            $userId = Auth::id();
 
             // Get the user's shopping cart
             $cart = ShoppingCart::where('user_id', $userId)->first();
@@ -174,7 +177,7 @@ class CartController extends Controller
 
                 // Create an order item
                 $orderItem = new OrderItem([
-                    'order_id' => null, // Will be updated after order creation
+                    'order_id' => null,
                     'product_id' => $product->id,
                     'quantity' => $cartItem->quantity,
                     'price' => $product->price,
