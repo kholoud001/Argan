@@ -10,6 +10,7 @@ use App\Http\Controllers\Auth\FacebookController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\ForgotPasswordLinkController;
 use App\Http\Controllers\Auth\GoogleController;
+use App\Http\Controllers\User\AccountController;
 use App\Http\Controllers\User\CartController;
 use App\Http\Controllers\User\HomeController;
 use App\Http\Controllers\User\OrderController;
@@ -162,6 +163,9 @@ Route::get('/wishlist/view',[WishlistController::class,'index']);
 
 
 Route::get('/checkout/view',[CartController::class,'checkoutview'])->name('get.checkout');
+
+Route::get('/account',[AccountController::class,'index'])->name('account.view');
+
 
 
 

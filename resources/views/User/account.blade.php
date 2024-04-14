@@ -13,6 +13,194 @@
     <!--== End Header Wrapper ==-->
 
 
+    <main class="main-content">
+
+        <!--== Start Page Header Area Wrapper ==-->
+        <section class="page-header-area pt-10 pb-9" data-bg-color="#FFF3DA">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-5">
+                        <div class="page-header-st3-content text-center text-md-start">
+                            <ol class="breadcrumb justify-content-center justify-content-md-start">
+                                <li class="breadcrumb-item"><a class="text-dark" href="index.html">Home</a></li>
+                                <li class="breadcrumb-item active text-dark" aria-current="page">My Account</li>
+                            </ol>
+                            <h2 class="page-header-title">My Account</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!--== End Page Header Area Wrapper ==-->
+
+        <!--== Start My Account Area Wrapper ==-->
+        <section class="my-account-area section-space">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-3 col-md-4">
+                        <div class="my-account-tab-menu nav nav-tabs" id="nav-tab" role="tablist">
+                            <button class="nav-link active" id="dashboad-tab" data-bs-toggle="tab"
+                                    data-bs-target="#dashboad" type="button" role="tab" aria-controls="dashboad"
+                                    aria-selected="true">Dashboard</button>
+
+                            <button class="nav-link" id="orders-tab" data-bs-toggle="tab" data-bs-target="#orders"
+                                    type="button" role="tab" aria-controls="orders" aria-selected="false"> Orders</button>
+
+                            <button class="nav-link" id="wishlists-tab" data-bs-toggle="tab" data-bs-target="#wishlists"
+                                    type="button" role="tab" aria-controls="wishlists" aria-selected="false">
+                                Wishlist</button>
+
+                            <button class="nav-link" id="account-info-tab" data-bs-toggle="tab" data-bs-target="#account-info"
+
+                                    type="button" role="tab" aria-controls="account-info" aria-selected="false">Account Details</button>
+{{--logout--}}
+                            <button class="nav-link" onclick="window.location.href='account-login.html'" type="button">Logout</button>
+                        </div>
+                    </div>
+                    <div class="col-lg-9 col-md-8">
+                        <div class="tab-content" id="nav-tabContent">
+
+                            {{--                            dashboard--}}
+                            <div class="tab-pane fade show active" id="dashboard" role="tabpanel" aria-labelledby="dashboard-tab">
+                                <div class="myaccount-content">
+                                    <h3>Dashboard</h3>
+                                    <div class="welcome">
+                                        <p id="userGreeting">Loading...</p>
+                                    </div>
+                                    <p>From your account dashboard. you can easily check & view your recent orders, manage your shipping and billing addresses and edit your password and account details.</p>
+                                </div>
+                            </div>
+
+                            {{--                            orders--}}
+                            <div class="tab-pane fade" id="orders" role="tabpanel" aria-labelledby="orders-tab">
+                                <div class="myaccount-content">
+                                    <h3>Orders</h3>
+                                    <div class="myaccount-table table-responsive text-center">
+                                        <table class="table table-bordered">
+                                            <thead class="thead-light">
+                                            <tr>
+                                                <th>Order</th>
+                                                <th>Date</th>
+                                                <th>Status</th>
+                                                <th>Total</th>
+                                                <th>Action</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr>
+                                                <td>1</td>
+                                                <td>Aug 22, 2018</td>
+                                                <td>Pending</td>
+                                                <td>$3000</td>
+                                                <td><a href="shop-cart.html" class="check-btn sqr-btn ">View</a></td>
+                                            </tr>
+                                            <tr>
+                                                <td>2</td>
+                                                <td>July 22, 2018</td>
+                                                <td>Approved</td>
+                                                <td>$200</td>
+                                                <td><a href="shop-cart.html" class="check-btn sqr-btn ">View</a></td>
+                                            </tr>
+                                            <tr>
+                                                <td>3</td>
+                                                <td>June 12, 2017</td>
+                                                <td>On Hold</td>
+                                                <td>$990</td>
+                                                <td><a href="shop-cart.html" class="check-btn sqr-btn ">View</a></td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {{--wishlist--}}
+                            <div class="tab-pane fade" id="wishlists" role="tabpanel" aria-labelledby="wishlists-tab">
+                                <div class="myaccount-content">
+                                    <h3>My Wishlist</h3>
+                                    <div class="myaccount-table table-responsive text-center">
+                                        <table class="table table-bordered">
+                                            <thead class="thead-light">
+                                            <tr>
+                                                <th class="product-remove">&nbsp;</th>
+                                                <th class="product-thumbnail">&nbsp;</th>
+                                                <th class="product-name">Product name</th>
+                                                <th class="product-price">Unit price</th>
+                                                <th class="product-stock-status">Stock status</th>
+                                                <th class="product-add-to-cart">&nbsp;</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody id="wishlistTableBody">
+                                            <!-- Wishlist items will be dynamically added here -->
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            {{-- account info--}}
+                            <div class="tab-pane fade" id="account-info" role="tabpanel" aria-labelledby="account-info-tab">
+                                <div class="myaccount-content">
+                                    <h3>Account Details</h3>
+                                    <div class="account-details-form">
+                                        <form id="account-info-form">
+                                            <!-- Input field for profile picture -->
+                                            <div class="single-input-item">
+                                                <label for="profile-picture">Profile Picture</label>
+                                                <input type="file" id="profile-picture">
+                                            </div>
+
+                                            <!-- Display the existing user information -->
+                                            <div class="row">
+                                                    <div class="single-input-item">
+                                                        <label for="name" class="required"> Name</label>
+                                                        <input type="text" id="name">
+                                                    </div>
+
+                                            <div class="single-input-item">
+                                                <label for="email" class="required">Email Address</label>
+                                                <input type="email" id="email">
+                                            </div>
+                                            <fieldset>
+                                                <legend>Password change</legend>
+                                                <div class="single-input-item">
+                                                    <label for="current-pwd" class="required">Current Password</label>
+                                                    <input type="password" id="current-pwd">
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-lg-6">
+                                                        <div class="single-input-item">
+                                                            <label for="new-pwd" class="required">New Password</label>
+                                                            <input type="password" id="new-pwd">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-6">
+                                                        <div class="single-input-item">
+                                                            <label for="confirm-pwd" class="required">Confirm Password</label>
+                                                            <input type="password" id="confirm-pwd">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </fieldset>
+                                            <div class="single-input-item">
+                                                <button class="check-btn sqr-btn">Save Changes</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!--== End My Account Area Wrapper ==-->
+
+    </main>
+
+
     <!--== Start Footer Area Wrapper ==-->
     @include('components/footer')
     <!--== End Footer Area Wrapper ==-->
@@ -56,37 +244,6 @@
     @include('components/cartAside')
     <!--== End Aside Cart ==-->
 
-
-    <aside class="aside-cart-wrapper offcanvas offcanvas-end" tabindex="-1" id="AsideOffcanvasCart" aria-labelledby="offcanvasRightLabel">
-        <div class="offcanvas-header">
-            <h1 class="d-none" id="offcanvasRightLabel">Shopping Cart</h1>
-            <button class="btn-aside-cart-close" data-bs-dismiss="offcanvas" aria-label="Close">Shopping Cart <i class="fa fa-chevron-right"></i></button>
-        </div>
-        <div class="offcanvas-body">
-            <ul class="aside-cart-product-list">
-                <li class="aside-product-list-item">
-                    <a href="#/" class="remove">×</a>
-                    <a href="product-details.html">
-                        <img src="assets/images/shop/cart1.webp" width="68" height="84" alt="Image">
-                        <span class="product-title">Leather Mens Slipper</span>
-                    </a>
-                    <span class="product-price">1 × £69.99</span>
-                </li>
-                <li class="aside-product-list-item">
-                    <a href="#/" class="remove">×</a>
-                    <a href="product-details.html">
-                        <img src="assets/images/shop/cart2.webp" width="68" height="84" alt="Image">
-                        <span class="product-title">Quickiin Mens shoes</span>
-                    </a>
-                    <span class="product-price">1 × £20.00</span>
-                </li>
-            </ul>
-            <p class="cart-total"><span>Subtotal:</span><span class="amount">£89.99</span></p>
-            <a class="btn-total" href="product-cart.html">View cart</a>
-            <a class="btn-total" href="product-checkout.html">Checkout</a>
-        </div>
-    </aside>
-    <!--== End Aside Cart ==-->
 
     <!--== Start Aside Menu ==-->
     <aside class="off-canvas-wrapper offcanvas offcanvas-start" tabindex="-1" id="AsideOffcanvasMenu" aria-labelledby="offcanvasExampleLabel">
@@ -166,6 +323,7 @@
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
 <!-- MyJS -->
+
 //display cart items
 <script>
     var token = localStorage.getItem("access_token");
@@ -192,6 +350,13 @@
 
                 listItem.querySelector('img').alt = item.product.name;
 
+                // Set the product link dynamically
+                const productLink = listItem.querySelector('.product-link');
+                if (productLink) {
+                    productLink.href = '{{ route('product.details', '') }}/' + item.product.id;
+                }
+
+
                 cartList.appendChild(listItem);
             });
 
@@ -214,6 +379,229 @@
             console.error('Error fetching cart items:', error);
         });
 </script>
+
+//add to cart
+<script>
+    function addToCart(productId) {
+
+        var token = localStorage.getItem("access_token");
+
+        axios.post(`/api/product/${productId}/addToCart`, {
+            _token: '{{ csrf_token() }}',
+        }, {
+            headers: {
+                'Authorization': 'Bearer ' + token
+            }
+        })
+            .then(function (response) {
+                console.log(response);
+            })
+            .catch(function (error) {
+                console.error(error);
+            });
+    }
+
+    ////////////////         wishlist management
+    var token = localStorage.getItem("access_token");
+    axios.get('/api/wishlist/items', {
+        headers: {
+            'Authorization': 'Bearer ' + token
+        }
+    })
+        .then(response => {
+            const wishlistItems = response.data;
+
+            const tableBody = document.getElementById('wishlistTableBody');
+
+            wishlistItems.forEach(item => {
+                // Create a new table row
+                const row = document.createElement('tr');
+                row.classList.add('tbody-item');
+
+                // Populate the row with item details
+                row.innerHTML = `
+                <td class="product-remove">
+                    <a class="remove" href="javascript:void(0)" data-id="${item.id}">×</a>
+                </td>
+                <td class="product-thumbnail">
+                    <div class="thumb">
+                        <a href="{{ route('product.details', '') }}/${item.product.id}">
+                            <img src="{{ asset('storage/') }}/${item.product.image}"width="68" height="84" alt="${item.product.name}">
+                        </a>
+                    </div>
+                </td>
+                <td class="product-name">
+                    <a class="title" href="{{ route('product.details', '') }}/${item.product.id}">${item.product.name}</a>
+                </td>
+                <td class="product-price">
+                    <span class="price">${item.product.price}</span>
+                </td>
+                <td class="product-stock-status">
+                    <span class="wishlist-in-stock">In Stock</span>
+                </td>
+                <td class="product-add-to-cart">
+                    <a class="btn-shop-cart" href="javascript:void(0)" onclick="addToCart(${item.product.id})">Add to Cart</a>
+                </td>
+            `;
+
+                tableBody.appendChild(row);
+            });
+
+
+            //remove item from wishlist
+            const removeButtons = document.querySelectorAll('.product-remove a');
+            removeButtons.forEach(button => {
+                button.addEventListener('click', function (event) {
+                    event.preventDefault();
+                    const itemId = button.getAttribute('data-id');
+                    console.log(itemId);
+                    var token = localStorage.getItem("access_token");
+
+                    axios.delete(`/api/wishlist/items/${itemId}`, {
+                        headers: {
+                            'Authorization': 'Bearer ' + token
+                        }
+                    })
+                        .then(response => {
+                            button.closest('.tbody-item').remove();
+                        })
+                        .catch(error => {
+                            console.error('Error removing item from wishlist:', error);
+                        });
+                });
+            });
+
+        })
+        .catch(error => {
+            console.error('Error fetching wishlist items:', error);
+        });
+
+</script>
+
+//dashboard
+<script>
+    var token = localStorage.getItem("access_token");
+
+    document.addEventListener("DOMContentLoaded", function() {
+        axios.get('/api/my-account',
+        {
+            headers: {
+                'Authorization': 'Bearer ' + token
+            }
+        })
+            .then(function(response) {
+                const user = response.data.user;
+                const welcomeMessage = document.getElementById('userGreeting');
+                welcomeMessage.innerHTML = `Hello, <strong>${user.name}</strong>  `;
+            })
+            .catch(function(error) {
+                console.error('Error fetching user information:', error);
+            });
+    });
+</script>
+
+//my orders
+<script>
+    var token = localStorage.getItem("access_token");
+
+    document.addEventListener('DOMContentLoaded', function() {
+        axios.get('/api/my-orders',
+            {
+                headers: {
+                    'Authorization': 'Bearer ' + token
+                }
+            })
+            .then(response => {
+                const orders = response.data; // Assuming the API returns an array of orders
+
+                const tableBody = document.querySelector('#orders tbody');
+
+                // Clear any existing rows in the table body
+                tableBody.innerHTML = '';
+
+                orders.forEach(order => {
+                    const row = `
+            <tr>
+              <td>${order.order_number}</td>
+              <td>${order.created_at}</td>
+              <td>${order.status}</td>
+              <td>${order.price} Dhs</td>
+              <td><a href="{{route('cart.view')}}" class="check-btn sqr-btn">View</a></td>
+            </tr>
+          `;
+                    tableBody.innerHTML += row;
+                });
+            })
+            .catch(error => {
+                console.error('Error fetching orders:', error);
+            });
+    });
+</script>
+
+
+//Account
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const accountInfoForm = document.getElementById('account-info-form');
+
+        // Function to fetch user's data and populate the form fields
+        function populateFormFields() {
+            axios.get('/api/user-info', {
+                headers: {
+                    'Authorization': 'Bearer ' + localStorage.getItem('access_token')
+                }
+            })
+                .then(response => {
+                    const userData = response.data;
+                    console.log(userData);
+                    document.getElementById('name').value = userData.name;
+                    document.getElementById('email').value = userData.email;
+                })
+                .catch(error => {
+                    console.error(error.response.data);
+                });
+        }
+
+        // Call the populateFormFields function when the page loads
+        populateFormFields();
+
+        // Event listener for form submission
+        accountInfoForm.addEventListener('submit', function (event) {
+            event.preventDefault();
+
+            const formData = new FormData(accountInfoForm);
+
+            axios.put('/api/user-info/update', formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                    'Authorization': 'Bearer ' + localStorage.getItem('access_token')
+                }
+            })
+                .then(response => {
+                    console.log(response.data);
+                    // Optionally, you can show a success message or redirect the user
+                })
+                .catch(error => {
+                    console.error(error.response.data);
+                    // Optionally, you can show an error message to the user
+                });
+        });
+    });
+
+</script>
+
+
+
+//toggeling
+<script>
+    document.getElementById('orders-tab').addEventListener('click', function () {
+        // Hide the dashboard tab pane
+        document.getElementById('dashboard').classList.remove('show', 'active');
+        // Show the orders tab pane
+        document.getElementById('orders').classList.add('show', 'active');
+    });
+</script>
+
 
 
 <!-- JS Vendor, Plugins & Activation Script Files -->

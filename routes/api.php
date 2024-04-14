@@ -3,6 +3,7 @@
 use App\Http\Controllers\API\LoginController;
 use App\Http\Controllers\API\LogoutController;
 use App\Http\Controllers\API\RegisterController;
+use App\Http\Controllers\User\AccountController;
 use App\Http\Controllers\User\CartController;
 use App\Http\Controllers\User\WishlistController;
 use Illuminate\Http\Request;
@@ -58,6 +59,19 @@ Route::group([
     Route::post('/wishlist/{productId}/add', [WishlistController::class, 'addToWishlist'])->name('wishlist.add');
     Route::get('/wishlist/items', [WishlistController::class, 'getWishlistItems']);
     Route::delete('/wishlist/items/{id}', [WishlistController::class, 'removeWishlistItem'])->name('api.wishlist.items.remove');
+
+
+////////////////////////////////       Account          ///////////////////////////////////////////////////
+   Route::get('/my-account',[AccountController::class,'dashboard'])->name('dashboard');;
+   //my orders
+    Route::get('/my-orders',[AccountController::class,'getOrderDetails'])->name('get.orders');
+    //my account
+    Route::get('/user-info', [AccountController::class, 'getUserInfo']);
+    Route::put('/user-info/update', [AccountController::class,'updateAccountInfo']);
+
+
+
+
 
 
 
