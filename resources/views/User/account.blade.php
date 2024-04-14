@@ -39,22 +39,16 @@
                 <div class="row">
                     <div class="col-lg-3 col-md-4">
                         <div class="my-account-tab-menu nav nav-tabs" id="nav-tab" role="tablist">
-                            <button class="nav-link active" id="dashboad-tab" data-bs-toggle="tab"
-                                    data-bs-target="#dashboad" type="button" role="tab" aria-controls="dashboad"
-                                    aria-selected="true">Dashboard</button>
+                            <button class="nav-link active" id="dashboard-tab" data-bs-toggle="tab" data-bs-target="#dashboard" type="button" role="tab" aria-controls="dashboard" aria-selected="true">Dashboard</button>
 
-                            <button class="nav-link" id="orders-tab" data-bs-toggle="tab" data-bs-target="#orders"
-                                    type="button" role="tab" aria-controls="orders" aria-selected="false"> Orders</button>
+                            <button class="nav-link" id="orders-tab" data-bs-toggle="tab" data-bs-target="#orders" type="button" role="tab" aria-controls="orders" aria-selected="false">Orders</button>
 
-                            <button class="nav-link" id="wishlists-tab" data-bs-toggle="tab" data-bs-target="#wishlists"
-                                    type="button" role="tab" aria-controls="wishlists" aria-selected="false">
-                                Wishlist</button>
+                            <button class="nav-link" id="wishlists-tab" data-bs-toggle="tab" data-bs-target="#wishlists" type="button" role="tab" aria-controls="wishlists" aria-selected="false">Wishlist</button>
 
-                            <button class="nav-link" id="account-info-tab" data-bs-toggle="tab" data-bs-target="#account-info"
+                            <button class="nav-link" id="account-info-tab" data-bs-toggle="tab" data-bs-target="#account-info" type="button" role="tab" aria-controls="account-info" aria-selected="false">Account Details</button>
 
-                                    type="button" role="tab" aria-controls="account-info" aria-selected="false">Account Details</button>
 {{--logout--}}
-                            <button class="nav-link" onclick="window.location.href='account-login.html'" type="button">Logout</button>
+                            <button class="nav-link" id="logout-button" type="button">Logout</button>
                         </div>
                     </div>
                     <div class="col-lg-9 col-md-8">
@@ -144,45 +138,56 @@
                                 <div class="myaccount-content">
                                     <h3>Account Details</h3>
                                     <div class="account-details-form">
-                                        <form id="account-info-form">
+                                        <form id="account-info-form" >
                                             <!-- Input field for profile picture -->
-                                            <div class="single-input-item">
-                                                <label for="profile-picture">Profile Picture</label>
-                                                <input type="file" id="profile-picture">
-                                            </div>
+{{--                                            <div class="single-input-item">--}}
+{{--                                                <label for="profile-picture">Profile Picture</label>--}}
+{{--                                                <input type="file" id="profile-picture" name="profile-picture">--}}
+{{--                                            </div>--}}
 
                                             <!-- Display the existing user information -->
-                                            <div class="row">
-                                                    <div class="single-input-item">
-                                                        <label for="name" class="required"> Name</label>
-                                                        <input type="text" id="name">
-                                                    </div>
+                                            <div class="single-input-item">
+                                                <label for="name" class="required">Name</label>
+                                                <input type="text" id="name" name="name">
+                                                <!-- Container for displaying the name validation error -->
+                                                <div id="name-error" class="error-message"></div>
+                                            </div>
 
                                             <div class="single-input-item">
                                                 <label for="email" class="required">Email Address</label>
-                                                <input type="email" id="email">
+                                                <input type="email" id="email" name="email">
+                                                <!-- Container for displaying the email validation error -->
+                                                <div id="email-error" class="error-message"></div>
                                             </div>
+
                                             <fieldset>
                                                 <legend>Password change</legend>
                                                 <div class="single-input-item">
                                                     <label for="current-pwd" class="required">Current Password</label>
-                                                    <input type="password" id="current-pwd">
+                                                    <input type="password" id="current-pwd" name="current-pwd">
+                                                    <div id="current-pwd-error" class="error-message"></div>
+
                                                 </div>
                                                 <div class="row">
                                                     <div class="col-lg-6">
                                                         <div class="single-input-item">
                                                             <label for="new-pwd" class="required">New Password</label>
-                                                            <input type="password" id="new-pwd">
+                                                            <input type="password" id="new-pwd" name="new-pwd">
+                                                            <div id="new-pwd-error" class="error-message"></div>
+
                                                         </div>
                                                     </div>
                                                     <div class="col-lg-6">
                                                         <div class="single-input-item">
                                                             <label for="confirm-pwd" class="required">Confirm Password</label>
-                                                            <input type="password" id="confirm-pwd">
+                                                            <input type="password" id="confirm-pwd" name="new-pwd_confirmation">
+                                                            <div id="new-pwd_confirmation-error" class="error-message"></div>
+
                                                         </div>
                                                     </div>
                                                 </div>
                                             </fieldset>
+
                                             <div class="single-input-item">
                                                 <button class="check-btn sqr-btn">Save Changes</button>
                                             </div>
@@ -346,7 +351,7 @@
                 listItem.querySelector('.product-title').textContent = item.product.name;
                 listItem.querySelector('.product-price').textContent = `${item.quantity} ×  ${item.product.price} Dhs`;
                 listItem.querySelector('img').src = '{{ asset("storage/") }}/' + item.product.image;
-                console.log('Image Source:', '{{ asset("storage/") }}' + item.product.image);
+                {{--console.log('Image Source:', '{{ asset("storage/") }}' + item.product.image);--}}
 
                 listItem.querySelector('img').alt = item.product.name;
 
@@ -544,7 +549,6 @@
     document.addEventListener('DOMContentLoaded', function () {
         const accountInfoForm = document.getElementById('account-info-form');
 
-        // Function to fetch user's data and populate the form fields
         function populateFormFields() {
             axios.get('/api/user-info', {
                 headers: {
@@ -553,7 +557,7 @@
             })
                 .then(response => {
                     const userData = response.data;
-                    console.log(userData);
+                    // console.log(userData);
                     document.getElementById('name').value = userData.name;
                     document.getElementById('email').value = userData.email;
                 })
@@ -562,43 +566,140 @@
                 });
         }
 
-        // Call the populateFormFields function when the page loads
         populateFormFields();
 
-        // Event listener for form submission
-        accountInfoForm.addEventListener('submit', function (event) {
-            event.preventDefault();
+        //  Update form submission
+        // accountInfoForm.addEventListener('submit', function (event) {
+        //     event.preventDefault();
+        //
+        //     const formData = new FormData(accountInfoForm);
+        //
+        //     for (let entry of formData.entries()) {
+        //         console.log(entry);
+        //     }
+        //
+        //     axios.put('/api/user-info/update', formData, {
+        //         headers: {
+        //             'Content-Type': 'multipart/form-data',
+        //             'Authorization': 'Bearer ' + localStorage.getItem('access_token')
+        //         }
+        //     })
+        //         .then(response => {
+        //             console.log(response.data);
+        //         })
+        //         .catch(error => {
+        //             if (error.response.status === 422) {
+        //                 const errors = error.response.data.errors;
+        //                 for (let field in errors) {
+        //                     const errorMessage = errors[field][0];
+        //                     const errorField = document.getElementById(`${field}-error`);
+        //                     if (errorField) {
+        //                         errorField.textContent = errorMessage;
+        //                         errorField.style.color = 'red';
+        //                     }
+        //                 }
+        //             } else {
+        //                 console.error(error.response.data);
+        //             }
+        //         });
+        // });
 
-            const formData = new FormData(accountInfoForm);
+            accountInfoForm.addEventListener('submit', function (event) {
+                event.preventDefault();
 
-            axios.put('/api/user-info/update', formData, {
-                headers: {
-                    'Content-Type': 'multipart/form-data',
-                    'Authorization': 'Bearer ' + localStorage.getItem('access_token')
-                }
-            })
-                .then(response => {
-                    console.log(response.data);
-                    // Optionally, you can show a success message or redirect the user
+                // Create an object to hold form data
+                const formData = {
+                    name: document.getElementById('name').value,
+                    email: document.getElementById('email').value,
+                    current_pwd: document.getElementById('current-pwd').value,
+                    new_pwd: document.getElementById('new-pwd').value,
+                    new_pwd_confirmation: document.getElementById('confirm-pwd').value
+                };
+
+                // Send form data to the server using Axios
+                axios.put('/api/user-info/update', formData, {
+                    headers: {
+                        'Authorization': 'Bearer ' + localStorage.getItem('access_token')
+                    }
                 })
-                .catch(error => {
-                    console.error(error.response.data);
-                    // Optionally, you can show an error message to the user
-                });
-        });
-    });
+                    .then(response => {
+                        console.log(response.data);
+                    })
+                    .catch(error => {
+                        if (error.response.status === 422) {
+                            const errors = error.response.data.errors;
+                            for (let field in errors) {
+                                const errorMessage = errors[field][0];
+                                const errorField = document.getElementById(`${field}-error`);
+                                if (errorField) {
+                                    errorField.textContent = errorMessage;
+                                    errorField.style.color = 'red';
+                                }
+                            }
+                        } else {
+                            console.error(error.response.data);
+                            // Optionally, you can show an error message to the user
+                        }
+                    });
+            });
 
+
+});
+
+</script>
+
+//logout
+<script>
+    document.getElementById('logout-button').addEventListener('click', function () {
+        axios.post('/api/logout', null, {
+            headers: {
+                'Authorization': 'Bearer ' + localStorage.getItem('access_token')
+            }
+        })
+            .then(response => {
+                // Redirect to the login page after successful logout
+                window.location.href = response.data.redirect_url;
+            })
+            .catch(error => {
+                console.error('Logout failed:', error.response.data);
+            });
+    });
 </script>
 
 
 
-//toggeling
+//toggling
 <script>
+    // Toggle dashboard tab
+    document.getElementById('dashboard-tab').addEventListener('click', function () {
+        document.getElementById('orders').classList.remove('show', 'active');
+        document.getElementById('wishlists').classList.remove('show', 'active');
+        document.getElementById('account-info').classList.remove('show', 'active');
+        document.getElementById('dashboard').classList.add('show', 'active');
+    });
+
+    // Toggle orders tab
     document.getElementById('orders-tab').addEventListener('click', function () {
-        // Hide the dashboard tab pane
         document.getElementById('dashboard').classList.remove('show', 'active');
-        // Show the orders tab pane
+        document.getElementById('wishlists').classList.remove('show', 'active');
+        document.getElementById('account-info').classList.remove('show', 'active');
         document.getElementById('orders').classList.add('show', 'active');
+    });
+
+    // Toggle wishlist tab
+    document.getElementById('wishlists-tab').addEventListener('click', function () {
+        document.getElementById('dashboard').classList.remove('show', 'active');
+        document.getElementById('orders').classList.remove('show', 'active');
+        document.getElementById('account-info').classList.remove('show', 'active');
+        document.getElementById('wishlists').classList.add('show', 'active');
+    });
+
+    // Toggle account-info tab
+    document.getElementById('account-info-tab').addEventListener('click', function () {
+        document.getElementById('dashboard').classList.remove('show', 'active');
+        document.getElementById('orders').classList.remove('show', 'active');
+        document.getElementById('wishlists').classList.remove('show', 'active');
+        document.getElementById('account-info').classList.add('show', 'active');
     });
 </script>
 

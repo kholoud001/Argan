@@ -29,27 +29,24 @@ class AccountController extends Controller
         try {
             $orders = Order::with('items')
                 ->where('user_id', Auth::id())
+                ->orderBy('created_at', 'desc')
                 ->get();
 
-            // If no orders found, return an empty array
             if ($orders->isEmpty()) {
                 return response()->json([], 200);
             }
 
-            // If orders found, return the necessary details
             $formattedOrders = $orders->map(function ($order) {
                 return [
                     'order_number' => $order->id,
                     'status' => $order->status,
                     'price' => $order->items->sum('price'),
                     'created_at' => $order->created_at->format('M d, Y'),
-
                 ];
             });
 
             return response()->json($formattedOrders, 200);
         } catch (\Exception $e) {
-            // If an error occurs, return an error response
             return response()->json(['error' => 'Failed to retrieve order details.'], 500);
         }
     }
@@ -74,29 +71,33 @@ class AccountController extends Controller
         $validatedData = $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255',
-            'current-pwd' => 'nullable|string|min:8',
-            'new-pwd' => 'nullable|string|min:8|confirmed',
-            'profile-picture' => 'nullable|image',
+            'current_pwd' => 'required|string|min:8',
+            'new_pwd' => 'nullable|string|min:8|confirmed',
+            //'profile-picture' => 'nullable|image',
         ]);
 
-        // Update the user's account information
-        $user = Auth::user();
-        $user->name = $validatedData['name'];
-        $user->email = $validatedData['email'];
+        // Get the authenticated user
+        $user = $request->user();
 
-        // Update password if provided
-        if ($validatedData['new-pwd']) {
-            $user->password = Hash::make($validatedData['new-pwd']);
+        // Prepare the data for update
+        $dataToUpdate = [
+            'name' => $validatedData['name'],
+            'email' => $validatedData['email'],
+        ];
+
+        if (!empty($validatedData['new-pwd']) && Hash::check($validatedData['current-pwd'], $user->password)) {
+            $dataToUpdate['password'] = Hash::make($validatedData['new-pwd']);
         }
 
+        // Update profile picture if provided
         if ($request->hasFile('profile-picture')) {
             $image = $request->file('profile-picture');
             $imageName = time() . '.' . $image->getClientOriginalExtension();
             $image->storeAs('public/profile-pictures', $imageName);
-            $user->picture = $imageName;
+            $dataToUpdate['picture'] = $imageName;
         }
 
-        $user->save();
+        $user->update($dataToUpdate);
 
         return response()->json(['message' => 'Account information updated successfully']);
     }
