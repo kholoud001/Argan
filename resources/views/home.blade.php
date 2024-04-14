@@ -688,6 +688,26 @@
         });
 </script>
 
+//google api
+<script>
+    try {
+        // Get the token from the URL query parameters
+        const urlParams = new URLSearchParams(window.location.search);
+        const token = urlParams.get('token');
+
+        // Check if token exists and store it in local storage
+        if (token) {
+            localStorage.setItem('access_token', token);
+            console.log('Token set in local storage:', token);
+        } else {
+            console.error('Token not found in URL query parameters.');
+        }
+    } catch (error) {
+        console.error('Error setting token in local storage:', error);
+    }
+</script>
+
+
 
 <!-- JS Vendor, Plugins & Activation Script Files -->
 <!-- Vendors JS -->

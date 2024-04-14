@@ -88,20 +88,7 @@
                                                 <td>$3000</td>
                                                 <td><a href="shop-cart.html" class="check-btn sqr-btn ">View</a></td>
                                             </tr>
-                                            <tr>
-                                                <td>2</td>
-                                                <td>July 22, 2018</td>
-                                                <td>Approved</td>
-                                                <td>$200</td>
-                                                <td><a href="shop-cart.html" class="check-btn sqr-btn ">View</a></td>
-                                            </tr>
-                                            <tr>
-                                                <td>3</td>
-                                                <td>June 12, 2017</td>
-                                                <td>On Hold</td>
-                                                <td>$990</td>
-                                                <td><a href="shop-cart.html" class="check-btn sqr-btn ">View</a></td>
-                                            </tr>
+
                                             </tbody>
                                         </table>
                                     </div>
