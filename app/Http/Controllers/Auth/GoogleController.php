@@ -12,7 +12,8 @@ use Laravel\Socialite\Facades\Socialite;
 
 class GoogleController extends Controller
 {
-    public function redirect(){
+    public function redirect()
+    {
 //        return Socialite::driver('google')->stateless()->redirect();
         return Socialite::driver('google')->redirect();
 
@@ -21,36 +22,39 @@ class GoogleController extends Controller
     public function callbackGoogle()
     {
         try {
-            $google_user = Socialite::driver('google')->user();
+            $googleUser = Socialite::driver('google')->user();
         } catch (\Exception $e) {
             return redirect('/')->with('error', 'Failed to retrieve user information from Google.');
         }
 
-        if (!$google_user) {
+        if (!$googleUser) {
             return redirect('/')->with('error', 'Failed to retrieve user information from Google.');
         }
 
         // Check if this user is in our DB
-        $user = User::where('google_id', $google_user->getId())->first();
+        $user = User::where('google_id', $googleUser->getId())->first();
 
         if (!$user) {
-            // Retrieve the role ID for 'user' or create it if it doesn't exist
             $userRole = Role::firstOrCreate(['name' => 'user']);
 
-            // If the user doesn't exist, create a new one with the default role
-            $new_user = User::create([
-                'name' => $google_user->getName(),
-                'email' => $google_user->getEmail(),
-                'google_id' => $google_user->getId(),
+            $newUser = User::create([
+                'name' => $googleUser->getName(),
+                'email' => $googleUser->getEmail(),
+                'google_id' => $googleUser->getId(),
                 'role_id' => $userRole->id,
             ]);
 
-            Auth::login($new_user);
-            return redirect('/')->with('success', 'Login successful!');
+            $token = $newUser->createToken('Access Token Google')->accessToken;
+
+            return redirect('/?token=' . $token);
+
         } else {
             // If the user exists, log them in
             Auth::login($user);
-            return redirect('/')->with('success', 'Login successful!');
+
+            $token = $user->createToken('Access Token Google')->accessToken;
+
+            return redirect('/?token=' . $token);
         }
     }
 }
