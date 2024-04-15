@@ -44,8 +44,8 @@ class LoginController extends Controller
         // Generate token
         $token = $user->createToken('Access Token')->accessToken;
 
-        // Redirect based on user's role
-        if ($role === 1) { // Assuming 1 represents the role ID for admin
+        // Redirect admin
+        if ($role === 1) {
             return response()->json([
                 'message' => 'Login successful',
                 'user' => $user,
@@ -61,6 +61,16 @@ class LoginController extends Controller
                 'token' => $token,
                 'redirect_url_user' => route('home')
             ]);
+        }
+    }
+
+
+    public function check(Request $request)
+    {
+        if ($request->user()) {
+            return response()->json(['authenticated' => true]);
+        } else {
+            return response()->json(['authenticated' => false]);
         }
     }
 }

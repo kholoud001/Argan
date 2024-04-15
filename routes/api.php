@@ -40,6 +40,9 @@ Route::namespace('Api')->group(function (){
 Route::group([
     'middleware'=> 'auth:api'
 ],function (){
+    //auth check
+    Route::get('/auth-check', [LoginController::class, 'check']);
+    //logout
     Route::post('logout',[LogoutController::class,'logout']);
 ////////////////////////////////       Orders          ///////////////////////////////////////////////////
     Route::post('/product/{id}/addToCart', [CartController::class, 'addToCart'])->name('product.addToCart');

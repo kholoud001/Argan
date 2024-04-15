@@ -644,7 +644,7 @@
             }
         })
             .then(response => {
-                // Redirect to the login page after successful logout
+                //console.log(response);
                 window.location.href = response.data.redirect_url;
             })
             .catch(error => {

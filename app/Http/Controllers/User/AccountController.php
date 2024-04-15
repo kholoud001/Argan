@@ -60,7 +60,6 @@ class AccountController extends Controller
             return response()->json(['error' => 'User not found'], 404);
         }
 
-        // You can customize this response to include only the necessary user information
         return response()->json($user);
     }
 

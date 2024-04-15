@@ -90,61 +90,65 @@ Route::post('/reset-password/{token}', [ForgotPasswordController::class, 'reset'
 |--------------------------------------------------------------------------
 */
 
+Route::group([
+    'middleware'=> 'check.admin'
+],function () {
+
 //should the admin be authentified
-Route::get('/dashboard', function () {
-    return view('Admin.index');
-})->name('dashboard');
+    Route::get('/dashboard', function () {
+        return view('Admin.index');
+    })->name('dashboard');
 ////////////////////////             Users Management             //////////////////////////////
 //users table (and trashed)
-Route::get('/admin/users', [UserController::class, 'show'])->name('users.show');
+    Route::get('/admin/users', [UserController::class, 'show'])->name('users.show');
 //add user
-Route::post('/admin/add/users', [UserController::class, 'store'])->name('users.store');
+    Route::post('/admin/add/users', [UserController::class, 'store'])->name('users.store');
 //Add user form
-Route::post('/users-add', [UserController::class, 'addForm'])->name('form');
+    Route::post('/users-add', [UserController::class, 'addForm'])->name('form');
 //delete user
-Route::delete('/admin/delete/users/{user}', [UserController::class, 'destroy'])->name('users.destroy');
+    Route::delete('/admin/delete/users/{user}', [UserController::class, 'destroy'])->name('users.destroy');
 // restore
-Route::put('/admin/users/restore/{id}', [UserController::class, 'restore'])->name('users.restore');
+    Route::put('/admin/users/restore/{id}', [UserController::class, 'restore'])->name('users.restore');
 
 ////////////////////////            Categories Management               //////////////////////////////
-Route::get('/admin/categories',[CategoryController::class,'show'])->name('categories.show');
+    Route::get('/admin/categories', [CategoryController::class, 'show'])->name('categories.show');
 //add category
-Route::post('/categories',[CategoryController::class,'store'])->name('categories.store');
+    Route::post('/categories', [CategoryController::class, 'store'])->name('categories.store');
 //update category
-Route::put('/categories/{id}',[CategoryController::class,'update'])->name('categories.update');
+    Route::put('/categories/{id}', [CategoryController::class, 'update'])->name('categories.update');
 //delete category
-Route::delete('/categories/{category}',[CategoryController::class,'destroy'])->name('categories.destroy');
+    Route::delete('/categories/{category}', [CategoryController::class, 'destroy'])->name('categories.destroy');
 
 
 ////////////////////////            Products Management               //////////////////////////////
-Route::get('/admin/products', [ProductController::class, 'show'])->name('products.show');
+    Route::get('/admin/products', [ProductController::class, 'show'])->name('products.show');
 //add product
-Route::post('/products', [ProductController::class, 'store'])->name('products.store');
+    Route::post('/products', [ProductController::class, 'store'])->name('products.store');
 //update product
-Route::put('/products/{product}', [ProductController::class, 'update'])->name('products.update');
+    Route::put('/products/{product}', [ProductController::class, 'update'])->name('products.update');
 //delete product
-Route::delete('/products/{product}', [ProductController::class, 'destroy'])->name('products.destroy');
+    Route::delete('/products/{product}', [ProductController::class, 'destroy'])->name('products.destroy');
 //restore post
-Route::put('/products/{id}/restore', [ProductController::class, 'restore'])->name('products.restore');
+    Route::put('/products/{id}/restore', [ProductController::class, 'restore'])->name('products.restore');
 
 
 ////////////////////////            Blogs Management               //////////////////////////////
-Route::get('/admin/posts', [BlogController::class, 'show'])->name('posts.show');
+    Route::get('/admin/posts', [BlogController::class, 'show'])->name('posts.show');
 //add product
-Route::post('/posts', [BlogController::class, 'store'])->name('posts.store');
+    Route::post('/posts', [BlogController::class, 'store'])->name('posts.store');
 //delete post
-Route::delete('/posts/{id}', [BlogController::class, 'destroy'])->name('posts.destroy');
+    Route::delete('/posts/{id}', [BlogController::class, 'destroy'])->name('posts.destroy');
 //restore post
-Route::put('/posts/{id}/restore', [BlogController::class, 'restore'])->name('posts.restore');
+    Route::put('/posts/{id}/restore', [BlogController::class, 'restore'])->name('posts.restore');
 
 ////////////////////////            Orders Management               //////////////////////////////
-Route::get('/admin/orders',[TrackController::class,'index'])->name('orders.show');
+    Route::get('/admin/orders', [TrackController::class, 'index'])->name('orders.show');
 //approve
-Route::post('/orders/{id}/approve', [TrackController::class, 'approve'])->name('orders.approve');
+    Route::post('/orders/{id}/approve', [TrackController::class, 'approve'])->name('orders.approve');
 //archive
-Route::delete('/orders/{id}/archive', [TrackController::class, 'archive'])->name('orders.archive');
+    Route::delete('/orders/{id}/archive', [TrackController::class, 'archive'])->name('orders.archive');
 
-
+});
 
 /*
 |--------------------------------------------------------------------------
