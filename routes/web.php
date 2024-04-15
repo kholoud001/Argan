@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\BlogController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ProductController;
+use App\Http\Controllers\Admin\TrackController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\API\LoginController;
 use App\Http\Controllers\API\RegisterController;
@@ -135,6 +136,15 @@ Route::post('/posts', [BlogController::class, 'store'])->name('posts.store');
 Route::delete('/posts/{id}', [BlogController::class, 'destroy'])->name('posts.destroy');
 //restore post
 Route::put('/posts/{id}/restore', [BlogController::class, 'restore'])->name('posts.restore');
+
+////////////////////////            Orders Management               //////////////////////////////
+Route::get('/admin/orders',[TrackController::class,'index'])->name('orders.show');
+//approve
+Route::post('/orders/{id}/approve', [TrackController::class, 'approve'])->name('orders.approve');
+//archive
+Route::delete('/orders/{id}/archive', [TrackController::class, 'archive'])->name('orders.archive');
+
+
 
 /*
 |--------------------------------------------------------------------------

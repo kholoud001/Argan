@@ -691,11 +691,9 @@
 //google api
 <script>
     try {
-        // Get the token from the URL query parameters
         const urlParams = new URLSearchParams(window.location.search);
         const token = urlParams.get('token');
 
-        // Check if token exists and store it in local storage
         if (token) {
             localStorage.setItem('access_token', token);
             console.log('Token set in local storage:', token);

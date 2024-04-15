@@ -34,6 +34,13 @@
                 </a>
 
             </li>
+            {{--                Order--}}
+            <li>
+                <a  href="{{route('orders.show')}}" aria-expanded="false">
+                    <i class=" icon-menu menu-icon"></i><span class="nav-text">Orders</span>
+                </a>
+
+            </li>
         </ul>
     </div>
 </div>
