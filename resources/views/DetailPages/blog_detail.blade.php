@@ -93,7 +93,8 @@
                     <!--== End Product Category Item ==-->
                 </div>
 
-{{--Comments--}}
+                <!-- Comments section -->
+                <!--post-->
                 <div class="blog-comment-form-wrap">
                     <div class="row justify-content-center">
                         <div class="col-lg-10">
@@ -113,12 +114,27 @@
                                 </select>
                             </div>
                             <div class="blog-comment-form">
-                                <img class="blog-comment-img" src="assets/images/blog/form1.webp" width="110" height="110" alt="Image">
-                                <textarea class="blog-comment-control" placeholder="type your comment"></textarea>
+
+                                {{--                                <div class="user-name">--}}
+                                {{--                                    <!-- Replace "user_name_here" with the actual user's name -->--}}
+                                {{--                                    <span>User Name</span>--}}
+                                {{--                                </div>--}}
+                                <textarea id="comment-content" class="blog-comment-control" placeholder="Type your comment"></textarea>
+                                <button id="submit-comment" class="btn btn-primary">Submit</button>
                             </div>
                         </div>
                     </div>
                 </div>
+                <!--get-->
+                <div class="blog-comments-wrap">
+                    <div class="row justify-content-center ">
+                        <div class="col-lg-10">
+                            <div id="comment-list"></div>
+                        </div>
+                    </div>
+                </div>
+
+
             </div>
         </section>
         <!--== End Blog Detail Area Wrapper ==-->
@@ -146,7 +162,7 @@
                                     <a class="post-category" href="blog.html">{{ $post->category }}</a>
                                     <h4 class="title"><a href="{{route('blog.details',$post->id)}}">{{ $post->title }}</a></h4>
                                     <ul class="meta">
-                                        <li class="author-info"><span>By:</span> <a href="blog.html"></a></li>
+                                        <li class="author-info"><span>By:</span> </li>
                                         <li class="post-date">{{ $post->created_at->format('F d, Y') }}</li>
                                     </ul>
                                 </div>
@@ -191,55 +207,8 @@
     <!--== Scroll Top Button ==-->
     <div id="scroll-to-top" class="scroll-to-top"><span class="fa fa-angle-up"></span></div>
 
-    <!--== Start Product Quick Wishlist Modal ==-->
-    <aside class="product-action-modal modal fade" id="action-WishlistModal" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-body">
-                    <div class="product-action-view-content">
-                        <button type="button" class="btn-close" data-bs-dismiss="modal">
-                            <i class="fa fa-times"></i>
-                        </button>
-                        <div class="modal-action-messages">
-                            <i class="fa fa-check-square-o"></i> Added to wishlist successfully!
-                        </div>
-                        <div class="modal-action-product">
-                            <div class="thumb">
-                                <img src="assets/images/shop/modal1.webp" alt="Organic Food Juice" width="466" height="320">
-                            </div>
-                            <h4 class="product-name"><a href="product-details.html">Readable content DX22</a></h4>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </aside>
-    <!--== End Product Quick Wishlist Modal ==-->
 
-    <!--== Start Product Quick Add Cart Modal ==-->
-    <aside class="product-action-modal modal fade" id="action-CartAddModal" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-body">
-                    <div class="product-action-view-content">
-                        <button type="button" class="btn-close" data-bs-dismiss="modal">
-                            <i class="fa fa-times"></i>
-                        </button>
-                        <div class="modal-action-messages">
-                            <i class="fa fa-check-square-o"></i> Added to cart successfully!
-                        </div>
-                        <div class="modal-action-product">
-                            <div class="thumb">
-                                <img src="assets/images/shop/modal1.webp" alt="Organic Food Juice" width="466" height="320">
-                            </div>
-                            <h4 class="product-name"><a href="product-details.html">Readable content DX22</a></h4>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </aside>
-    <!--== End Product Quick Add Cart Modal ==-->
+
 
     <!--== Start Aside Search Form ==-->
     <aside class="aside-search-box-wrapper offcanvas offcanvas-top" tabindex="-1" id="AsideOffcanvasSearch" aria-labelledby="offcanvasTopLabel">
@@ -269,35 +238,7 @@
 
 
     <!--== Start Aside Cart ==-->
-    <aside class="aside-cart-wrapper offcanvas offcanvas-end" tabindex="-1" id="AsideOffcanvasCart" aria-labelledby="offcanvasRightLabel">
-        <div class="offcanvas-header">
-            <h1 class="d-none" id="offcanvasRightLabel">Shopping Cart</h1>
-            <button class="btn-aside-cart-close" data-bs-dismiss="offcanvas" aria-label="Close">Shopping Cart <i class="fa fa-chevron-right"></i></button>
-        </div>
-        <div class="offcanvas-body">
-            <ul class="aside-cart-product-list">
-                <li class="aside-product-list-item">
-                    <a href="#/" class="remove">×</a>
-                    <a href="product-details.html">
-                        <img src="assets/images/shop/cart1.webp" width="68" height="84" alt="Image">
-                        <span class="product-title">Leather Mens Slipper</span>
-                    </a>
-                    <span class="product-price">1 × £69.99</span>
-                </li>
-                <li class="aside-product-list-item">
-                    <a href="#/" class="remove">×</a>
-                    <a href="product-details.html">
-                        <img src="assets/images/shop/cart2.webp" width="68" height="84" alt="Image">
-                        <span class="product-title">Quickiin Mens shoes</span>
-                    </a>
-                    <span class="product-price">1 × £20.00</span>
-                </li>
-            </ul>
-            <p class="cart-total"><span>Subtotal:</span><span class="amount">£89.99</span></p>
-            <a class="btn-total" href="product-cart.html">View cart</a>
-            <a class="btn-total" href="product-checkout.html">Checkout</a>
-        </div>
-    </aside>
+    @include('components/cartAside')
     <!--== End Aside Cart ==-->
 
     <!--== Start Aside Menu ==-->
@@ -375,13 +316,168 @@
 
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+<!-- MY JS -->
+
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+
+//get comments
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        let currentUrl = window.location.href;
+        let urlParts = currentUrl.split('/');
+        let blogPostId = urlParts[urlParts.length - 1];
+
+        const commentList = document.getElementById('comment-list');
+
+        axios.get(`/api/comments/${blogPostId}`)
+            .then(response => {
+                const comments = response.data.comments;
+                console.log(comments);
+
+                comments.forEach(comment => {
+                    const commentItem = document.createElement('div');
+                    commentItem.classList.add('product-review-item', 'mb-3');
+
+                    const reviewTop = document.createElement('div');
+                    reviewTop.classList.add('product-review-top');
+                    commentItem.appendChild(reviewTop);
+
+                    const reviewContent = document.createElement('div');
+                    reviewContent.classList.add('product-review-content');
+                    reviewTop.appendChild(reviewContent);
+
+                    const userName = document.createElement('span');
+                    userName.classList.add('product-review-name');
+                    userName.textContent = comment.user.name;
+                    reviewContent.appendChild(userName);
+
+                    const createdAt = document.createElement('span');
+                    createdAt.classList.add('product-review-designation');
+                    createdAt.textContent = formatDate(comment.created_at);
+                    reviewContent.appendChild(createdAt);
+
+                    const desc = document.createElement('p');
+                    desc.classList.add('desc');
+                    desc.textContent = comment.content;
+                    commentItem.appendChild(desc);
+
+                    commentList.appendChild(commentItem);
+
+
+                });
+            })
+            .catch(error => {
+                console.error('Error fetching comments:', error);
+            });
+    });
+    function formatDate(dateString) {
+        const date = new Date(dateString);
+        const options = { day: 'numeric', month: 'short', year: 'numeric', hour: 'numeric', minute: 'numeric', hour12: true };
+        return date.toLocaleDateString('en-US', options);
+    }
+
+
+</script>
+
+//store comments
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        let currentUrl = window.location.href;
+        let urlParts = currentUrl.split('/');
+        let blogPostId = urlParts[urlParts.length - 1];
+        // console.log(blogPostId);
+
+        const submitBtn = document.getElementById('submit-comment');
+
+        submitBtn.addEventListener('click', function() {
+            const content = document.getElementById('comment-content').value;
+
+            axios.post(`/api/blog-posts/${blogPostId}/comments`, {
+                content: content
+            }, {
+                headers: {
+                    'Authorization': 'Bearer ' + localStorage.getItem('access_token')
+                }
+            })
+                .then(response => {
+                    console.log('Comment added successfully: ', response.data);
+                })
+                .catch(error => {
+                    console.error('Error adding comment:', error);
+                });
+        });
+    });
+</script>
+
+
+//navbar account
+<script src="{{url('myJs/account.js')}}"></script>
+
+//display cart items
+<script>
+    var token = localStorage.getItem("access_token");
+
+    axios.get('/api/cart/items', {
+        headers: {
+            'Authorization': 'Bearer ' + token
+        }
+    })
+        .then(response => {
+            const cartItems = response.data.cartItems;
+            const totalPrice = response.data.totalPrice.toFixed(2);
+
+            // Update cart items
+            const cartList = document.querySelector('.aside-cart-product-list');
+            const cartItemTemplate = document.getElementById('cart-item-template');
+
+            cartItems.forEach(item => {
+                const listItem = cartItemTemplate.content.cloneNode(true);
+                listItem.querySelector('.product-title').textContent = item.product.name;
+                listItem.querySelector('.product-price').textContent = `${item.quantity} ×  ${item.product.price} Dhs`;
+                listItem.querySelector('img').src = '{{ asset("storage/") }}/' + item.product.image;
+                console.log('Image Source:', '{{ asset("storage/") }}' + item.product.image);
+
+                listItem.querySelector('img').alt = item.product.name;
+
+                // Set the product link dynamically
+                const productLink = listItem.querySelector('.product-link');
+                if (productLink) {
+                    productLink.href = '{{ route('product.details', '') }}/' + item.product.id;
+                }
+
+
+                cartList.appendChild(listItem);
+            });
+
+            // Update subtotal
+            const subtotalElement = document.querySelector('.cart-total .amount');
+            subtotalElement.textContent = `${totalPrice} Dhs`;
+
+            //   View cart
+            const viewCartLink = document.querySelector('.btn-total[href="{{route('cart.view')}}"]');
+            viewCartLink.addEventListener('click', function(event) {
+                event.preventDefault();
+                window.location.href = "{{ route('cart.view') }}";
+            });
+
+
+            const checkoutLink = document.querySelector('.btn-total[href="product-checkout.html"]');
+            checkoutLink.href = "product-checkout.html";
+        })
+        .catch(error => {
+            console.error('Error fetching cart items:', error);
+        });
+</script>
+
+
 
 <!-- JS Vendor, Plugins & Activation Script Files -->
 <!-- Vendors JS -->
 <script src="{{asset('assets/js/vendor/modernizr-3.11.7.min.js)')}}"></script>
 <script src="{{asset('assets/js/vendor/jquery-3.6.0.min.js')}}"></script>
 <script src="{{asset('assets/js/vendor/jquery-migrate-3.3.2.min.js')}}"></script>
-{{--<script src="{{asset('assets/js/vendor/bootstrap.bundle.min.js')}}"></script>--}}
+<script src="{{asset('assets/js/vendor/bootstrap.bundle.min.js')}}"></script>
 
 <!-- Plugins JS -->
 <script src="{{asset('assets/js/plugins/swiper-bundle.min.js')}}"></script>

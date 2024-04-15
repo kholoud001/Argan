@@ -15,7 +15,7 @@ document.addEventListener("DOMContentLoaded", function() {
         .catch(function(error) {
             document.getElementById('account-link').addEventListener('click', function(event) {
                 event.preventDefault();
-                window.location.href = '/login'; 
+                window.location.href = '/login';
             });
         });
 });

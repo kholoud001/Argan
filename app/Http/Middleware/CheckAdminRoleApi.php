@@ -17,12 +17,16 @@ class CheckAdminRoleApi
      */
     public function handle(Request $request, Closure $next)
     {
-        {
-            if (Auth::guard('api')->check() && Auth::user()->role() == 'admin') {
-                return $next($request);
-            }
 
-            return response()->json(['message' => 'Unauthorized'], 401);
+        $test=Auth::guard('api')->check();
+        dd($test);
+
+        if (Auth::guard('api')->check() && Auth::guard('api')->user()->role_id === 1) {
+            return $next($request);
         }
-        }
+
+        return response()->json(['message' => 'Unauthorized'], 401);
+    }
+
+
 }

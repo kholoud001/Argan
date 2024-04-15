@@ -16,6 +16,7 @@ use App\Http\Controllers\User\CartController;
 use App\Http\Controllers\User\HomeController;
 use App\Http\Controllers\User\OrderController;
 use App\Http\Controllers\User\WishlistController;
+use App\Http\Middleware\CheckAdminRoleApi;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -90,9 +91,7 @@ Route::post('/reset-password/{token}', [ForgotPasswordController::class, 'reset'
 |--------------------------------------------------------------------------
 */
 
-Route::group([
-    'middleware'=> 'check.admin'
-],function () {
+//Route::group(['middleware' => ['auth:api', CheckAdminRoleApi::class]], function () {
 
 //should the admin be authentified
     Route::get('/dashboard', function () {
@@ -148,7 +147,7 @@ Route::group([
 //archive
     Route::delete('/orders/{id}/archive', [TrackController::class, 'archive'])->name('orders.archive');
 
-});
+//});
 
 /*
 |--------------------------------------------------------------------------
@@ -167,6 +166,9 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 
 //product details page
 Route::get('/products/{id}', [HomeController::class, 'getProductDetails'])->name('product.details');
+
+////////////////////////////////       Blogs          ///////////////////////////////////////////////////
+
 //Blog details page
 Route::get('/blogs/{id}',[HomeController::class,'getBlogDetails'])->name('blog.details');
 

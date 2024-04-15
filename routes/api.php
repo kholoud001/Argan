@@ -5,6 +5,7 @@ use App\Http\Controllers\API\LogoutController;
 use App\Http\Controllers\API\RegisterController;
 use App\Http\Controllers\User\AccountController;
 use App\Http\Controllers\User\CartController;
+use App\Http\Controllers\User\CommentController;
 use App\Http\Controllers\User\WishlistController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -29,10 +30,16 @@ use Illuminate\Support\Facades\Route;
 */
 Route::namespace('Api')->group(function (){
 
+    //get comments
+    Route::get('/comments/{blog_post_id}', [CommentController::class,'getComments']);
+
     Route::prefix('auth')->group(function (){
         Route::post('login', [LoginController::class, 'login']);
        // Route::post('register', [RegisterController::class, 'store']);
         Route::post('/register', [RegisterController::class, 'store']);
+
+
+
 
     });
 });
@@ -44,6 +51,7 @@ Route::group([
     Route::get('/auth-check', [LoginController::class, 'check']);
     //logout
     Route::post('logout',[LogoutController::class,'logout']);
+
 ////////////////////////////////       Orders          ///////////////////////////////////////////////////
     Route::post('/product/{id}/addToCart', [CartController::class, 'addToCart'])->name('product.addToCart');
     //display my cart items
@@ -71,6 +79,12 @@ Route::group([
     //my account
     Route::get('/user-info', [AccountController::class, 'getUserInfo']);
     Route::put('/user-info/update', [AccountController::class,'updateAccountInfo']);
+
+////////////////////////////////       Comments          ///////////////////////////////////////////////////
+
+    Route::post('/blog-posts/{blog_post_id}/comments', [CommentController::class,'store']);
+
+
 
 
 

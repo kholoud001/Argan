@@ -428,10 +428,10 @@
                                         <img src="{{ asset('storage/' . $post->picture) }}" width="370" height="320" alt="{{ $post->picture }}">
                                     </a>
                                     <div class="content">
-                                        <a class="post-category" href="blog.html">{{ $post->category }}</a>
+                                        <a class="post-category" href="{{route('blog.details',$post->id)}}">{{ $post->category }}</a>
                                         <h4 class="title"><a href="{{route('blog.details',$post->id)}}">{{ $post->title }}</a></h4>
                                         <ul class="meta">
-                                            <li class="author-info"><span>By:</span> <a href="blog.html"></a></li>
+                                            <li class="author-info"><span>By:</span> <a href="{{route('blog.details',$post->id)}}"></a></li>
                                             <li class="post-date">{{ $post->created_at->format('F d, Y') }}</li>
                                         </ul>
                                     </div>
