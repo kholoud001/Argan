@@ -226,10 +226,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="reviews-form-checkbox">
-                                            <input class="form-check-input" type="checkbox" value="" id="ReviewsFormCheckbox" checked="">
-                                            <label class="form-check-label" for="ReviewsFormCheckbox">Provide ratings anonymously.</label>
-                                        </div>
+
                                     </div>
                                     <div class="form-input-item mb-0">
                                         <button type="submit" class="btn">SUBMIT</button>

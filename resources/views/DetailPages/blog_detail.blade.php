@@ -120,7 +120,7 @@
                                 {{--                                    <span>User Name</span>--}}
                                 {{--                                </div>--}}
                                 <textarea id="comment-content" class="blog-comment-control" placeholder="Type your comment"></textarea>
-                                <button id="submit-comment" class="btn btn-primary">Submit</button>
+                                <button id="submit-comment" class="btn">Submit</button>
                             </div>
                         </div>
                     </div>
@@ -326,6 +326,7 @@
     document.addEventListener('DOMContentLoaded', function() {
         let currentUrl = window.location.href;
         let urlParts = currentUrl.split('/');
+        // console.log(urlParts);
         let blogPostId = urlParts[urlParts.length - 1];
 
         const commentList = document.getElementById('comment-list');
@@ -333,7 +334,7 @@
         axios.get(`/api/comments/${blogPostId}`)
             .then(response => {
                 const comments = response.data.comments;
-                console.log(comments);
+                // console.log(comments);
 
                 comments.forEach(comment => {
                     const commentItem = document.createElement('div');
@@ -343,9 +344,18 @@
                     reviewTop.classList.add('product-review-top');
                     commentItem.appendChild(reviewTop);
 
+
+
                     const reviewContent = document.createElement('div');
                     reviewContent.classList.add('product-review-content');
                     reviewTop.appendChild(reviewContent);
+
+                    //reply btn
+                    const replyIcon = document.createElement('button');
+                    replyIcon.classList.add('review-reply');
+                    replyIcon.innerHTML = '<i class="fa fa-reply"></i>';
+                    reviewTop.appendChild(replyIcon);
+
 
                     const userName = document.createElement('span');
                     userName.classList.add('product-review-name');
@@ -371,8 +381,11 @@
                 console.error('Error fetching comments:', error);
             });
     });
+
+
     function formatDate(dateString) {
         const date = new Date(dateString);
+       // console.log(date);
         const options = { day: 'numeric', month: 'short', year: 'numeric', hour: 'numeric', minute: 'numeric', hour12: true };
         return date.toLocaleDateString('en-US', options);
     }
@@ -405,6 +418,8 @@
                 })
                 .catch(error => {
                     console.error('Error adding comment:', error);
+                    window.location.href = '{{ route('login') }}';
+
                 });
         });
     });
