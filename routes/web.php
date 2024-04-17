@@ -15,6 +15,7 @@ use App\Http\Controllers\User\AccountController;
 use App\Http\Controllers\User\CartController;
 use App\Http\Controllers\User\HomeController;
 use App\Http\Controllers\User\OrderController;
+use App\Http\Controllers\User\ReviewController;
 use App\Http\Controllers\User\WishlistController;
 use App\Http\Middleware\CheckAdminRoleApi;
 use Illuminate\Support\Facades\Route;
@@ -164,7 +165,7 @@ Route::post('/reset-password/{token}', [ForgotPasswordController::class, 'reset'
 Route::get('/', [HomeController::class, 'index'])->name('home');
 ////////////////////////////////       Products          ///////////////////////////////////////////////////
 
-//product details page
+//product details page and reviews
 Route::get('/products/{id}', [HomeController::class, 'getProductDetails'])->name('product.details');
 
 ////////////////////////////////       Blogs          ///////////////////////////////////////////////////
@@ -181,6 +182,11 @@ Route::get('/wishlist/view',[WishlistController::class,'index']);
 Route::get('/checkout/view',[CartController::class,'checkoutview'])->name('get.checkout');
 
 Route::get('/account',[AccountController::class,'index'])->name('account.view');
+
+
+
+// get review
+
 
 
 

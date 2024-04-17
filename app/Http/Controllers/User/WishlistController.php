@@ -14,7 +14,6 @@ class WishlistController extends Controller
     public function addToWishlist(Request $request, $productId)
     {
         try {
-            // Check if the user is authenticated
             if (!Auth::check()) {
                 return response()->json(['success' => false, 'error' => 'User is not authenticated.'], 401);
             }
@@ -30,7 +29,6 @@ class WishlistController extends Controller
                 return response()->json(['success' => false, 'message' => 'Product is already in the wishlist.'], 400);
             }
 
-            // Add the product to the wishlist
             Wishlist::create([
                 'user_id' => $userId,
                 'product_id' => $productId,
@@ -57,7 +55,6 @@ class WishlistController extends Controller
     public function removeWishlistItem($id)
     {
         try {
-            // Find the wishlist item
             $wishlistItem = Wishlist::findOrFail($id);
 
             // Check if the authenticated user owns the wishlist item

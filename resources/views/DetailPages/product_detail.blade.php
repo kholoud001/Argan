@@ -113,73 +113,33 @@
 
                             <div class="tab-pane fade show active" id="review" role="tabpanel" aria-labelledby="review-tab">
                                 <!--== Start Reviews Content Item ==-->
-                                <div class="product-review-item">
-                                    <div class="product-review-top">
-                                        <div class="product-review-thumb">
-                                            <img src="assets/images/shop/product-details/comment1.webp" alt="Images">
-                                        </div>
-                                        <div class="product-review-content">
-                                            <span class="product-review-name">Tomas Doe</span>
-                                            <span class="product-review-designation">Delveloper</span>
-                                            <div class="product-review-icon">
-                                                <i class="fa fa-star-o"></i>
-                                                <i class="fa fa-star-o"></i>
-                                                <i class="fa fa-star-o"></i>
-                                                <i class="fa fa-star-o"></i>
-                                                <i class="fa fa-star-half-o"></i>
+                                @foreach ($reviews as $review)
+                                    <div class="product-review-item">
+                                        <div class="product-review-top">
+                                            <div class="product-review-content">
+                                                <span class="product-review-name">{{ $review->user->name }}</span>
+                                                <div class="product-review-icon">
+                                                    <!-- Display stars based on the rating -->
+                                                    @for ($i = 1; $i <= 5; $i++)
+                                                        @if ($i <= $review->rating)
+                                                            <i class="fa fa-star"></i>
+                                                        @elseif ($i - 0.5 <= $review->rating)
+                                                            <i class="fa fa-star-half-o"></i>
+                                                        @else
+                                                            <i class="fa fa-star-o"></i>
+                                                        @endif
+                                                    @endfor
+                                                </div>
+
                                             </div>
                                         </div>
+                                        <p class="desc">{{ $review->feedback }}</p>
+                                        <span class="product-review-time">{{ $review->created_at->isoFormat('D MMM YYYY  h:mm a') }}</span>
+
                                     </div>
-                                    <p class="desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed viverra amet, sodales faucibus nibh. Vivamus amet potenti ultricies nunc gravida duis. Nascetur scelerisque massa sodales.</p>
-                                    <button type="button" class="review-reply"><i class="fa fa fa-undo"></i></button>
-                                </div>
+                                @endforeach
                                 <!--== End Reviews Content Item ==-->
 
-                                <!--== Start Reviews Content Item ==-->
-                                <div class="product-review-item product-review-reply">
-                                    <div class="product-review-top">
-                                        <div class="product-review-thumb">
-                                            <img src="assets/images/shop/product-details/comment2.webp" alt="Images">
-                                        </div>
-                                        <div class="product-review-content">
-                                            <span class="product-review-name">Tomas Doe</span>
-                                            <span class="product-review-designation">Delveloper</span>
-                                            <div class="product-review-icon">
-                                                <i class="fa fa-star-o"></i>
-                                                <i class="fa fa-star-o"></i>
-                                                <i class="fa fa-star-o"></i>
-                                                <i class="fa fa-star-o"></i>
-                                                <i class="fa fa-star-half-o"></i>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <p class="desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed viverra amet, sodales faucibus nibh. Vivamus amet potenti ultricies nunc gravida duis. Nascetur scelerisque massa sodales.</p>
-                                    <button type="button" class="review-reply"><i class="fa fa fa-undo"></i></button>
-                                </div>
-                                <!--== End Reviews Content Item ==-->
-
-                                <!--== Start Reviews Content Item ==-->
-                                <div class="product-review-item mb-0">
-                                    <div class="product-review-top">
-                                        <div class="product-review-thumb">
-                                            <img src="assets/images/shop/product-details/comment3.webp" alt="Images">
-                                        </div>
-                                        <div class="product-review-content">
-                                            <span class="product-review-name">Tomas Doe</span>
-                                            <span class="product-review-designation">Delveloper</span>
-                                            <div class="product-review-icon">
-                                                <i class="fa fa-star-o"></i>
-                                                <i class="fa fa-star-o"></i>
-                                                <i class="fa fa-star-o"></i>
-                                                <i class="fa fa-star-o"></i>
-                                                <i class="fa fa-star-half-o"></i>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <p class="desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed viverra amet, sodales faucibus nibh. Vivamus amet potenti ultricies nunc gravida duis. Nascetur scelerisque massa sodales.</p>
-                                    <button type="button" class="review-reply"><i class="fa fa fa-undo"></i></button>
-                                </div>
-                                <!--== End Reviews Content Item ==-->
                             </div>
                         </div>
                     </div>
@@ -187,21 +147,19 @@
 {{--                    Reviews--}}
                     <div class="col-lg-5">
                         <div class="product-reviews-form-wrap">
-                            <h4 class="product-form-title">Leave a replay</h4>
+                            <h4 class="product-form-title">Leave a reply</h4>
                             <div class="product-reviews-form">
-                                <form action="#">
+                                <!-- Review and feedback form -->
+                                <form id="reviewForm" >
+                                    @csrf
+                                    <input type="hidden" name="product_id" value="{{ $productId }}">
+
                                     <div class="form-input-item">
-                                        <textarea class="form-control" placeholder="Enter you feedback"></textarea>
-                                    </div>
-                                    <div class="form-input-item">
-                                        <input class="form-control" type="text" placeholder="Full Name">
-                                    </div>
-                                    <div class="form-input-item">
-                                        <input class="form-control" type="email" placeholder="Email Address">
+                                        <textarea name="feedback" class="form-control" placeholder="Enter your feedback"></textarea>
                                     </div>
                                     <div class="form-input-item">
                                         <div class="form-ratings-item">
-                                            <select id="product-review-form-rating-select" class="select-ratings">
+                                            <select id="product-review-form-rating-select" class="select-ratings" name="rating">
                                                 <option value="1">01</option>
                                                 <option value="2">02</option>
                                                 <option value="3">03</option>
@@ -231,8 +189,7 @@
                                     <div class="form-input-item mb-0">
                                         <button type="submit" class="btn">SUBMIT</button>
                                     </div>
-                                </form>
-                            </div>
+                                </form>                            </div>
                         </div>
                     </div>
                 </div>
@@ -466,6 +423,67 @@
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
 <!-- MyJS -->
+
+//form review submit
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var token = localStorage.getItem("access_token");
+
+        document.getElementById('reviewForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const formData = new FormData(this);
+            console.log(formData);
+
+            // Make a request to submit review
+            axios.post('/api/submit-review', {
+                product_id: formData.get('product_id'),
+                feedback: formData.get('feedback'),
+                rating: formData.get('rating')
+            }, {
+                headers: {
+                    'Authorization': 'Bearer ' + token
+                }
+            })
+                .then(function(response) {
+                    console.log(response.data);
+                    window.location.reload();
+                })
+                .catch(function(error) {
+                    // Handle error
+                    console.error(error);
+                });
+        });
+    });
+</script>
+
+
+//navbar account
+<script src="{{url('myJs/account.js')}}"></script>
+
+
+//Star rating
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const select = document.getElementById('product-review-form-rating-select');
+        const fillIcons = document.querySelectorAll('#product-review-form-rating i');
+
+        select.addEventListener('change', function() {
+            const rating = parseInt(this.value);
+            fillIcons.forEach((icon, index) => {
+                if (index < rating) {
+                    icon.classList.add('fa-star');
+                    icon.classList.remove('fa-star-o');
+                } else {
+                    icon.classList.remove('fa-star');
+                    icon.classList.add('fa-star-o');
+                }
+            });
+        });
+    });
+</script>
+
+
 //add to cart
 <script>
     function addToCart(productId) {
@@ -489,6 +507,7 @@
             });
     }
 </script>
+
 //Add to wishlist
 <script>
     function addToWishList(productId) {
@@ -509,6 +528,7 @@
             });
     }
 </script>
+
 //display cart items
 <script>
     var token = localStorage.getItem("access_token");

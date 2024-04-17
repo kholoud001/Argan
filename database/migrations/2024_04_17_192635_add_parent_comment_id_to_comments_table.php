@@ -13,15 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('comments', function (Blueprint $table) {
-            $table->id();
+        Schema::table('comments', function (Blueprint $table) {
             $table->unsignedBigInteger('parent_comment_id')->nullable()->after('id');
             $table->foreign('parent_comment_id')->references('id')->on('comments')->onDelete('cascade');
-            $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->foreignId('blog_post_id')->constrained()->onDelete('cascade');
-            $table->text('content');
-
-            $table->timestamps();
         });
     }
 
@@ -32,6 +26,9 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('comments');
+        Schema::table('comments', function (Blueprint $table) {
+            $table->dropForeign(['parent_comment_id']);
+            $table->dropColumn('parent_comment_id');
+        });
     }
 };

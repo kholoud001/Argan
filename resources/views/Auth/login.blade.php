@@ -276,6 +276,8 @@
                     }
 
                     localStorage.setItem('access_token', data.token);
+                    // document.cookie = `access_token=${data.token}; `;
+
 
                     if (data.message === 'Login successful') {
                         var redirectUrl = data.role === 1 ? data.redirect_url_admin : data.redirect_url_user;

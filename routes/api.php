@@ -6,6 +6,7 @@ use App\Http\Controllers\API\RegisterController;
 use App\Http\Controllers\User\AccountController;
 use App\Http\Controllers\User\CartController;
 use App\Http\Controllers\User\CommentController;
+use App\Http\Controllers\User\ReviewController;
 use App\Http\Controllers\User\WishlistController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -83,6 +84,9 @@ Route::group([
 ////////////////////////////////       Comments          ///////////////////////////////////////////////////
 
     Route::post('/blog-posts/{blog_post_id}/comments', [CommentController::class,'store']);
+
+    // add reviews
+    Route::post('/submit-review', [ReviewController::class,'submitReview'])->name('submit.review');
 
 
 

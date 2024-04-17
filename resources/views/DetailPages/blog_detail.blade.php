@@ -321,12 +321,12 @@
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
 
-//get comments
+<!-- Get comments -->
 <script>
+    // Get comments
     document.addEventListener('DOMContentLoaded', function() {
         let currentUrl = window.location.href;
         let urlParts = currentUrl.split('/');
-        // console.log(urlParts);
         let blogPostId = urlParts[urlParts.length - 1];
 
         const commentList = document.getElementById('comment-list');
@@ -334,64 +334,156 @@
         axios.get(`/api/comments/${blogPostId}`)
             .then(response => {
                 const comments = response.data.comments;
-                // console.log(comments);
+
+                console.log('Comments:', comments);
 
                 comments.forEach(comment => {
-                    const commentItem = document.createElement('div');
-                    commentItem.classList.add('product-review-item', 'mb-3');
-
-                    const reviewTop = document.createElement('div');
-                    reviewTop.classList.add('product-review-top');
-                    commentItem.appendChild(reviewTop);
-
-
-
-                    const reviewContent = document.createElement('div');
-                    reviewContent.classList.add('product-review-content');
-                    reviewTop.appendChild(reviewContent);
-
-                    //reply btn
-                    const replyIcon = document.createElement('button');
-                    replyIcon.classList.add('review-reply');
-                    replyIcon.innerHTML = '<i class="fa fa-reply"></i>';
-                    reviewTop.appendChild(replyIcon);
-
-
-                    const userName = document.createElement('span');
-                    userName.classList.add('product-review-name');
-                    userName.textContent = comment.user.name;
-                    reviewContent.appendChild(userName);
-
-                    const createdAt = document.createElement('span');
-                    createdAt.classList.add('product-review-designation');
-                    createdAt.textContent = formatDate(comment.created_at);
-                    reviewContent.appendChild(createdAt);
-
-                    const desc = document.createElement('p');
-                    desc.classList.add('desc');
-                    desc.textContent = comment.content;
-                    commentItem.appendChild(desc);
-
+                    const commentItem = createCommentItem(comment);
+                    const repliesContainer = document.createElement('div');
+                    repliesContainer.classList.add('replies-container');
+                    commentItem.appendChild(repliesContainer);
                     commentList.appendChild(commentItem);
 
-
+                    // Fetch and append replies
+                    axios.get(`/api/comments/${comment.id}/replies`)
+                        .then(replyResponse => {
+                            const replies = replyResponse.data.replies;
+                            console.log('Replies for comment', comment.id, ':', replies);
+                            replies.forEach(reply => {
+                                const replyItem = createReplyItem(reply);
+                                repliesContainer.appendChild(replyItem);
+                            });
+                        })
+                        .catch(error => {
+                            console.error('Error fetching replies for comment', comment.id, ':', error);
+                        });
                 });
             })
             .catch(error => {
                 console.error('Error fetching comments:', error);
             });
+
+        function createCommentItem(comment) {
+            const commentItem = document.createElement('div');
+            commentItem.classList.add('product-review-item', 'mb-3');
+            commentItem.setAttribute('data-commentId', comment.id);
+
+            const reviewTop = document.createElement('div');
+            reviewTop.classList.add('product-review-top');
+            commentItem.appendChild(reviewTop);
+
+            const reviewContent = document.createElement('div');
+            reviewContent.classList.add('product-review-content');
+            reviewTop.appendChild(reviewContent);
+
+            const userName = document.createElement('span');
+            userName.classList.add('product-review-name');
+            userName.textContent = comment.user.name;
+            reviewContent.appendChild(userName);
+
+            const createdAt = document.createElement('span');
+            createdAt.classList.add('product-review-designation');
+            createdAt.textContent = formatDate(comment.created_at);
+            reviewContent.appendChild(createdAt);
+
+            const desc = document.createElement('p');
+            desc.classList.add('desc');
+            desc.textContent = comment.content;
+            commentItem.appendChild(desc);
+
+            // Reply button
+            // const replyButtonContainer = document.createElement('div');
+            // replyButtonContainer.classList.add('reply-button-container');
+            //
+            // const replyButton = document.createElement('button');
+            // replyButton.classList.add('btn', 'btn-primary', 'reply-button');
+            // replyButton.textContent = 'Reply';
+            // replyButtonContainer.appendChild(replyButton);
+            // reviewTop.appendChild(replyButtonContainer);
+
+            return commentItem;
+        }
+
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            const options = { day: 'numeric', month: 'short', year: 'numeric', hour: 'numeric', minute: 'numeric', hour12: true };
+            return date.toLocaleDateString('en-US', options);
+        }
     });
-
-
-    function formatDate(dateString) {
-        const date = new Date(dateString);
-       // console.log(date);
-        const options = { day: 'numeric', month: 'short', year: 'numeric', hour: 'numeric', minute: 'numeric', hour12: true };
-        return date.toLocaleDateString('en-US', options);
-    }
-
-
 </script>
+
+
+{{--<!-- Reply to comments -->--}}
+{{--<script>--}}
+{{--    document.addEventListener('DOMContentLoaded', function() {--}}
+{{--        let currentUrl = window.location.href;--}}
+{{--        let urlParts = currentUrl.split('/');--}}
+{{--        let blogPostId = urlParts[urlParts.length - 1];--}}
+
+{{--        document.addEventListener('click', function(event) {--}}
+{{--            if (event.target.classList.contains('reply-button')) {--}}
+{{--                const commentItem = event.target.closest('.product-review-item');--}}
+{{--                console.log(commentItem.dataset);--}}
+{{--                const commentId = commentItem.dataset.commentid;--}}
+{{--                console.log(commentId);--}}
+
+{{--                const commentTextarea = document.createElement('textarea');--}}
+{{--                commentTextarea.classList.add('form-control', 'mb-2', 'comment-reply-textarea');--}}
+{{--                commentTextarea.placeholder = 'Write your reply here...';--}}
+
+{{--                const submitButton = document.createElement('button');--}}
+{{--                submitButton.classList.add('btn', 'btn-primary', 'submit-reply-button', 'mb-2');--}}
+{{--                submitButton.textContent = 'Submit';--}}
+
+{{--                const replyContainer = document.createElement('div');--}}
+{{--                replyContainer.classList.add('comment-reply-container');--}}
+{{--                replyContainer.appendChild(commentTextarea);--}}
+{{--                replyContainer.appendChild(submitButton);--}}
+
+{{--                // Append the reply container after the review top--}}
+{{--                commentItem.appendChild(replyContainer);--}}
+
+{{--                submitButton.addEventListener('click', () => {--}}
+{{--                    const replyContent = commentTextarea.value;--}}
+{{--                    axios.post(`/api/blog-posts/${blogPostId}/comments`, {--}}
+{{--                        content: replyContent,--}}
+{{--                        parent_comment_id: commentId,--}}
+{{--                    },{--}}
+{{--                            headers: {--}}
+{{--                                'Authorization': 'Bearer ' + localStorage.getItem('access_token')--}}
+{{--                            }--}}
+{{--                    })--}}
+{{--                        .then(response => {--}}
+{{--                            console.log('Reply submitted successfully:', response.data.message);--}}
+{{--                        })--}}
+{{--                        .catch(error => {--}}
+{{--                            if (error.response) {--}}
+{{--                                // The request was made and the server responded with a status code--}}
+{{--                                // that falls out of the range of 2xx--}}
+{{--                                console.error('Error submitting reply:', error.response.data);--}}
+{{--                                console.error('Status code:', error.response.status);--}}
+{{--                            } else if (error.request) {--}}
+{{--                                // The request was made but no response was received--}}
+{{--                                console.error('Error submitting reply:', error.request);--}}
+{{--                            } else {--}}
+{{--                                // Something happened in setting up the request that triggered an Error--}}
+{{--                                console.error('Error submitting reply:', error.message);--}}
+{{--                            }--}}
+{{--                        });--}}
+{{--                });--}}
+{{--            }--}}
+{{--        });--}}
+{{--    });--}}
+
+
+{{--</script>--}}
+
+
+
+
+
+
+
 
 //store comments
 <script>
