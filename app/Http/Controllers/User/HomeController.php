@@ -7,6 +7,7 @@ use App\Models\Blog;
 use App\Models\Product;
 use App\Models\Review;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class HomeController extends Controller
 {
@@ -43,6 +44,29 @@ class HomeController extends Controller
 
 
         return view('DetailPages.blog_detail', compact('blogDetails','posts'));
+    }
+
+
+    public function contactview(){
+        return view('contact');
+    }
+
+    public function sendEmail(Request $request)
+    {
+        // Validate the form data
+        $request->validate([
+            'con_name' => 'required',
+            'con_email' => 'required|email',
+            'con_message' => 'required',
+        ]);
+
+        Mail::send([], [], function ($message) use ($request) {
+            $message->to(config('mail.from.address'))
+                ->subject('New Contact Message')
+                ->html('Name: ' . $request->con_name . '<br>Email: ' . $request->con_email . '<br>Message: ' . $request->con_message);
+        });
+
+        return back()->with('success', 'Your message has been sent successfully!');
     }
 
 

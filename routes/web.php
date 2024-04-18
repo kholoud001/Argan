@@ -185,8 +185,9 @@ Route::get('/account',[AccountController::class,'index'])->name('account.view');
 
 
 
-// get review
-
+////////////////////////////////       Contact Page          ///////////////////////////////////////////////////
+Route::get('/contact',[HomeController::class,'contactview'])->name('contact.view');
+Route::post('/contact', [HomeController::class, 'sendEmail'])->name('contact.send');
 
 
 

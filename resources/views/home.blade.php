@@ -615,6 +615,7 @@
             });
     }
 </script>
+
 //Add to wishlist
 <script>
     function addToWishList(productId) {

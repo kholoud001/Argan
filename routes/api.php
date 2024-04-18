@@ -85,7 +85,7 @@ Route::group([
 
     Route::post('/blog-posts/{blog_post_id}/comments', [CommentController::class,'store']);
 
-    // add reviews
+////////////////////////////////       Reviews          ///////////////////////////////////////////////////
     Route::post('/submit-review/{product_id}', [ReviewController::class, 'submitReview']);
 
 
