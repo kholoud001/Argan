@@ -22,8 +22,11 @@ class HomeController extends Controller
     {
         $productDetails = Product::with('category')->findOrFail($id);
         $latestProducts = Product::with('category')->orderBy('created_at', 'desc')->take(3)->get();
-        $reviews = Review::with('user')->latest()->limit(10)->get();
-
+        $reviews = Review::with('user')
+            ->where('product_id', $id)
+            ->latest()
+            ->take(10)
+            ->get();
 
         return view('DetailPages.product_detail', [
             'productDetails' => $productDetails,

@@ -429,15 +429,17 @@
     document.addEventListener("DOMContentLoaded", function() {
         var token = localStorage.getItem("access_token");
 
+        // Extract product ID from the URL
+        const productId = window.location.pathname.split('/').pop();
+        console.log("Product ID:", productId);
+
         document.getElementById('reviewForm').addEventListener('submit', function(event) {
             event.preventDefault();
 
             const formData = new FormData(this);
-            console.log(formData);
 
             // Make a request to submit review
-            axios.post('/api/submit-review', {
-                product_id: formData.get('product_id'),
+            axios.post(`/api/submit-review/${productId}`, {
                 feedback: formData.get('feedback'),
                 rating: formData.get('rating')
             }, {
