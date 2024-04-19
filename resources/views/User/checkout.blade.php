@@ -336,6 +336,10 @@
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
 <!-- MyJS -->
+
+//navbar account
+<script src="{{url('myJs/account.js')}}"></script>
+
 //display cart items
 <script>
     var token = localStorage.getItem("access_token");
@@ -420,7 +424,7 @@
 
             // Update cart items
             const tableBody = document.querySelector('.table-body');
-            tableBody.innerHTML = ''; // Clear existing items
+            tableBody.innerHTML = '';
 
             cartItems.forEach(item => {
                 const row = document.createElement('tr');
@@ -499,7 +503,7 @@
         })
             .then(response => {
                 console.log("Checkout successful");
-                // window.location.href = "account.html";
+                 window.location.href = '{{ route('account.view') }}';
             })
             .catch(error => {
                 console.error("Checkout failed:", error.response.data.error);

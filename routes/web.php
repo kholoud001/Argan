@@ -92,7 +92,7 @@ Route::post('/reset-password/{token}', [ForgotPasswordController::class, 'reset'
 |--------------------------------------------------------------------------
 */
 
-//Route::group(['middleware' => ['auth:api', CheckAdminRoleApi::class]], function () {
+//Route::group(['middleware' => [CheckAdminRoleApi::class]], function () {
 
 //should the admin be authentified
     Route::get('/dashboard', function () {
@@ -174,20 +174,23 @@ Route::get('/products/{id}', [HomeController::class, 'getProductDetails'])->name
 Route::get('/blogs/{id}',[HomeController::class,'getBlogDetails'])->name('blog.details');
 
 ////////////////////////////////       Orders          ///////////////////////////////////////////////////
+///
+/// I need to be connected
 //Route::post('/product/{id}/addToCart', [OrderController::class, 'addToCart'])->name('product.addToCart');
 Route::get('/cart/view',[CartController::class,'viewCart'])->name('cart.view');
 Route::get('/wishlist/view',[WishlistController::class,'index']);
 
-
 Route::get('/checkout/view',[CartController::class,'checkoutview'])->name('get.checkout');
-
 Route::get('/account',[AccountController::class,'index'])->name('account.view');
 
+Route::get('/producty', function () {
+    return view('User.product');
+})->name('producty');
 
 
 ////////////////////////////////       Contact Page          ///////////////////////////////////////////////////
 Route::get('/contact',[HomeController::class,'contactview'])->name('contact.view');
-Route::post('/contact', [HomeController::class, 'sendEmail'])->name('contact.send');
+Route::post('/contact   ', [HomeController::class, 'sendEmail'])->name('contact.send');
 
 
 
