@@ -3,9 +3,9 @@
     <div class="container">
         <div class="row align-items-center">
             <div class="col-5 col-sm-6 col-lg-3">
-                <div class="header-logo">
+                <div class="logo">
                     <a href="{{route('home')}}">
-                        <img class="logo-main" src="{{url('assets/images/logo.webp')}}" width="95" height="68" alt="Logo">
+                        <img class="logo-main" src="{{url('assets/images/logo1.png')}}" width="100" height="75" alt="Logo">
                     </a>
                 </div>
             </div>

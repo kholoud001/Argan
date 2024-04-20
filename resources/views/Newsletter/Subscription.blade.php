@@ -103,14 +103,19 @@
                                         <table cellpadding="0" cellspacing="0" width="100%">
                                             <tbody>
                                             <tr>
+
                                                 <td width="560" class="esd-container-frame" align="center" valign="top">
                                                     <table cellpadding="0" cellspacing="0" width="100%">
-                                                        <tbody>
-                                                        <tr>
-                                                            <td align="center" class="esd-block-image" style="font-size:0"><a target="_blank" href="https://viewstripo.email/"><img class="adapt-img" src="https://eihivcl.stripocdn.email/content/guids/CABINET_3a08bc5dc2724c01f8c13454b8e32bd9/images/18501557135488918.png" alt="" style="display: block;" width="190"></a></td>
-                                                        </tr>
-                                                        </tbody>
-                                                    </table></td>
+                                                        <tbody><tr>
+                                                            <td align="center" class="esd-block-image" style="font-size: 0">
+                                                                <a target="_blank">
+                                                                    <img src="https://eihivcl.stripocdn.email/content/guids/CABINET_d1c82382e1839d0bb6c9a858d0a04d44976ab449ff541a0f60c0482a2c7ec31d/images/logoremovebgpreview.png" alt="" width="556" class="img-5918">
+                                                                </a>
+                                                            </td>
+                                                        </tr></tbody></table>
+                                                </td>
+
+
                                             </tr>
                                             </tbody>
                                         </table></td>
@@ -360,9 +365,7 @@
                                                             <td align="center" class="esd-block-text es-p5t es-p15b" bgcolor="transparent"><p style="font-size: 12px;"><b>100% off with code ArganBeauty valid now through 9/9/2024 gift&nbsp;cards are excluded from any discounts, conditions may apply</b></p></td>
                                                         </tr>
                                                         <tr>
-                                                            <td align="center" bgcolor="transparent" esd-links-color="#333333" class="esd-block-text es-p15b"><p style="font-size: 12px;"><u><b>
-                                                                             <!-- Unsubscribe -->
-                                                                            <a target="_blank" style="color: #333333;">unsubscribe</a></b></u></p></td>
+                                                            <td align="center" bgcolor="transparent" esd-links-color="#333333" class="esd-block-text es-p15b"><p style="font-size: 12px;"><u><b><a target="_blank" style="color: #333333;">unsubscribe</a></b></u></p></td>
                                                         </tr>
                                                         </tbody>
                                                     </table></td>
@@ -408,5 +411,4 @@
     </table>
 </div>
 
-</body>
-</html>
+</body></html>

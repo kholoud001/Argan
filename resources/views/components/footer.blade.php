@@ -7,7 +7,7 @@
                     <div class="widget-item">
                         <div class="widget-about">
                             <a class="widget-logo" href="{{route('home')}}">
-                                <img src="{{url('assets/images/logo.webp')}}" width="95" height="68" alt="Logo">
+                                <img src="{{url('assets/images/logo1.png')}}" width="95" height="68" alt="Logo">
                             </a>
                             <p class="desc">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been.</p>
                         </div>

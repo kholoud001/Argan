@@ -183,17 +183,15 @@ Route::get('/wishlist/view',[WishlistController::class,'index']);
 Route::get('/checkout/view',[CartController::class,'checkoutview'])->name('get.checkout');
 Route::get('/account',[AccountController::class,'index'])->name('account.view');
 
-Route::get('/producty', function () {
-    return view('User.product');
-})->name('producty');
+
 
 
 ////////////////////////////////       Contact Page          ///////////////////////////////////////////////////
 Route::get('/contact',[HomeController::class,'contactview'])->name('contact.view');
-Route::post('/contact   ', [HomeController::class, 'sendEmail'])->name('contact.send');
+Route::post('/contact   ', [HomeController::class, 'contact'])->name('contact.send');
 
 
-
+Route::get('/producty',[HomeController::class,'ProductCatalogue'])->name('producty');
 
 
 

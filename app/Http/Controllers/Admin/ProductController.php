@@ -31,7 +31,7 @@ class ProductController extends Controller
         ], ['image.required' => 'The image field is required.']);
 
         // Upload image if provided
-        $imagePath = $request->file('image')->store('products', 'public');
+        $imagePath = $request->file('image')->store('public/storage/products');
 
         Product::create(array_merge(
             $request->only(['name', 'description', 'price', 'quantity', 'category_id']),

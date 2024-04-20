@@ -11,6 +11,8 @@ use Illuminate\Support\Facades\Mail;
 
 class HomeController extends Controller
 {
+
+    /////////////////////////////////////   home page
     public function index()
     {
         $recentProducts = Product::with('category')->orderBy('created_at', 'desc')->take(6)->get();
@@ -46,12 +48,13 @@ class HomeController extends Controller
         return view('DetailPages.blog_detail', compact('blogDetails','posts'));
     }
 
+    ////////////////////////////////////  Contact page
 
     public function contactview(){
         return view('contact');
     }
 
-    public function sendEmail(Request $request)
+    public function contact(Request $request)
     {
         // Validate the form data
         $request->validate([
@@ -67,6 +70,18 @@ class HomeController extends Controller
         });
 
         return back()->with('success', 'Your message has been sent successfully!');
+    }
+
+
+    /////////////////////////   Product catalogue page
+    ///
+    public function ProductCatalogue()
+    {
+        $products = Product::with('category')
+            ->orderBy('created_at', 'desc')
+            ->paginate(9);
+
+        return view('User.product', compact('products'));
     }
 
 
