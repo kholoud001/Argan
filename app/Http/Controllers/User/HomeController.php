@@ -4,6 +4,7 @@ namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
 use App\Models\Blog;
+use App\Models\Category;
 use App\Models\Product;
 use App\Models\Review;
 use Illuminate\Http\Request;
@@ -81,7 +82,9 @@ class HomeController extends Controller
             ->orderBy('created_at', 'desc')
             ->paginate(9);
 
-        return view('User.product', compact('products'));
+        $categories = Category::all();
+
+        return view('User.product', compact('products','categories'));
     }
 
 

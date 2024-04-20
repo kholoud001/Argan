@@ -188,6 +188,8 @@ class CartController extends Controller
 
                 // Decrement the product quantity
                 $product->quantity -= $cartItem->quantity;
+                $product->sales_count += $cartItem->quantity;
+
                 $product->save();
 
                 // Create an order item

@@ -50,7 +50,7 @@
                                         <div class="product-item product-st3-item">
                                             <div class="product-thumb">
                                                 <a class="d-block" href="{{ route('products.show', $product->id) }}">
-                                                    <img src="{{ asset('storage/' . $product->image) }}" width="370" height="450" alt="{{ $product->name }}">
+                                                    <img src="{{ asset('storage/' . $product->image) }}" width="370" height="450" alt="{{  $product->image }}">
                                                 </a>
                                                 @if ($product->is_new)
                                                     <span class="flag-new">new</span>
@@ -131,16 +131,21 @@
                             </div>
                             <!-- Pagination -->
                             <div class="col-12">
+                                @php
+                                    $pageNumber = $products->currentPage();
+                                    $counter = ($pageNumber - 1) * $products->perPage() + 1;
+                                @endphp
+
                                 <ul class="pagination justify-content-center">
-                                    <li class="page-item {{ $products->onFirstPage() ? 'disabled' : '' }}">
+                                    <li class="page-item {{ $pageNumber == 1 ? 'disabled' : '' }}">
                                         <a class="page-link" href="{{ $products->previousPageUrl() }}" aria-label="Previous">&laquo;</a>
                                     </li>
 
-                                    @foreach ($products as $page => $product)
-                                        <li class="page-item {{ $page == $products->currentPage() ? 'active' : '' }}">
-                                            <a class="page-link" href="{{ $products->url($page) }}">{{ $page }}</a>
+                                    @for ($i = 1; $i <= $products->lastPage(); $i++)
+                                        <li class="page-item {{ $pageNumber == $i ? 'active' : '' }}">
+                                            <a class="page-link" href="{{ $products->url($i) }}">{{ $i }}</a>
                                         </li>
-                                    @endforeach
+                                    @endfor
 
                                     <li class="page-item {{ !$products->hasMorePages() ? 'disabled' : '' }}">
                                         <a class="page-link" href="{{ $products->nextPageUrl() }}" aria-label="Next">&raquo;</a>
@@ -154,34 +159,40 @@
                     <!-- Sidebar -->
                     <div class="col-xl-3">
                         <div class="product-sidebar-widget">
+                            <!--search-->
                             <div class="product-widget-search">
                                 <form action="#">
                                     <input type="search" placeholder="Search Here">
                                     <button type="submit"><i class="fa fa-search"></i></button>
                                 </form>
                             </div>
+                            <!-- Price filter -->
                             <div class="product-widget">
-                                <h4 class="product-widget-title">Price Filter</h4>
-                                <div class="product-widget-range-slider">
-                                    <div class="slider-range" id="slider-range"></div>
-                                    <div class="slider-labels">
-                                        <span id="slider-range-value1"></span>
-                                        <span>—</span>
-                                        <span id="slider-range-value2"></span>
-                                    </div>
+                                <h4 class="product-widget-title">Sort BY</h4>
+                                <div class="product-widget">
+
+                                    <select class="select-shoing">
+                                        <option data-display="Sort">Sort</option>
+                                        <option value="2">Best Selling</option>
+                                        <option value="3">Alphabetically, A-Z</option>
+                                        <option value="4">Alphabetically, Z-A</option>
+                                        <option value="5">Price, low to high</option>
+                                        <option value="6">Price, high to low</option>
+                                        <option value="7">Date, new to old</option>
+                                        <option value="8">Date, old to new</option>
+                                    </select>
+
+
                                 </div>
                             </div>
+                            <!-- Categories -->
                             <div class="product-widget">
                                 <h4 class="product-widget-title">Categoris</h4>
+                                @foreach( $categories as $category)
                                 <ul class="product-widget-category">
-                                    <li><a href="product.html">Accesasories <span>(5)</span></a></li>
-                                    <li><a href="product.html">Computer <span>(4)</span></a></li>
-                                    <li><a href="product.html">Covid-19 <span>(2)</span></a></li>
-                                    <li><a href="product.html">Electronics <span>(6)</span></a></li>
-                                    <li><a href="product.html">Frame Sunglasses <span>(12)</span></a></li>
-                                    <li><a href="product.html">Furniture <span>(7)</span></a></li>
-                                    <li><a href="product.html">Genuine Leather <span>(9)</span></a></li>
+                                    <li><a href="product.html">{{$category->name}} <span>({{ $category->products()->count() }})</span></a></li>
                                 </ul>
+                                @endforeach
                             </div>
                             <div class="product-widget mb-0">
                                 <h4 class="product-widget-title">Popular Tags</h4>
