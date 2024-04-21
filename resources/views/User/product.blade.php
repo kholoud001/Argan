@@ -162,10 +162,17 @@
                             <!--search-->
                             <div class="product-widget-search">
                                 <form action="{{ route('search') }}" method="GET">
-                                    <input type="search" name="search_query" id="searchInput" placeholder="Search Here">
+                                    <input type="search" name="search_query" id="searchInput" placeholder="Search Your Product Name">
                                     <button type="submit"><i class="fa fa-search"></i></button>
                                 </form>
                             </div>
+{{--                            <!-- Search by category -->--}}
+{{--                            <div class="product-widget-search">--}}
+{{--                                <form action="{{ route('search') }}" method="GET">--}}
+{{--                                    <input type="search" name="search_query" id="searchInput" placeholder="Search Your Category">--}}
+{{--                                    <button type="submit"><i class="fa fa-search"></i></button>--}}
+{{--                                </form>--}}
+{{--                            </div>--}}
                             <!-- Price filter -->
 {{--                            <div class="product-widget">--}}
 {{--                                <h4 class="product-widget-title">Sort BY</h4>--}}
@@ -523,7 +530,7 @@
                             html += '<a class="d-block" href="{{ url('/products/') }}/' + product.id + '">';
                             html += '<img src="{{ asset('storage/') }}/' + product.image + '" width="370" height="450" alt="' + product.image + '">';
                             html += '</a>';
-                            // html += '<span class="flag-new">' + product.category.name + '</span>';
+                            html += '<span class="flag-new">' + product.category.name + '</span>';
                             html += '<div class="product-action">';
                             // Add buttons for expand product details, add to cart, and add to wishlist here
                             html += '</div>';

@@ -91,7 +91,9 @@ class HomeController extends Controller
     {
         $searchQuery = $request->input('search_query');
 
-        $products = Product::where('name', 'like', '%' . $searchQuery . '%')->paginate(9);
+        $products = Product::with('category')
+            ->where('name', 'like', '%' . $searchQuery . '%')
+            ->paginate(9);
 
         return response()->json([
             'products' => $products,
