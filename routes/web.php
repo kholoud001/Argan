@@ -55,7 +55,7 @@ Route::get('auth/facebook/callback', [FacebookController::class, 'callbackFacebo
 | register Page
 |--------------------------------------------------------------------------
 */
-Route::get('/register', [RegisterController::class, 'show']);
+Route::get('/register', [RegisterController::class, 'show'])->name('register');
 
 /*
 |--------------------------------------------------------------------------
@@ -198,5 +198,10 @@ Route::get('/products-sort', [HomeController::class, 'sort'])->name('products.so
 Route::get('/products-search', [HomeController::class, 'search'])->name('search');
 
 
-
-
+//|--------------------------------------------------------------------------
+//| About us Page
+//|--------------------------------------------------------------------------
+//*/
+Route::get('/About-us',function (){
+    return view ('aboutus');
+})->name('about.us');

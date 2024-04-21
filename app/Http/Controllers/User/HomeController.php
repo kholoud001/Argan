@@ -78,13 +78,15 @@ class HomeController extends Controller
     ///
     public function ProductCatalogue()
     {
+        $latestProducts = Product::with('category')->orderBy('created_at', 'desc')->take(3)->get();
+
         $products = Product::with('category')
             ->orderBy('created_at', 'desc')
             ->paginate(9);
 
         $categories = Category::all();
 
-        return $this->returnView(compact('products', 'categories'));
+        return $this->returnView(compact('products', 'categories','latestProducts'));
     }
 
     public function search(Request $request)

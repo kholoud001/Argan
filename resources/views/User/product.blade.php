@@ -207,7 +207,6 @@
                                 <h4 class="product-widget-title">Popular Tags</h4>
                                 <ul class="product-widget-tags">
                                     <li><a href="#">Beauty</a></li>
-                                    <li><a href="#">MakeupArtist</a></li>
                                     <li><a href="#">Makeup</a></li>
                                     <li><a href="#">Hair</a></li>
                                     <li><a href="#">Nails</a></li>
@@ -226,8 +225,8 @@
         <section>
             <div class="container">
                 <!--== Start Product Category Item ==-->
-                <a href="product.html" class="product-banner-item">
-                    <img src="assets/images/shop/banner/7.webp" width="1170" height="240" alt="Image-HasTech">
+                <a href="{{route('products.collection')}}" class="product-banner-item">
+                    <img src="{{url('assets/images/shop/banner/7.webp')}}" width="1170" height="240" alt="Image-HasTech">
                 </a>
                 <!--== End Product Category Item ==-->
             </div>
@@ -249,126 +248,40 @@
                     <div class="col-12">
                         <div class="swiper related-product-slide-container">
                             <div class="swiper-wrapper">
-                                <div class="swiper-slide mb-8">
-                                    <!--== Start Product Item ==-->
-                                    <div class="product-item">
-                                        <div class="product-thumb">
-                                            <a class="d-block" href="product-details.html">
-                                                <img src="assets/images/shop/4.webp" width="370" height="450" alt="Image-HasTech">
-                                            </a>
-                                            <span class="flag-new">new</span>
-                                            <div class="product-action">
-                                                <button type="button" class="product-action-btn action-btn-quick-view" data-bs-toggle="modal" data-bs-target="#action-QuickViewModal">
-                                                    <i class="fa fa-expand"></i>
-                                                </button>
-                                                <button type="button" class="product-action-btn action-btn-cart" data-bs-toggle="modal" data-bs-target="#action-CartAddModal">
-                                                    <span>Add to cart</span>
-                                                </button>
-                                                <button type="button" class="product-action-btn action-btn-wishlist" data-bs-toggle="modal" data-bs-target="#action-WishlistModal">
-                                                    <i class="fa fa-heart-o"></i>
-                                                </button>
-                                            </div>
-                                        </div>
-                                        <div class="product-info">
-                                            <div class="product-rating">
-                                                <div class="rating">
-                                                    <i class="fa fa-star-o"></i>
-                                                    <i class="fa fa-star-o"></i>
-                                                    <i class="fa fa-star-o"></i>
-                                                    <i class="fa fa-star-o"></i>
-                                                    <i class="fa fa-star-half-o"></i>
+                                @foreach ($latestProducts as $product)
+                                    <div class="swiper-slide mb-8">
+                                        <!-- Start Product Item -->
+                                        <div class="product-item">
+                                            <div class="product-thumb">
+                                                <a class="d-block" href="{{ route('product.details', $product->id) }}">
+                                                    <img src="{{ asset('storage/' . $product->image) }}" width="370" height="450" alt="{{ $product->image }}">
+                                                </a>
+                                                <span class="flag-new">{{ $product->category->name }}</span>
+                                                <div class="product-action">
+                                                    <button type="button" class="product-action-btn action-btn-quick-view" data-bs-toggle="modal" data-bs-target="#action-QuickViewModal-{{$product->id}}">
+                                                        <i class="fa fa-expand"></i>
+                                                    </button>
+                                                    <button type="button" class="product-action-btn action-btn-cart" data-bs-toggle="modal" data-bs-target="#action-CartAddModal1-{{$product->id}}" onclick="addToCart('{{ $product->id }}')">
+                                                        <span>Add to cart</span>
+                                                    </button>
+                                                    <button type="button" class="product-action-btn action-btn-wishlist" data-bs-toggle="modal" data-bs-target="#action-WishlistModal-{{$product->id}}" onclick="addToWishList('{{ $product->id }}')">
+                                                        <i class="fa fa-heart-o"></i>
+                                                    </button>
                                                 </div>
-                                                <div class="reviews">150 reviews</div>
                                             </div>
-                                            <h4 class="title"><a href="product-details.html">Readable content DX22</a></h4>
-                                            <div class="prices">
-                                                <span class="price">$210.00</span>
-                                                <span class="price-old">300.00</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!--== End prPduct Item ==-->
-                                </div>
-                                <div class="swiper-slide mb-8">
-                                    <!--== Start Product Item ==-->
-                                    <div class="product-item">
-                                        <div class="product-thumb">
-                                            <a class="d-block" href="product-details.html">
-                                                <img src="assets/images/shop/5.webp" width="370" height="450" alt="Image-HasTech">
-                                            </a>
-                                            <span class="flag-new">new</span>
-                                            <div class="product-action">
-                                                <button type="button" class="product-action-btn action-btn-quick-view" data-bs-toggle="modal" data-bs-target="#action-QuickViewModal">
-                                                    <i class="fa fa-expand"></i>
-                                                </button>
-                                                <button type="button" class="product-action-btn action-btn-cart" data-bs-toggle="modal" data-bs-target="#action-CartAddModal">
-                                                    <span>Add to cart</span>
-                                                </button>
-                                                <button type="button" class="product-action-btn action-btn-wishlist" data-bs-toggle="modal" data-bs-target="#action-WishlistModal">
-                                                    <i class="fa fa-heart-o"></i>
-                                                </button>
-                                            </div>
-                                        </div>
-                                        <div class="product-info">
-                                            <div class="product-rating">
-                                                <div class="rating">
-                                                    <i class="fa fa-star-o"></i>
-                                                    <i class="fa fa-star-o"></i>
-                                                    <i class="fa fa-star-o"></i>
-                                                    <i class="fa fa-star-o"></i>
-                                                    <i class="fa fa-star-half-o"></i>
+                                            <div class="product-info">
+                                                <div class="product-rating">
+                                                    <!-- Add rating stars here -->
                                                 </div>
-                                                <div class="reviews">150 reviews</div>
-                                            </div>
-                                            <h4 class="title"><a href="product-details.html">Readable content DX22</a></h4>
-                                            <div class="prices">
-                                                <span class="price">$210.00</span>
-                                                <span class="price-old">300.00</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!--== End prPduct Item ==-->
-                                </div>
-                                <div class="swiper-slide mb-8">
-                                    <!--== Start Product Item ==-->
-                                    <div class="product-item">
-                                        <div class="product-thumb">
-                                            <a class="d-block" href="product-details.html">
-                                                <img src="assets/images/shop/6.webp" width="370" height="450" alt="Image-HasTech">
-                                            </a>
-                                            <span class="flag-new">new</span>
-                                            <div class="product-action">
-                                                <button type="button" class="product-action-btn action-btn-quick-view" data-bs-toggle="modal" data-bs-target="#action-QuickViewModal">
-                                                    <i class="fa fa-expand"></i>
-                                                </button>
-                                                <button type="button" class="product-action-btn action-btn-cart" data-bs-toggle="modal" data-bs-target="#action-CartAddModal">
-                                                    <span>Add to cart</span>
-                                                </button>
-                                                <button type="button" class="product-action-btn action-btn-wishlist" data-bs-toggle="modal" data-bs-target="#action-WishlistModal">
-                                                    <i class="fa fa-heart-o"></i>
-                                                </button>
-                                            </div>
-                                        </div>
-                                        <div class="product-info">
-                                            <div class="product-rating">
-                                                <div class="rating">
-                                                    <i class="fa fa-star-o"></i>
-                                                    <i class="fa fa-star-o"></i>
-                                                    <i class="fa fa-star-o"></i>
-                                                    <i class="fa fa-star-o"></i>
-                                                    <i class="fa fa-star-half-o"></i>
+                                                <h4 class="title"><a href="{{ route('product.details', $product->id) }}">{{ $product->name }}</a></h4>
+                                                <div class="prices">
+                                                    <span class="price">{{ $product->price }} Dhs</span>
                                                 </div>
-                                                <div class="reviews">150 reviews</div>
-                                            </div>
-                                            <h4 class="title"><a href="product-details.html">Readable content DX22</a></h4>
-                                            <div class="prices">
-                                                <span class="price">$210.00</span>
-                                                <span class="price-old">300.00</span>
                                             </div>
                                         </div>
+                                        <!-- End Product Item -->
                                     </div>
-                                    <!--== End prPduct Item ==-->
-                                </div>
+                                @endforeach
                             </div>
                         </div>
                     </div>
@@ -516,10 +429,8 @@
                 data: { search_query: searchQuery },
                 dataType: 'json',
                 success: function(response) {
-                    // Log the response to inspect the data structure
                     console.log(response);
 
-                    // Check if products are present in the response
                     if (response.products && response.products.data.length > 0) {
                         // Build HTML content for search results
                         var html = '';
@@ -552,15 +463,18 @@
                             html += '</div>';
                         });
 
-                        // Update search results section with built HTML content
                         $('#product-collection').html(html);
                     } else {
-                        // If no products found, display a message or handle accordingly
                         $('#product-collection').html('<p>No products found.</p>');
                     }
 
-                    // Hide the product collection container after displaying search results
+                    //
                     $('#product-collection').removeClass('d-none');
+
+                    var currentUrl = window.location.href.split('?')[0]; // Get the current URL without query string
+                    var newUrl = currentUrl + '?search_query=' + encodeURIComponent(searchQuery);
+                    window.history.replaceState({ path: newUrl }, '', newUrl);
+                    console.log(newUrl);
                 },
                 error: function(xhr, status, error) {
                     console.error(error);

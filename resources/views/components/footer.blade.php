@@ -18,13 +18,13 @@
                         <h4 class="widget-title">Information</h4>
                         <ul class="widget-nav">
                             <li><a href="blog.html">Blog</a></li>
-                            <li><a href="about-us.html">About us</a></li>
-                            <li><a href="contact.html">Contact</a></li>
-                            <li><a href="faq.html">Privacy</a></li>
-                            <li><a href="account-login.html">Login</a></li>
-                            <li><a href="product.html">Shop</a></li>
-                            <li><a href="my-account.html">My Account</a></li>
-                            <li><a href="faq.html">FAQs</a></li>
+                            <li><a href="{{route('about.us')}}">About us</a></li>
+                            <li><a href="{{route('contact.view')}}">Contact</a></li>
+                            <li><a href="{{route('login')}}">Login</a></li>
+                            <li><a href="{{route('products.collection')}}">Shop</a></li>
+{{--                            <li><a href="faq.html">FAQs</a></li>--}}
+                            <li><a href="{{route('register')}}">Register</a></li>
+
                         </ul>
                     </div>
                 </div>
