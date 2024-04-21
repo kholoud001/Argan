@@ -16,11 +16,10 @@ document.getElementById('logout-btn').addEventListener('click', function(event) 
             'Content-Type': 'application/json',
         },
     })
-        .then(response => response.json()) // Parse JSON response
+        .then(response => response.json())
         .then(data => {
             // Handle logout success
             console.log(data.message);
-            // Redirect to the login page or perform any other action
             window.location.href = data.redirect_url;
         })
         .catch(error => {

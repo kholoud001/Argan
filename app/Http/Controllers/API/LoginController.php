@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Validator;
 
 class LoginController extends Controller
 {
+
     public function show (){
         return view('Auth/login');
     }
@@ -38,7 +39,6 @@ class LoginController extends Controller
 
         $user = $request->user();
 
-        // Determine user's role
         $role = $user->role_id;
 
         // Generate token
