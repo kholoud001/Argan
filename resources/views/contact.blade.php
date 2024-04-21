@@ -252,7 +252,7 @@
                 listItem.querySelector('.product-title').textContent = item.product.name;
                 listItem.querySelector('.product-price').textContent = `${item.quantity} ×  ${item.product.price} Dhs`;
                 listItem.querySelector('img').src = '{{ asset("storage/") }}/' + item.product.image;
-                console.log('Image Source:', '{{ asset("storage/") }}' + item.product.image);
+                {{--console.log('Image Source:', '{{ asset("storage/") }}' + item.product.image);--}}
 
                 listItem.querySelector('img').alt = item.product.name;
 
@@ -278,8 +278,8 @@
             });
 
 
-            const checkoutLink = document.querySelector('.btn-total[href="product-checkout.html"]');
-            checkoutLink.href = "product-checkout.html";
+            const checkoutLink = document.querySelector('.btn-total[href="{{route('cart.view')}}"]');
+            checkoutLink.href = "{{route('cart.view')}}";
         })
         .catch(error => {
             console.error('Error fetching cart items:', error);
@@ -306,7 +306,7 @@
 
 <!-- JS Vendor, Plugins & Activation Script Files -->
 <!-- Vendors JS -->
-<script src="{{asset('assets/js/vendor/modernizr-3.11.7.min.js)')}}"></script>
+{{--<script src="{{asset('assets/js/vendor/modernizr-3.11.7.min.js)')}}"></script>--}}
 <script src="{{asset('assets/js/vendor/jquery-3.6.0.min.js')}}"></script>
 <script src="{{asset('assets/js/vendor/jquery-migrate-3.3.2.min.js')}}"></script>
 <script src="{{asset('assets/js/vendor/bootstrap.bundle.min.js')}}"></script>

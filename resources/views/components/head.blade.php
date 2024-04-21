@@ -16,7 +16,7 @@
     <!-- Font CSS -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
-    <link href="../../css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+{{--    <link href="../../css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">--}}
 
     <!-- Vendor CSS (Bootstrap & Icon Font) -->
     <link rel="stylesheet" href="{{url('assets/css/vendor/bootstrap.min.css')}}">

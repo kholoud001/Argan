@@ -43,18 +43,18 @@
                 <div class="row justify-content-between flex-xl-row-reverse">
                     <div class="col-xl-9">
                         <div class="row g-3 g-sm-6">
-                            <div class="row">
+                            <!--products-->
+                            <div id="product-collection" class="row">
                                 @foreach ($products as $product)
                                     <div class="col-6 col-lg-4 col-xl-4 mb-4 mb-sm-8">
                                         <!-- Start Product Item -->
                                         <div class="product-item product-st3-item">
                                             <div class="product-thumb">
-                                                <a class="d-block" href="{{ route('products.show', $product->id) }}">
+                                                <a class="d-block" href="{{route('product.details',$product->id)}}">
                                                     <img src="{{ asset('storage/' . $product->image) }}" width="370" height="450" alt="{{  $product->image }}">
                                                 </a>
-                                                @if ($product->is_new)
-                                                    <span class="flag-new">new</span>
-                                                @endif
+                                                    <span class="flag-new">{{ $product->category->name }}</span>
+
                                                 <div class="product-action">
                                                     <!-- Expand product details -->
                                                     <button type="button" class="product-action-btn action-btn-quick-view"
@@ -83,7 +83,7 @@
                                                 <div class="product-rating">
                                                     <!-- Add rating stars here -->
                                                 </div>
-                                                <h4 class="title"><a href="{{ route('products.show', $product->id) }}">{{ $product->name }}</a></h4>
+                                                <h4 class="title"><a href="{{ route('product.details', $product->id) }}">{{ $product->name }}</a></h4>
                                                 <div class="prices">
                                                     <span class="price">{{ $product->price }} Dhs</span>
 {{--                                                    @if ($product->old_price)--}}
@@ -161,30 +161,32 @@
                         <div class="product-sidebar-widget">
                             <!--search-->
                             <div class="product-widget-search">
-                                <form action="#">
-                                    <input type="search" placeholder="Search Here">
+                                <form action="{{ route('search') }}" method="GET">
+                                    <input type="search" name="search_query" id="searchInput" placeholder="Search Here">
                                     <button type="submit"><i class="fa fa-search"></i></button>
                                 </form>
                             </div>
                             <!-- Price filter -->
-                            <div class="product-widget">
-                                <h4 class="product-widget-title">Sort BY</h4>
-                                <div class="product-widget">
+{{--                            <div class="product-widget">--}}
+{{--                                <h4 class="product-widget-title">Sort BY</h4>--}}
+{{--                                <div class="product-widget">--}}
 
-                                    <select class="select-shoing">
-                                        <option data-display="Sort">Sort</option>
-                                        <option value="2">Best Selling</option>
-                                        <option value="3">Alphabetically, A-Z</option>
-                                        <option value="4">Alphabetically, Z-A</option>
-                                        <option value="5">Price, low to high</option>
-                                        <option value="6">Price, high to low</option>
-                                        <option value="7">Date, new to old</option>
-                                        <option value="8">Date, old to new</option>
-                                    </select>
+{{--                                    <!-- Select element for sorting -->--}}
+{{--                                    <select class="select-shoing" onchange="sortProducts(this)">--}}
+{{--                                        <option data-display="Sort">Sort</option>--}}
+{{--                                        <option value="best_selling">Best Selling</option>--}}
+{{--                                        <option value="alphabetically_asc">Alphabetically, A-Z</option>--}}
+{{--                                        <option value="alphabetically_desc">Alphabetically, Z-A</option>--}}
+{{--                                        <option value="price_low_high">Price, low to high</option>--}}
+{{--                                        <option value="price_high_low">Price, high to low</option>--}}
+{{--                                        <option value="date_new_old">Date, new to old</option>--}}
+{{--                                        <option value="date_old_new">Date, old to new</option>--}}
+{{--                                    </select>--}}
 
 
-                                </div>
-                            </div>
+
+{{--                                </div>--}}
+{{--                            </div>--}}
                             <!-- Categories -->
                             <div class="product-widget">
                                 <h4 class="product-widget-title">Categoris</h4>
@@ -197,13 +199,13 @@
                             <div class="product-widget mb-0">
                                 <h4 class="product-widget-title">Popular Tags</h4>
                                 <ul class="product-widget-tags">
-                                    <li><a href="blog.html">Beauty</a></li>
-                                    <li><a href="blog.html">MakeupArtist</a></li>
-                                    <li><a href="blog.html">Makeup</a></li>
-                                    <li><a href="blog.html">Hair</a></li>
-                                    <li><a href="blog.html">Nails</a></li>
-                                    <li><a href="blog.html">Hairstyle</a></li>
-                                    <li><a href="blog.html">Skincare</a></li>
+                                    <li><a href="#">Beauty</a></li>
+                                    <li><a href="#">MakeupArtist</a></li>
+                                    <li><a href="#">Makeup</a></li>
+                                    <li><a href="#">Hair</a></li>
+                                    <li><a href="#">Nails</a></li>
+                                    <li><a href="#">Hairstyle</a></li>
+                                    <li><a href="#">Skincare</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -491,8 +493,99 @@
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
 
 <!-- MyJS -->
+//search
+<script>
+    $(document).ready(function() {
+        $('#searchInput').on('input', function() {
+            var searchQuery = $(this).val();
+
+            $.ajax({
+                url: '{{ route("search") }}',
+                method: 'GET',
+                data: { search_query: searchQuery },
+                dataType: 'json',
+                success: function(response) {
+                    // Log the response to inspect the data structure
+                    console.log(response);
+
+                    // Check if products are present in the response
+                    if (response.products && response.products.data.length > 0) {
+                        // Build HTML content for search results
+                        var html = '';
+                        $.each(response.products.data, function(index, product) {
+                            html += '<div class="col-6 col-lg-4 col-xl-4 mb-4 mb-sm-8">';
+                            html += '<div class="product-item product-st3-item">';
+                            html += '<div class="product-thumb">';
+                            html += '<a class="d-block" href="{{ url('/products/') }}/' + product.id + '">';
+                            html += '<img src="{{ asset('storage/') }}/' + product.image + '" width="370" height="450" alt="' + product.image + '">';
+                            html += '</a>';
+                            // html += '<span class="flag-new">' + product.category.name + '</span>';
+                            html += '<div class="product-action">';
+                            // Add buttons for expand product details, add to cart, and add to wishlist here
+                            html += '</div>';
+                            html += '</div>';
+                            html += '<div class="product-info">';
+                            html += '<div class="product-rating">';
+                            // Add rating stars here
+                            html += '</div>';
+                            html += '<h4 class="title"><a href="{{ url('/products/') }}/' + product.id + '">' + product.name + '</a></h4>';
+                            html += '<div class="prices">';
+                            html += '<span class="price">' + product.price + ' Dhs</span>';
+                            // Add logic for displaying old price if needed
+                            html += '</div>';
+                            html += '</div>';
+                            html += '<div class="product-action-bottom">';
+                            // Add buttons for expand product details, add to cart, and add to wishlist here
+                            html += '</div>';
+                            html += '</div>';
+                            html += '</div>';
+                        });
+
+                        // Update search results section with built HTML content
+                        $('#product-collection').html(html);
+                    } else {
+                        // If no products found, display a message or handle accordingly
+                        $('#product-collection').html('<p>No products found.</p>');
+                    }
+
+                    // Hide the product collection container after displaying search results
+                    $('#product-collection').removeClass('d-none');
+                },
+                error: function(xhr, status, error) {
+                    console.error(error);
+                }
+            });
+        });
+    });
+</script>
+
+//sorting
+<script>
+    function sortProducts(selectElement) {
+        var selectedOption = selectElement.value;
+        // console.log(selectedOption)
+        $.ajax({
+            url: '{{ route("products.sort") }}',
+            type: 'GET',
+            data: { sort: selectedOption },
+            success: function(response) {
+                console.log(response)
+
+                $('#product-collection').html(response);
+            },
+            error: function(xhr, status, error) {
+                console.error('XHR Status:', xhr.status);
+                console.error('Error:', error);
+                console.error('Response Text:', xhr.responseText);
+            }
+        });
+    }
+
+</script>
 
 //navbar account
 <script src="{{url('myJs/account.js')}}"></script>
@@ -564,7 +657,7 @@
                 listItem.querySelector('.product-title').textContent = item.product.name;
                 listItem.querySelector('.product-price').textContent = `${item.quantity} ×  ${item.product.price} Dhs`;
                 listItem.querySelector('img').src = '{{ asset("storage/") }}/' + item.product.image;
-                console.log('Image Source:', '{{ asset("storage/") }}' + item.product.image);
+                {{--console.log('Image Source:', '{{ asset("storage/") }}' + item.product.image);--}}
 
                 listItem.querySelector('img').alt = item.product.name;
 
@@ -590,35 +683,20 @@
             });
 
 
-            const checkoutLink = document.querySelector('.btn-total[href="product-checkout.html"]');
-            checkoutLink.href = "product-checkout.html";
+            const checkoutLink = document.querySelector('.btn-total[href="{{route('get.checkout')}}"]');
+            checkoutLink.href = "{{route('get.checkout')}}";
         })
         .catch(error => {
             console.error('Error fetching cart items:', error);
         });
 </script>
 
-//google api
-<script>
-    try {
-        const urlParams = new URLSearchParams(window.location.search);
-        const token = urlParams.get('token');
 
-        if (token) {
-            localStorage.setItem('access_token', token);
-            console.log('Token set in local storage:', token);
-        } else {
-            console.error('Token not found in URL query parameters.');
-        }
-    } catch (error) {
-        console.error('Error setting token in local storage:', error);
-    }
-</script>
 
 
 <!-- JS Vendor, Plugins & Activation Script Files -->
 <!-- Vendors JS -->
-<script src="{{asset('assets/js/vendor/modernizr-3.11.7.min.js)')}}"></script>
+{{--<script src="{{asset('assets/js/vendor/modernizr-3.11.7.min.js)')}}"></script>--}}
 <script src="{{asset('assets/js/vendor/jquery-3.6.0.min.js')}}"></script>
 <script src="{{asset('assets/js/vendor/jquery-migrate-3.3.2.min.js')}}"></script>
 <script src="{{asset('assets/js/vendor/bootstrap.bundle.min.js')}}"></script>

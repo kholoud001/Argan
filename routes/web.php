@@ -190,8 +190,12 @@ Route::get('/account',[AccountController::class,'index'])->name('account.view');
 Route::get('/contact',[HomeController::class,'contactview'])->name('contact.view');
 Route::post('/contact   ', [HomeController::class, 'contact'])->name('contact.send');
 
+//get products collection and sort
+Route::get('/products-collection',[HomeController::class,'ProductCatalogue'])->name('products.collection');
 
-Route::get('/producty',[HomeController::class,'ProductCatalogue'])->name('producty');
+Route::get('/products-sort', [HomeController::class, 'sort'])->name('products.sort');
+
+Route::get('/products-search', [HomeController::class, 'search'])->name('search');
 
 
 
