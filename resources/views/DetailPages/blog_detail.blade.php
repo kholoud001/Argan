@@ -36,7 +36,7 @@
                             <a class="category" href="#">{{ $category->name }}</a>
                         @endforeach
                     </div>
-                    <img class="blog-detail-img mb-7 mb-lg-10" src="{{ asset('storage/' .$blogDetails->picture) }}" width="1170" height="1012" alt="Image">
+                    <img class="blog-detail-img mb-7 mb-lg-10" src="{{ asset($blogDetails->picture) }}" width="1170" height="1012" alt="Image">
                     <div class="row justify-content-center">
                         <div class="col-lg-10">
                             <div class="row">
@@ -156,7 +156,7 @@
                             <!--== Start Blog Item ==-->
                             <div class="post-item">
                                 <a href="{{route('blog.details',$post->id)}}" class="thumb">
-                                    <img src="{{ asset('storage/' . $post->picture) }}" width="370" height="320" alt="{{ $post->picture }}">
+                                    <img src="{{ asset( $post->picture) }}" width="370" height="320" alt="{{ $post->picture }}">
                                 </a>
                                 <div class="content">
                                     <a class="post-category" href="blog.html">{{ $post->category }}</a>
@@ -542,7 +542,7 @@
                 const listItem = cartItemTemplate.content.cloneNode(true);
                 listItem.querySelector('.product-title').textContent = item.product.name;
                 listItem.querySelector('.product-price').textContent = `${item.quantity} ×  ${item.product.price} Dhs`;
-                listItem.querySelector('img').src = '{{ asset("storage/") }}/' + item.product.image;
+                listItem.querySelector('img').src = '{{ asset("/") }}' + item.product.image;
                 {{--console.log('Image Source:', '{{ asset("storage/") }}' + item.product.image);--}}
 
                 listItem.querySelector('img').alt = item.product.name;

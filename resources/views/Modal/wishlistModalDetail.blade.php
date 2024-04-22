@@ -13,7 +13,7 @@
                     <div class="modal-action-product">
                         <div class="thumb">
 
-                            <img src="{{ asset('storage/' . $productDetails->image) }}" alt="{{$productDetails->image}}" width="466" height="320">
+                            <img src="{{ asset($productDetails->image) }}" alt="{{$productDetails->image}}" width="466" height="320">
                         </div>
                         <h4 class="product-name"><a href="{{route('product.details',$product->id)}}">{{$productDetails->name}}</a></h4>
                     </div>

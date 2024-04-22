@@ -74,7 +74,8 @@ class HomeController extends Controller
     }
 
 
-    /////////////////////////   Product catalogue page
+    ////////////////////////////                 Product catalogue page               ////////////////////////////////////////
+    ///
     ///
     public function ProductCatalogue()
     {
@@ -103,62 +104,20 @@ class HomeController extends Controller
         ]);
     }
 
-    public function sort1(Request $request)
-    {
-        $sortBy = $request->input('sort_by');
-
-        // Set a default sorting field and direction if $sortBy is empty or null
-        if (empty($sortBy)) {
-            $sortBy = 'created_at';
-            $sortDirection = 'desc';
-        }
-
-        // Query products based on the selected sorting field
-        switch ($sortBy) {
-            case 'best_selling':
-                // Sort products by sales count (best selling)
-                $products = Product::orderBy('sales_count', 'desc')->paginate(9);
-                break;
-            case 'price_low_high':
-                // Sort products by price low to high
-                $products = Product::orderBy('price', 'asc')->paginate(9);
-                break;
-            case 'price_high_low':
-                // Sort products by price high to low
-                $products = Product::orderBy('price', 'desc')->paginate(9);
-                break;
-            case 'date_old_new':
-                // Sort products by date old to new
-                $products = Product::orderBy('created_at', 'asc')->paginate(9);
-                break;
-            case 'date_new_old':
-                // Sort products by date new to old
-                $products = Product::orderBy('created_at', 'desc')->paginate(9);
-                break;
-            case 'alphabetically_asc':
-                // Sort products alphabetically A-Z
-                $products = Product::orderBy('name', 'asc')->paginate(9);
-                break;
-            case 'alphabetically_desc':
-                // Sort products alphabetically Z-A
-                $products = Product::orderBy('name', 'desc')->paginate(9);
-                break;
-            default:
-                // Default sorting logic
-                $products = Product::paginate(9);
-                break;
-        }
-
-        // Return the sorted products and categories to the view
-        return $this->returnView(compact('products'));
-    }
-
     private function returnView($data)
     {
         $categories = Category::all();
         return view('User.product', array_merge($data, compact('categories')));
     }
 
+    ////////////////////////////                 Blog catalogue page               ////////////////////////////////////////
+    ///
+    ///
+    public function BlogCatalogue(){
 
+        $blogs =Blog::with('categories')->orderBy('created_at','desc')->paginate(6);
+
+        return view('blog',compact('blogs'));
+    }
 
 }

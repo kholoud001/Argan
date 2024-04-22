@@ -34,7 +34,7 @@ Route::namespace('Api')->group(function (){
     //get comments
     Route::get('/comments/{blog_post_id}', [CommentController::class,'getComments']);
 
-    Route::prefix('auth')->group(function (){
+    Route::prefix('auth')->middleware('guest')->group(function (){
         Route::post('login', [LoginController::class, 'login']);
        // Route::post('register', [RegisterController::class, 'store']);
         Route::post('/register', [RegisterController::class, 'store']);

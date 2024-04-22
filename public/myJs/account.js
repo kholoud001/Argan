@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     })
         .then(function(response) {
-            console.log(response);
+            console.log('hna',response);
             if (response.data.authenticated) {
                 document.getElementById('account-link').setAttribute('href', '/account');
             } else {
@@ -18,7 +18,9 @@ document.addEventListener("DOMContentLoaded", function() {
             document.getElementById('account-link').addEventListener('click', function(event) {
                 event.preventDefault();
                // console.log(error);
+                document.getElementById('account-link').setAttribute('href', '/login');
                 window.location.href = '/login';
+
             });
         });
 });

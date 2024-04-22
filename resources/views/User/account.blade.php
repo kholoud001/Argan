@@ -1,8 +1,9 @@
+
 <!DOCTYPE html>
 <html class="no-js" lang="zxx">
 
 @include('components/head')
-
+{{--<script src="{{url('myJs/account.js')}}"></script>--}}
 <body>
 
 <!--== Wrapper Start ==-->
@@ -314,6 +315,32 @@
 
 <!-- MyJS -->
 
+
+
+//auth
+{{--<script>--}}
+{{--    document.addEventListener("DOMContentLoaded", function() {--}}
+{{--        var token = localStorage.getItem("access_token");--}}
+
+{{--        axios.get('/api/auth-check', {--}}
+{{--            headers: {--}}
+{{--                'Authorization': 'Bearer ' + token--}}
+{{--            }--}}
+{{--        })--}}
+{{--            .then(function(response) {--}}
+{{--                console.log('hna',response);--}}
+{{--                if (response.data.authenticated) {--}}
+{{--                    document.getElementById('account-link').setAttribute('href', '/account');--}}
+{{--                } else {--}}
+{{--                    document.getElementById('account-link').setAttribute('href', '/login');--}}
+{{--                }--}}
+{{--            })--}}
+{{--            .catch(function(error) {--}}
+{{--                window.location.href = '/login'; // Redirect to login page immediately--}}
+{{--            });--}}
+{{--    });--}}
+{{--</script>--}}
+
 //display cart items
 <script>
     var token = localStorage.getItem("access_token");
@@ -335,7 +362,7 @@
                 const listItem = cartItemTemplate.content.cloneNode(true);
                 listItem.querySelector('.product-title').textContent = item.product.name;
                 listItem.querySelector('.product-price').textContent = `${item.quantity} ×  ${item.product.price} Dhs`;
-                listItem.querySelector('img').src = '{{ asset("storage/") }}/' + item.product.image;
+                listItem.querySelector('img').src = '{{ asset("/") }}' + item.product.image;
                 {{--console.log('Image Source:', '{{ asset("storage/") }}' + item.product.image);--}}
 
                 listItem.querySelector('img').alt = item.product.name;
@@ -416,7 +443,7 @@
                 <td class="product-thumbnail">
                     <div class="thumb">
                         <a href="{{ route('product.details', '') }}/${item.product.id}">
-                            <img src="{{ asset('storage/') }}/${item.product.image}"width="68" height="84" alt="${item.product.name}">
+                            <img src="{{ asset('/') }}${item.product.image}"width="68" height="84" alt="${item.product.name}">
                         </a>
                     </div>
                 </td>
@@ -553,41 +580,7 @@
 
         populateFormFields();
 
-        //  Update form submission
-        // accountInfoForm.addEventListener('submit', function (event) {
-        //     event.preventDefault();
-        //
-        //     const formData = new FormData(accountInfoForm);
-        //
-        //     for (let entry of formData.entries()) {
-        //         console.log(entry);
-        //     }
-        //
-        //     axios.put('/api/user-info/update', formData, {
-        //         headers: {
-        //             'Content-Type': 'multipart/form-data',
-        //             'Authorization': 'Bearer ' + localStorage.getItem('access_token')
-        //         }
-        //     })
-        //         .then(response => {
-        //             console.log(response.data);
-        //         })
-        //         .catch(error => {
-        //             if (error.response.status === 422) {
-        //                 const errors = error.response.data.errors;
-        //                 for (let field in errors) {
-        //                     const errorMessage = errors[field][0];
-        //                     const errorField = document.getElementById(`${field}-error`);
-        //                     if (errorField) {
-        //                         errorField.textContent = errorMessage;
-        //                         errorField.style.color = 'red';
-        //                     }
-        //                 }
-        //             } else {
-        //                 console.error(error.response.data);
-        //             }
-        //         });
-        // });
+
 
             accountInfoForm.addEventListener('submit', function (event) {
                 event.preventDefault();
@@ -643,6 +636,7 @@
         })
             .then(response => {
                 //console.log(response);
+                localStorage.clear();
                 window.location.href = response.data.redirect_url;
             })
             .catch(error => {

@@ -12,7 +12,7 @@
                     </div>
                     <div class="modal-action-product">
                         <div class="thumb">
-                            <img src="{{ asset('storage/' . $product->image) }}" alt="{{$product->image}}" width="466" height="320">
+                            <img src="{{ asset($product->image) }}" alt="{{$product->image}}" width="466" height="320">
                         </div>
                         <h4 class="product-name"><a href="{{route('product.details',$product->id)}}">{{ $product->name }}</a></h4>
                     </div>

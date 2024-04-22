@@ -20,6 +20,7 @@ document.getElementById('logout-btn').addEventListener('click', function(event) 
         .then(data => {
             // Handle logout success
             console.log(data.message);
+            localStorage.clear();
             window.location.href = data.redirect_url;
         })
         .catch(error => {

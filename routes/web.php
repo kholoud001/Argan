@@ -17,7 +17,6 @@ use App\Http\Controllers\User\HomeController;
 use App\Http\Controllers\User\OrderController;
 use App\Http\Controllers\User\ReviewController;
 use App\Http\Controllers\User\WishlistController;
-use App\Http\Middleware\CheckAdminRoleApi;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -38,12 +37,14 @@ use Illuminate\Support\Facades\Route;
 | login Page
 |--------------------------------------------------------------------------
 */
-Route::get('/login', [LoginController::class, 'show'])->name('login');
+    Route::get('/login', [LoginController::class, 'show'])->name('login');
+    Route::get('/register', [RegisterController::class, 'show'])->name('register');
+
 
 
 //Google login
-Route::get('auth/google', [GoogleController::class, 'redirect'])->name('google-auth');
-Route::get('auth/google/callback', [GoogleController::class, 'callbackGoogle']);
+Route::get('auth/google', [GoogleController::class, 'redirect'])->name('google-auth')->middleware('guest');
+Route::get('auth/google/callback', [GoogleController::class, 'callbackGoogle'])->middleware('guest');
 // Facebook
 // Route for redirecting to Facebook for authentication
 Route::get('auth/facebook', [FacebookController::class, 'redirect'])->name('facebook.redirect');
@@ -55,7 +56,6 @@ Route::get('auth/facebook/callback', [FacebookController::class, 'callbackFacebo
 | register Page
 |--------------------------------------------------------------------------
 */
-Route::get('/register', [RegisterController::class, 'show'])->name('register');
 
 /*
 |--------------------------------------------------------------------------
@@ -66,10 +66,10 @@ Route::get('/register', [RegisterController::class, 'show'])->name('register');
 
 // Route for showing the form to enter the email
 Route::get('/forgot-password', [ForgotPasswordLinkController::class, 'create'])
-    ->name('password.request');
+    ->name('password.request')->middleware('guest');
 // Route for handling form submission
 Route::post('/forgot-password', [ForgotPasswordLinkController::class, 'store'])
-    ->name('password.email');
+    ->name('password.email')->middleware('guest');
 //success page
 Route::get('/check-your-inbox', [ForgotPasswordLinkController::class, 'show'])
     ->name('success');
@@ -95,9 +95,12 @@ Route::post('/reset-password/{token}', [ForgotPasswordController::class, 'reset'
 Route::group(['middleware' => 'auth.basic'], function () {
 
 //should the admin be authentified
-    Route::get('/dashboard', function () {
-        return view('Admin.index');
-    })->name('dashboard');
+    Route::middleware('role:admin')->group(function () {
+        Route::get('/dashboard', function () {
+            return view('Admin.index');
+        })->name('dashboard');
+
+
 ////////////////////////             Users Management             //////////////////////////////
 //users table (and trashed)
     Route::get('/admin/users', [UserController::class, 'show'])->name('users.show');
@@ -149,7 +152,7 @@ Route::group(['middleware' => 'auth.basic'], function () {
     Route::delete('/orders/{id}/archive', [TrackController::class, 'archive'])->name('orders.archive');
 
 });
-
+});
 /*
 |--------------------------------------------------------------------------
 | user Pages
@@ -173,15 +176,6 @@ Route::get('/products/{id}', [HomeController::class, 'getProductDetails'])->name
 //Blog details page
 Route::get('/blogs/{id}',[HomeController::class,'getBlogDetails'])->name('blog.details');
 
-////////////////////////////////       Orders          ///////////////////////////////////////////////////
-///
-/// I need to be connected
-//Route::post('/product/{id}/addToCart', [OrderController::class, 'addToCart'])->name('product.addToCart');
-Route::get('/cart/view',[CartController::class,'viewCart'])->name('cart.view');
-Route::get('/wishlist/view',[WishlistController::class,'index']);
-
-Route::get('/checkout/view',[CartController::class,'checkoutview'])->name('get.checkout');
-Route::get('/account',[AccountController::class,'index'])->name('account.view');
 
 
 
@@ -193,9 +187,16 @@ Route::post('/contact   ', [HomeController::class, 'contact'])->name('contact.se
 //get products collection and sort
 Route::get('/products-collection',[HomeController::class,'ProductCatalogue'])->name('products.collection');
 
-Route::get('/products-sort', [HomeController::class, 'sort'])->name('products.sort');
+//Route::get('/products-sort', [HomeController::class, 'sort'])->name('products.sort');
 
 Route::get('/products-search', [HomeController::class, 'search'])->name('search');
+
+//|--------------------------------------------------------------------------
+//| Blog Collection
+//|--------------------------------------------------------------------------
+//*/
+///
+Route::get('blog-collection',[HomeController::class, 'BlogCatalogue'])->name('blog');
 
 
 //|--------------------------------------------------------------------------
@@ -205,3 +206,17 @@ Route::get('/products-search', [HomeController::class, 'search'])->name('search'
 Route::get('/About-us',function (){
     return view ('aboutus');
 })->name('about.us');
+
+
+
+////////////////////////////////       Orders          ///////////////////////////////////////////////////
+///
+/// I need to be connected
+//Route::post('/product/{id}/addToCart', [OrderController::class, 'addToCart'])->name('product.addToCart');
+
+Route::group([], function () {
+    Route::get('/cart/view', [CartController::class, 'viewCart'])->name('cart.view');
+    Route::get('/wishlist/view', [WishlistController::class, 'index'])->name('wishlist.view');
+    Route::get('/checkout/view', [CartController::class, 'checkoutview'])->name('get.checkout');
+    Route::get('/account', [AccountController::class, 'index'])->name('account.view');
+});

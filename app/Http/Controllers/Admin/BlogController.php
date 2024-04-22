@@ -24,8 +24,6 @@ class BlogController extends Controller
 
     public function store(Request $request)
     {
-       // dd($request);
-        // Validate the form data
         // Validate the form data
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
@@ -35,12 +33,12 @@ class BlogController extends Controller
             'image' => 'required|image|max:2048',
         ]);
 
-// Check if validation fails
+        // Check if validation fails
         if ($validator->fails()) {
-            dd($validator->errors());
+            return redirect()->back()->withErrors($validator)->withInput();
         }
 
-// If validation passes, retrieve validated data
+        // If validation passes, retrieve validated data
         $validatedData = $validator->validated();
 
         // Create a new post instance
@@ -48,24 +46,31 @@ class BlogController extends Controller
         $post->title = $validatedData['name'];
         $post->content = $validatedData['content'];
 
-
-        // Handle image upload
-        if ($request->hasFile('image')) {
-            $imagePath = $request->file('image')->store('post_images', 'public');
-            $post->picture = $imagePath;
+        // Upload image if provided
+        if ($image = $request->file('image')) {
+            $save_url = $this->handleImage($image);
+            $post->picture = $save_url;
         }
 
         // Save the post
         $post->save();
 
         // Attach categories to the post
-        foreach ($validatedData['category_ids'] as $categoryId) {
-            $post->categories()->attach($categoryId);
-        }
+        $post->categories()->attach($validatedData['category_ids']);
 
         // Redirect back or to a specific route
         return redirect()->route('posts.show')->with('success', 'Post created successfully!');
     }
+
+
+
+    protected function handleImage($image){
+        $name_gen = hexdec(uniqid()) . '.' . $image->getClientOriginalExtension();
+        $save_url = 'assets/images/post/' . $name_gen; // Corrected the directory path
+        $image->move(public_path('assets/images/post'), $name_gen);
+        return $save_url;
+    }
+
 
 
     public function destroy($id)

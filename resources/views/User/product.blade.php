@@ -51,7 +51,7 @@
                                         <div class="product-item product-st3-item">
                                             <div class="product-thumb">
                                                 <a class="d-block" href="{{route('product.details',$product->id)}}">
-                                                    <img src="{{ asset('storage/' . $product->image) }}" width="370" height="450" alt="{{  $product->image }}">
+                                                    <img src="{{ asset( $product->image) }}" width="370" height="450" alt="{{  $product->image }}">
                                                 </a>
                                                     <span class="flag-new">{{ $product->category->name }}</span>
 
@@ -166,34 +166,7 @@
                                     <button type="submit"><i class="fa fa-search"></i></button>
                                 </form>
                             </div>
-{{--                            <!-- Search by category -->--}}
-{{--                            <div class="product-widget-search">--}}
-{{--                                <form action="{{ route('search') }}" method="GET">--}}
-{{--                                    <input type="search" name="search_query" id="searchInput" placeholder="Search Your Category">--}}
-{{--                                    <button type="submit"><i class="fa fa-search"></i></button>--}}
-{{--                                </form>--}}
-{{--                            </div>--}}
-                            <!-- Price filter -->
-{{--                            <div class="product-widget">--}}
-{{--                                <h4 class="product-widget-title">Sort BY</h4>--}}
-{{--                                <div class="product-widget">--}}
 
-{{--                                    <!-- Select element for sorting -->--}}
-{{--                                    <select class="select-shoing" onchange="sortProducts(this)">--}}
-{{--                                        <option data-display="Sort">Sort</option>--}}
-{{--                                        <option value="best_selling">Best Selling</option>--}}
-{{--                                        <option value="alphabetically_asc">Alphabetically, A-Z</option>--}}
-{{--                                        <option value="alphabetically_desc">Alphabetically, Z-A</option>--}}
-{{--                                        <option value="price_low_high">Price, low to high</option>--}}
-{{--                                        <option value="price_high_low">Price, high to low</option>--}}
-{{--                                        <option value="date_new_old">Date, new to old</option>--}}
-{{--                                        <option value="date_old_new">Date, old to new</option>--}}
-{{--                                    </select>--}}
-
-
-
-{{--                                </div>--}}
-{{--                            </div>--}}
                             <!-- Categories -->
                             <div class="product-widget">
                                 <h4 class="product-widget-title">Categoris</h4>
@@ -254,7 +227,7 @@
                                         <div class="product-item">
                                             <div class="product-thumb">
                                                 <a class="d-block" href="{{ route('product.details', $product->id) }}">
-                                                    <img src="{{ asset('storage/' . $product->image) }}" width="370" height="450" alt="{{ $product->image }}">
+                                                    <img src="{{ asset($product->image) }}" width="370" height="450" alt="{{ $product->image }}">
                                                 </a>
                                                 <span class="flag-new">{{ $product->category->name }}</span>
                                                 <div class="product-action">
@@ -304,31 +277,6 @@
 
 
 
-    <!--== Start Aside Search Form ==-->
-    <aside class="aside-search-box-wrapper offcanvas offcanvas-top" tabindex="-1" id="AsideOffcanvasSearch" aria-labelledby="offcanvasTopLabel">
-        <div class="offcanvas-header">
-            <h5 class="d-none" id="offcanvasTopLabel">Aside Search</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"><i class="fa fa-close"></i></button>
-        </div>
-        <div class="offcanvas-body">
-            <div class="container pt--0 pb--0">
-                <div class="search-box-form-wrap">
-                    <div class="search-note">
-                        <p>Start typing and press Enter to search</p>
-                    </div>
-                    <form action="#" method="post">
-                        <div class="aside-search-form position-relative">
-                            <label for="SearchInput" class="visually-hidden">Search</label>
-                            <input id="SearchInput" type="search" class="form-control" placeholder="Search entire store…">
-                            <button class="search-button" type="submit"><i class="fa fa-search"></i></button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </aside>
-
-    <!--== End Aside Search Form ==-->
 
 
 
@@ -439,7 +387,7 @@
                             html += '<div class="product-item product-st3-item">';
                             html += '<div class="product-thumb">';
                             html += '<a class="d-block" href="{{ url('/products/') }}/' + product.id + '">';
-                            html += '<img src="{{ asset('storage/') }}/' + product.image + '" width="370" height="450" alt="' + product.image + '">';
+                            html += '<img src="{{ asset('/') }}' + product.image + '" width="370" height="450" alt="' + product.image + '">';
                             html += '</a>';
                             html += '<span class="flag-new">' + product.category.name + '</span>';
                             html += '<div class="product-action">';
@@ -471,10 +419,7 @@
                     //
                     $('#product-collection').removeClass('d-none');
 
-                    var currentUrl = window.location.href.split('?')[0]; // Get the current URL without query string
-                    var newUrl = currentUrl + '?search_query=' + encodeURIComponent(searchQuery);
-                    window.history.replaceState({ path: newUrl }, '', newUrl);
-                    console.log(newUrl);
+
                 },
                 error: function(xhr, status, error) {
                     console.error(error);
@@ -484,32 +429,8 @@
     });
 </script>
 
-//sorting
-<script>
-    function sortProducts(selectElement) {
-        var selectedOption = selectElement.value;
-        // console.log(selectedOption)
-        $.ajax({
-            url: '{{ route("products.sort") }}',
-            type: 'GET',
-            data: { sort: selectedOption },
-            success: function(response) {
-                console.log(response)
 
-                $('#product-collection').html(response);
-            },
-            error: function(xhr, status, error) {
-                console.error('XHR Status:', xhr.status);
-                console.error('Error:', error);
-                console.error('Response Text:', xhr.responseText);
-            }
-        });
-    }
 
-</script>
-
-//navbar account
-<script src="{{url('myJs/account.js')}}"></script>
 
 //add to cart
 <script>
@@ -556,6 +477,10 @@
     }
 </script>
 
+
+//navbar account
+<script src="{{url('myJs/account.js')}}"></script>
+
 //display cart items
 <script>
     var token = localStorage.getItem("access_token");
@@ -577,7 +502,7 @@
                 const listItem = cartItemTemplate.content.cloneNode(true);
                 listItem.querySelector('.product-title').textContent = item.product.name;
                 listItem.querySelector('.product-price').textContent = `${item.quantity} ×  ${item.product.price} Dhs`;
-                listItem.querySelector('img').src = '{{ asset("storage/") }}/' + item.product.image;
+                listItem.querySelector('img').src = '{{ asset("/") }}' + item.product.image;
                 {{--console.log('Image Source:', '{{ asset("storage/") }}' + item.product.image);--}}
 
                 listItem.querySelector('img').alt = item.product.name;

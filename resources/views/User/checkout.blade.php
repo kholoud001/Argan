@@ -361,8 +361,8 @@
                 const listItem = cartItemTemplate.content.cloneNode(true);
                 listItem.querySelector('.product-title').textContent = item.product.name;
                 listItem.querySelector('.product-price').textContent = `${item.quantity} ×  ${item.product.price} Dhs`;
-                listItem.querySelector('img').src = '{{ asset("storage/") }}/' + item.product.image;
-                console.log('Image Source:', '{{ asset("storage/") }}' + item.product.image);
+                listItem.querySelector('img').src = '{{ asset("/") }}' + item.product.image;
+                //console.log('Image Source:', '{{ asset("storage/") }}' + item.product.image);
 
                 listItem.querySelector('img').alt = item.product.name;
 

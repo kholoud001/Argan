@@ -253,7 +253,7 @@
                 <td class="product-thumbnail">
                     <div class="thumb">
                         <a href="{{ route('product.details', '') }}/${item.product.id}">
-                            <img src="{{ asset('storage/') }}/${item.product.image}" width="68" height="84" alt="${item.product.name}">
+                            <img src="{{ asset('/') }}${item.product.image}" width="68" height="84" alt="${item.product.name}">
                         </a>
                     </div>
                 </td>

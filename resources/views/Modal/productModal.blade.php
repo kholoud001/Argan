@@ -12,7 +12,7 @@
                             <div class="col-lg-6">
                                 <!--== Start Product Thumbnail Area ==-->
                                 <div class="product-single-thumb">
-                                    <img src="{{ asset('storage/' . $product->image) }}" width="544" height="560" alt="{{$product->image}}">
+                                    <img src="{{ asset($product->image) }}" width="544" height="560" alt="{{$product->image}}">
                                 </div>
                                 <!--== End Product Thumbnail Area ==-->
                             </div>

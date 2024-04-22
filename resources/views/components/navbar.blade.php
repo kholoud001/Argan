@@ -19,7 +19,7 @@
                         <li class="has-submenu position-static"><a href="{{route('products.collection')}}">shop</a>
 
                         </li>
-                        <li class="has-submenu"><a href="blog.html">Blog</a>
+                        <li class="has-submenu"><a href="{{route('blog')}}">Blog</a>
 
                         </li>
 

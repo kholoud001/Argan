@@ -223,7 +223,7 @@
                                 <!--== Start Blog Item ==-->
                                 <div class="post-item">
                                     <a href="{{route('blog.details',$post->id)}}" class="thumb">
-                                        <img src="{{ asset('storage/' . $post->picture) }}" width="370" height="320" alt="{{ $post->picture }}">
+                                        <img src="{{ asset($post->picture) }}" width="370" height="320" alt="{{ $post->picture }}">
                                     </a>
                                     <div class="content">
                                         <a class="post-category" href="{{route('blog.details',$post->id)}}">{{ $post->category }}</a>
@@ -272,34 +272,6 @@
     <!--== Scroll Top Button ==-->
     <div id="scroll-to-top" class="scroll-to-top"><span class="fa fa-angle-up"></span></div>
 
-
-
-
-
-    <!--== Start Aside Search Form ==-->
-{{--    <aside class="aside-search-box-wrapper offcanvas offcanvas-top" tabindex="-1" id="AsideOffcanvasSearch" aria-labelledby="offcanvasTopLabel">--}}
-{{--        <div class="offcanvas-header">--}}
-{{--            <h5 class="d-none" id="offcanvasTopLabel">Aside Search</h5>--}}
-{{--            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"><i class="fa fa-close"></i></button>--}}
-{{--        </div>--}}
-{{--        <div class="offcanvas-body">--}}
-{{--            <div class="container pt--0 pb--0">--}}
-{{--                <div class="search-box-form-wrap">--}}
-{{--                    <div class="search-note">--}}
-{{--                        <p>Start typing and press Enter to search</p>--}}
-{{--                    </div>--}}
-{{--                    <!-- Update form action to point to the search route -->--}}
-{{--                    <form id="searchForm" action="{{ route('search') }}" method="get">--}}
-{{--                        <div class="aside-search-form position-relative">--}}
-{{--                            <label for="SearchInput" class="visually-hidden">Search</label>--}}
-{{--                            <input id="SearchInput" type="search" class="form-control" placeholder="Search entire store…" name="search_query">--}}
-{{--                            <button class="search-button" type="submit"><i class="fa fa-search"></i></button>--}}
-{{--                        </div>--}}
-{{--                    </form>--}}
-{{--                </div>--}}
-{{--            </div>--}}
-{{--        </div>--}}
-{{--    </aside>    <!--== End Aside Search Form ==-->--}}
 
 
 
@@ -387,32 +359,6 @@
 <!-- MyJS -->
 
 
-{{--//search bar--}}
-{{--<script>--}}
-{{--    $(document).ready(function() {--}}
-{{--        $('#searchForm').submit(function(event) {--}}
-{{--            event.preventDefault();--}}
-
-{{--            var searchQuery = $('#SearchInput').val();--}}
-
-{{--            $.ajax({--}}
-{{--                url: $(this).attr('action'),--}}
-{{--                method: $(this).attr('method'),--}}
-{{--                data: { search_query: searchQuery },--}}
-{{--                dataType: 'json',--}}
-{{--                success: function(response) {--}}
-{{--                    console.log(response);--}}
-
-{{--                    window.location.href = '{{ route("products.collection") }}?search_query=' + searchQuery;--}}
-
-{{--                },--}}
-{{--                error: function(xhr, status, error) {--}}
-{{--                    console.error(error);--}}
-{{--                }--}}
-{{--            });--}}
-{{--        });--}}
-{{--    });--}}
-{{--</script>--}}
 
 //navbar account
 <script src="{{url('myJs/account.js')}}"></script>
@@ -483,7 +429,7 @@
                 const listItem = cartItemTemplate.content.cloneNode(true);
                 listItem.querySelector('.product-title').textContent = item.product.name;
                 listItem.querySelector('.product-price').textContent = `${item.quantity} ×  ${item.product.price} Dhs`;
-                listItem.querySelector('img').src = '{{ asset("storage/") }}/' + item.product.image;
+                listItem.querySelector('img').src = '{{ asset("/") }}' + item.product.image;
                 {{--console.log('Image Source:', '{{ asset("storage/") }}' + item.product.image);--}}
 
                 listItem.querySelector('img').alt = item.product.name;
