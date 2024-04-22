@@ -92,7 +92,7 @@ Route::post('/reset-password/{token}', [ForgotPasswordController::class, 'reset'
 |--------------------------------------------------------------------------
 */
 
-Route::group(['middleware' => 'auth'], function () {
+Route::group(['middleware' => 'auth.basic'], function () {
 
 //should the admin be authentified
     Route::get('/dashboard', function () {

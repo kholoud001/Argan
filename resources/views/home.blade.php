@@ -122,7 +122,7 @@
                             <div class="product-item product-st2-item">
                                 <div class="product-thumb">
                                     <a class="d-block" href="{{route('product.details',$product->id)}}">
-                                        <img src="{{ asset('storage/' . $product->image) }}" width="370" height="450" alt="{{$product->image}}">
+                                        <img src="{{ asset($product->image) }}" width="370" height="450" alt="{{$product->image}}">
                                     </a>
                                     <span class="flag-new">{{ $product->category->name }}</span>
                                 </div>

@@ -28,18 +28,30 @@ class ProductController extends Controller
             'quantity' => 'required|integer|min:0',
             'category_id' => 'required|exists:categories,id',
             'image' => 'required|image',
-        ], ['image.required' => 'The image field is required.']);
+        ]);
 
         // Upload image if provided
-        $imagePath = $request->file('image')->store('public/storage/products');
-
-        Product::create(array_merge(
-            $request->only(['name', 'description', 'price', 'quantity', 'category_id']),
-            ['image' => $imagePath]
-        ));
+       if($image = $request->file('image')){
+           $save_url = $this->handleImage($request->file('image'));
+       }
+       Product::create([
+           'name' => $request->name,
+           'description' => $request->description,
+           'price' => $request->price,
+           'quantity'=>$request->quantity,
+           'image' => $save_url,
+           'category_id' => $request->category_id,
+       ]);
 
         return redirect()->route('products.show')->with('success', 'Product created successfully.');
     }
+    protected function handleImage($image){
+        $name_gen = hexdec(uniqid()) . '.' . $image->getClientOriginalExtension();
+        $save_url = 'assets/images/product/' . $name_gen; // Corrected the directory path
+        $image->move(public_path('assets/images/product'), $name_gen); // Save the image to the public directory
+        return $save_url;
+    }
+
 
     public function update(Request $request, Product $product)
     {
