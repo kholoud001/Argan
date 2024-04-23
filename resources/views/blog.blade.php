@@ -20,7 +20,7 @@
         <nav aria-label="breadcrumb" class="breadcrumb-style1 mb-10">
             <div class="container">
                 <ol class="breadcrumb justify-content-center">
-                    <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                    <li class="breadcrumb-item"><a href="{{route('home')}}">Home</a></li>
                     <li class="breadcrumb-item active" aria-current="page">Blog</li>
                 </ol>
             </div>
@@ -31,7 +31,7 @@
             <div class="container">
                 <div class="row justify-content-between flex-xl-row-reverse">
                     <div class="col-xl-8">
-                        <div class="row">
+                        <div id="searchResults" class="row">
                             @foreach($blogs as $blog)
                                 <div class="col-sm-6 col-lg-4 col-xl-6 mb-8">
                                     <!--== Start Blog Item ==-->
@@ -53,81 +53,79 @@
                             @endforeach
 
 
-                            <!--pagination -->
-                            <div class="col-12">
-                                <ul class="pagination justify-content-center me-auto ms-auto mt-7 mb-8 mb-xl-0">
-                                    <li class="page-item">
-                                        <a class="page-link previous" href="product.html" aria-label="Previous">
-                                            <span class="fa fa-chevron-left" aria-hidden="true"></span>
-                                        </a>
-                                    </li>
-                                    <li class="page-item"><a class="page-link" href="product.html">01</a></li>
-                                    <li class="page-item"><a class="page-link" href="product.html">02</a></li>
-                                    <li class="page-item"><a class="page-link" href="product.html">03</a></li>
-                                    <li class="page-item"><a class="page-link" href="product.html">....</a></li>
-                                    <li class="page-item">
-                                        <a class="page-link next" href="product.html" aria-label="Next">
-                                            <span class="fa fa-chevron-right" aria-hidden="true"></span>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
+                                <!-- Pagination -->
+                                <div class="col-12">
+                                    @php
+                                        $pageNumber = $blogs->currentPage();
+                                        $counter = ($pageNumber - 1) * $blogs->perPage() + 1;
+                                    @endphp
+
+                                    <ul class="pagination justify-content-center">
+                                        <li class="page-item {{ $pageNumber == 1 ? 'disabled' : '' }}">
+                                            <a class="page-link" href="{{ $blogs->previousPageUrl() }}" aria-label="Previous">&laquo;</a>
+                                        </li>
+
+                                        @for ($i = 1; $i <= $blogs->lastPage(); $i++)
+                                            <li class="page-item {{ $pageNumber == $i ? 'active' : '' }}">
+                                                <a class="page-link" href="{{ $blogs->url($i) }}">{{ $i }}</a>
+                                            </li>
+                                        @endfor
+
+                                        <li class="page-item {{ !$blogs->hasMorePages() ? 'disabled' : '' }}">
+                                            <a class="page-link" href="{{ $blogs->nextPageUrl() }}" aria-label="Next">&raquo;</a>
+                                        </li>
+                                    </ul>
+                                </div>
+
                         </div>
                     </div>
+                    <!-- Left side Bar -->
                     <div class="col-xl-4">
                         <div class="blog-sidebar-widget">
+                            <!-- Search -->
                             <div class="blog-search-widget">
-                                <form action="#">
-                                    <input type="search" placeholder="Search Here">
+                                <form action="{{ route('blog.search') }}" method="GET">
+                                    @csrf
+                                    <input id="searchInput" name="searchInput" type="search" placeholder="Search Here">
                                     <button type="submit"><i class="fa fa-search"></i></button>
                                 </form>
                             </div>
+                            <!-- Categories -->
                             <div class="blog-widget">
-                                <h4 class="blog-widget-title">Popular Categoris</h4>
+                                <h4 class="blog-widget-title">Popular Categories</h4>
+                                @foreach( $categories as $category)
+
                                 <ul class="blog-widget-category">
-                                    <li><a href="blog.html">Accesasories <span>(6)</span></a></li>
-                                    <li><a href="blog.html">Computer <span>(4)</span></a></li>
-                                    <li><a href="blog.html">Covid-19 <span>(2)</span></a></li>
-                                    <li><a href="blog.html">Electronics <span>(12)</span></a></li>
-                                    <li><a href="blog.html">Furniture <span>(9)</span></a></li>
+                                    <li><a href="#">{{$category->name}} <span>({{ $category->posts()->count() }})</span></a></li>
                                 </ul>
+                                @endforeach
                             </div>
+                            <!-- Recent posts -->
                             <div class="blog-widget">
                                 <h4 class="blog-widget-title">Recent Posts</h4>
+                                @foreach($recentBlogs as $blog)
                                 <div class="blog-widget-post">
                                     <div class="blog-widget-single-post">
-                                        <a href="blog-details.html">
-                                            <img src="assets/images/blog/s1.webp" width="75" height="78" alt="Images">
-                                            <span class="title">Lorem ipsum dolor sit amet conse adipis.</span>
+                                        <a href="{{ route('blog.details', $blog->id) }}">
+                                            <img src="{{asset($blog->picture)}}" width="75" height="78" alt="{{$blog->picture}}">
+                                            <span class="title">{{$blog->title}}</span>
                                         </a>
-                                        <span class="date">Sep 24,2022</span>
-                                    </div>
-                                    <div class="blog-widget-single-post">
-                                        <a href="blog-details.html">
-                                            <img src="assets/images/blog/s2.webp" width="75" height="78" alt="Images">
-                                            <span class="title">Lorem ipsum dolor sit amet conse adipis.</span>
-                                        </a>
-                                        <span class="date">Sep 25,2022</span>
-                                    </div>
-                                    <div class="blog-widget-single-post">
-                                        <a href="blog-details.html">
-                                            <img src="assets/images/blog/s3.webp" width="75" height="78" alt="Images">
-                                            <span class="title">Lorem ipsum dolor sit amet conse adipis.</span>
-                                        </a>
-                                        <span class="date">Sep 26,2022</span>
+                                        <span class="date">{{ $blog->created_at->format('F d, Y') }}</span>
                                     </div>
                                 </div>
+                                @endforeach
                             </div>
+                            <!-- Pop Tags -->
                             <div class="blog-widget mb-0">
                                 <h4 class="blog-widget-title">Popular Tags</h4>
                                 <ul class="blog-widget-tags">
-                                    <li><a href="blog.html">Beauty</a></li>
-                                    <li><a href="blog.html">MakeupArtist</a></li>
-                                    <li><a href="blog.html">Makeup</a></li>
-                                    <li><a href="blog.html">Hair</a></li>
-                                    <li><a href="blog.html">Nails</a></li>
-                                    <li><a href="blog.html">Hairstyle</a></li>
-                                    <li><a href="blog.html">Skincare</a></li>
+                                    <li><a href="#">Beauty</a></li>
+                                    <li><a href="#">MakeupArtist</a></li>
+                                    <li><a href="#">Makeup</a></li>
+                                    <li><a href="#">Hair</a></li>
+                                    <li><a href="#">Nails</a></li>
+                                    <li><a href="#">Hairstyle</a></li>
+                                    <li><a href="#">Skincare</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -253,6 +251,61 @@
 
 <!-- MyJS -->
 
+// Search blog
+{{--<script src="{{ asset('myJs/searchBlog.js') }}"></script>--}}
+<script>
+
+    $(document).ready(function() {
+        $('#searchInput').on('input', function() {
+            var searchInput = $(this).val();
+
+            $.ajax({
+                url: "{{ route('blog.search') }}",
+                method: 'GET',
+                data: { searchInput: searchInput },
+                dataType: 'json',
+                success: function(response) {
+                    console.log(response);
+
+                    if (response.posts && response.posts.data.length > 0) {
+                        var html = '';
+                        $.each(response.posts.data, function(index, blog) {
+                            html += '<div class="col-sm-6 col-lg-4 col-xl-6 mb-8">';
+                            html += '<div class="post-item">';
+                            html += '<a href="' + '{{ route('blog.details', $blog->id) }}' + '" class="thumb">';
+                            html += '<img src="{{ asset('/') }}' + blog.picture + '" width="370" height="320" alt="' + blog.title + '">';
+                            html += '</a>';
+                            html += '<div class="content">';
+                            html += '<a class="post-category"  href="' + '{{ route('blog.details', $blog->id) }}' + '">' + '{{$blog->category}}' + '</a>';
+                            html += '<h4 class="title"><a href="' + '{{ route('blog.details', $blog->id) }}' + '">' + blog.title + '</a></h4>';
+                            html += '<ul class="meta">';
+                            html += '<li class="post-date">' + '{{ $blog->created_at->format('F d, Y') }}' + '</li>';
+                            html += '</ul>';
+                            html += '</div>';
+                            html += '</div>';
+                            html += '</div>';
+
+                        });
+
+                        $('#searchResults').html(html);
+                        console.log("yay")
+                    } else {
+                        $('#searchResults').html('<p>No blogs found.</p>');
+                        console.log("oh noo!")
+                    }
+
+                    //
+                    $('#searchResults').removeClass('d-none');
+
+
+                },
+                error: function(xhr, status, error) {
+                    console.error(error);
+                }
+            });
+        });
+    });
+</script>
 
 //navbar account
 <script src="{{url('myJs/account.js')}}"></script>

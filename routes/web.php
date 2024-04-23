@@ -197,6 +197,8 @@ Route::get('/products-search', [HomeController::class, 'search'])->name('search'
 //*/
 ///
 Route::get('blog-collection',[HomeController::class, 'BlogCatalogue'])->name('blog');
+Route::get('/blog-search', [HomeController::class, 'searchBlog'])->name('blog.search');
+
 
 
 //|--------------------------------------------------------------------------

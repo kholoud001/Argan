@@ -169,10 +169,10 @@
 
                             <!-- Categories -->
                             <div class="product-widget">
-                                <h4 class="product-widget-title">Categoris</h4>
+                                <h4 class="product-widget-title">Categories</h4>
                                 @foreach( $categories as $category)
                                 <ul class="product-widget-category">
-                                    <li><a href="product.html">{{$category->name}} <span>({{ $category->products()->count() }})</span></a></li>
+                                    <li><a href="#">{{$category->name}} <span>({{ $category->products()->count() }})</span></a></li>
                                 </ul>
                                 @endforeach
                             </div>
@@ -380,7 +380,6 @@
                     console.log(response);
 
                     if (response.products && response.products.data.length > 0) {
-                        // Build HTML content for search results
                         var html = '';
                         $.each(response.products.data, function(index, product) {
                             html += '<div class="col-6 col-lg-4 col-xl-4 mb-4 mb-sm-8">';
@@ -416,7 +415,6 @@
                         $('#product-collection').html('<p>No products found.</p>');
                     }
 
-                    //
                     $('#product-collection').removeClass('d-none');
 
 

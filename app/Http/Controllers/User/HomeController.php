@@ -115,9 +115,23 @@ class HomeController extends Controller
     ///
     public function BlogCatalogue(){
 
-        $blogs =Blog::with('categories')->orderBy('created_at','desc')->paginate(6);
+        $blogs =Blog::with('categories')->paginate(6);
+        $categories = Category::all();
+        $recentBlogs= Blog::orderBy('created_at','desc')->take(3)->get();
 
-        return view('blog',compact('blogs'));
+
+        return view('blog',compact('blogs','categories','recentBlogs'));
+    }
+
+    public function searchBlog(Request $request)
+    {
+        $query = $request->input('searchInput');
+
+        $posts = Blog::where('title', 'like', '%' . $query . '%')->paginate(6);
+
+        return response()->json([
+            'query'=>$query,
+            'posts' => $posts]);
     }
 
 }

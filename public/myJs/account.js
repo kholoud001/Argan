@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     })
         .then(function(response) {
-            console.log('hna',response);
+            // console.log(response);
             if (response.data.authenticated) {
                 document.getElementById('account-link').setAttribute('href', '/account');
             } else {
