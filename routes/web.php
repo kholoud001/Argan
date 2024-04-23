@@ -45,8 +45,8 @@ Route::post('/subscribe', [NewsletterController::class, 'subscribe'])->name('sub
 
 
 //Google login
-Route::get('auth/google', [GoogleController::class, 'redirect'])->name('google-auth')->middleware('guest');
-Route::get('auth/google/callback', [GoogleController::class, 'callbackGoogle'])->middleware('guest');
+Route::get('auth/google', [GoogleController::class, 'redirect'])->name('google-auth');
+Route::get('auth/google/callback', [GoogleController::class, 'callbackGoogle']);
 // Facebook
 // Route for redirecting to Facebook for authentication
 Route::get('auth/facebook', [FacebookController::class, 'redirect'])->name('facebook.redirect');
