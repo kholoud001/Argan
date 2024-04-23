@@ -78,7 +78,7 @@
                                                     <table width="100%" cellspacing="0" cellpadding="0">
                                                         <tbody>
                                                         <tr>
-                                                            <td align="right" class="es-infoblock esd-block-text es-m-txt-c"><p><a href="https://viewstripo.email/" target="_blank" class="view">​</a></p></td>
+                                                            <td align="right" class="es-infoblock esd-block-text es-m-txt-c"><p><a href="{{route('home')}}" target="_blank" class="view">​</a></p></td>
                                                         </tr>
                                                         </tbody>
                                                     </table></td>

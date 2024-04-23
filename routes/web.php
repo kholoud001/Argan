@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\BlogController;
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\NewsletterController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\TrackController;
 use App\Http\Controllers\Admin\UserController;
@@ -30,6 +31,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::post('/subscribe', [NewsletterController::class, 'subscribe'])->name('subscribe');
 
 
 /*

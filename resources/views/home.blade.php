@@ -253,8 +253,9 @@
                         </div>
                     </div>
                     <div class="newsletter-form">
-                        <form>
-                            <input type="email" class="form-control" placeholder="enter your email">
+                        <form action="{{ route('subscribe') }}" method="POST">
+                            @csrf
+                            <input name="email" type="email" class="form-control" placeholder="enter your email">
                             <button class="btn-submit" type="submit"><i class="fa fa-paper-plane"></i></button>
                         </form>
                     </div>
