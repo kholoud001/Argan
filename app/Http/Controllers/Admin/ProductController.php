@@ -34,6 +34,7 @@ class ProductController extends Controller
        if($image = $request->file('image')){
            $save_url = $this->handleImage($request->file('image'));
        }
+
        Product::create([
            'name' => $request->name,
            'description' => $request->description,
@@ -45,40 +46,33 @@ class ProductController extends Controller
 
         return redirect()->route('products.show')->with('success', 'Product created successfully.');
     }
-    protected function handleImage($image){
-        $name_gen = hexdec(uniqid()) . '.' . $image->getClientOriginalExtension();
-        $save_url = 'assets/images/product/' . $name_gen; // Corrected the directory path
-        $image->move(public_path('assets/images/product'), $name_gen); // Save the image to the public directory
-        return $save_url;
-    }
+
 
 
     public function update(Request $request, Product $product)
     {
-        $validatedData = $request->validate([
-            'name' => 'sometimes|string|max:255',
-            'description' => 'nullable|string',
-            'price' => 'sometimes|numeric|min:0',
-            'quantity' => 'sometimes|integer|min:0',
-            'category_id' => 'sometimes|exists:categories,id',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-        ]);
+        // Update the product with the request data
+        $product->update($request->all());
 
-        // Filter out null values from the validated data
-        $validatedData = array_filter($validatedData, function ($value) {
-            return $value !== null;
-        });
-
-        // Upload image if provided
         if ($request->hasFile('image')) {
-            $imagePath = $request->file('image')->store('products');
-            $validatedData['image'] = $imagePath;
+            // Handle image upload and get the image path
+            $imagePath = $this->handleImage($request->file('image'));
+
+            $product->image = $imagePath;
+            $product->save();
         }
 
-        $product->update($validatedData);
-
-        return redirect()->route('products.show')->with('success', 'Product updated successfully.');
+        return redirect()->route('products.show', $product->id)->with('success', 'Product updated successfully.');
     }
+
+    protected function handleImage($image){
+        $name_gen = hexdec(uniqid()) . '.' . $image->getClientOriginalExtension();
+        $image->move(public_path('assets/images/product'), $name_gen); // Save the image to the public directory
+        $imagePath = 'assets/images/product/' . $name_gen; // Image path relative to the public directory
+        return $imagePath;
+    }
+
+
 
 
     public function destroy(Product $product)

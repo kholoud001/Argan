@@ -150,14 +150,14 @@
                                                     </div>
                                                     <div class="col-lg-12">
                                                         <!-- Modal body -->
-                                                        <form class="p-4 md:p-5" action="{{ route('products.update', $product->id) }}" method="POST">
+                                                        <form class="p-4 md:p-5" action="{{ route('products.update', $product->id) }}" method="POST" enctype="multipart/form-data"   >
                                                         @csrf
                                                         @method('PUT')
                                                         <!-- Product name Field -->
                                                         <div class="form-group row">
                                                             <div class="col-lg-12">
                                                                 <label class=" col-form-label" for="name">Product Name <span class="text-danger">*</span></label>
-                                                                <input type="text" class="form-control" id="name" name="name" value="{{ $product->name }}" required>
+                                                                <input type="text" class="form-control" id="name" name="name" value="{{ old('name', $product->name) }}" required>
 
                                                             </div>
                                                         </div>
@@ -165,11 +165,11 @@
                                                         <div class="form-group row">
                                                             <div class="col-lg-6">
                                                                 <label class="col-form-label" for="price">Price <span class="text-danger">*</span></label>
-                                                                <input type="text" class="form-control" id="price" name="price" value="{{ $product->price }}" required>
+                                                                <input type="text" class="form-control" id="price" name="price" value="{{ old('name', $product->price) }}" required>
                                                             </div>
                                                             <div class="col-lg-6">
                                                                 <label class="col-form-label" for="quantity">Quantity <span class="text-danger">*</span></label>
-                                                                <input type="number" class="form-control" id="quantity" name="quantity" value="{{ $product->quantity }}" required>
+                                                                <input type="number" class="form-control" id="quantity" name="quantity" value="{{ old('name', $product->quantity) }}"required>
                                                             </div>
                                                         </div>
                                                         <!-- Category and Image Fields -->

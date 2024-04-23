@@ -229,7 +229,7 @@
                                         <a class="post-category" href="{{route('blog.details',$post->id)}}">{{ $post->category }}</a>
                                         <h4 class="title"><a href="{{route('blog.details',$post->id)}}">{{ $post->title }}</a></h4>
                                         <ul class="meta">
-                                            <li class="author-info"><span>By:</span> <a href="{{route('blog.details',$post->id)}}"></a></li>
+                                            <li class="author-info"><span>By: Lilly</span> <a href="{{route('blog.details',$post->id)}}"></a></li>
                                             <li class="post-date">{{ $post->created_at->format('F d, Y') }}</li>
                                         </ul>
                                     </div>
