@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 @include('Admin/components/head')
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="{{url('myJs/IsConected.js')}}"></script>
 <body>
 
 <!--*******************

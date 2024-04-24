@@ -145,13 +145,13 @@
                                     <div class="product-action">
                                         <!--add to cart button -->
                                         <button type="button"
-                                                class="product-action-btn action-btn-cart"
                                                 data-bs-toggle="modal"
+                                                class="product-action-btn action-btn-cart"
                                                 onclick="addToCart('{{ $product->id }}')"
-                                                data-bs-target="#action-CartAddModal1-{{$product->id}}">
-
+                                                data-target="#action-CartAddModal1-{{ $product->id }}">
                                             <span>Add to cart</span>
                                         </button>
+
                                         <!-- Expand product details -->
                                         <button type="button" class="product-action-btn action-btn-quick-view"
                                                 data-bs-toggle="modal"
@@ -354,7 +354,11 @@
 <!--== Wrapper End ==-->
 
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<!-- Bootstrap bundle -->
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
 <!-- MyJS -->
@@ -368,44 +372,59 @@
 <script>
     function addToCart(productId) {
         var quantity = document.getElementById('quantityInput').value;
-        console.log(quantity);
         var token = localStorage.getItem("access_token");
 
-        axios.post(`/api/product/${productId}/addToCart`, {
-            _token: '{{ csrf_token() }}',
-            quantity: quantity
-        }, {
-            headers: {
-                'Authorization': 'Bearer ' + token
-            }
-        })
-            .then(function (response) {
-                console.log(response);
+        if (token == null ) {
+            window.location.href = '/login';
+        } else {
+            axios.post(`/api/product/${productId}/addToCart`, {
+                _token: '{{ csrf_token() }}',
+                quantity: quantity
+            }, {
+                headers: {
+                    'Authorization': 'Bearer ' + token
+                }
             })
-            .catch(function (error) {
-                console.error(error);
-            });
+                .then(function(response) {
+                    //console.log(response);
+                    $('#action-CartAddModal1-' + productId).modal('show');
+                })
+                .catch(function(error) {
+                    window.location.href = '/login';
+                   // console.error('hna',error);
+                });
+        }
     }
 </script>
 
+
 //Add to wishlist
 <script>
-    function addToWishList(productId) {
-        var token = localStorage.getItem("access_token");
 
-        axios.post(`/api/wishlist/${productId}/add`, {
-            _token: '{{ csrf_token() }}',
-        }, {
-            headers: {
-                'Authorization': 'Bearer ' + token
-            }
-        })
-            .then(function (response) {
-                console.log(response);
+    function addToWishList(productId) {
+        $('#action-WishlistModal-' + productId).modal('hide');
+
+
+        var token = localStorage.getItem("access_token");
+        if (token == null) {
+            window.location.href = '/login';
+        } else {
+            axios.post(`/api/wishlist/${productId}/add`, {
+                _token: '{{ csrf_token() }}',
+            }, {
+                headers: {
+                    'Authorization': 'Bearer ' + token
+                }
             })
-            .catch(function (error) {
-                console.error(error);
-            });
+                .then(function(response) {
+                    $('#action-WishlistModal-' + productId).modal('show');
+                    console.log('wish',response);
+                })
+                .catch(function(error) {
+                    ///window.location.href='/login';
+                    console.error('wish',error);
+                });
+        }
     }
 </script>
 
