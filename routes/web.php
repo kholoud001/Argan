@@ -93,16 +93,14 @@ Route::post('/reset-password/{token}', [ForgotPasswordController::class, 'reset'
 | Admin Pages
 |--------------------------------------------------------------------------
 */
-
-Route::group(['middleware' => 'auth.basic'], function () {
-
 //should the admin be authentified
+Route::group([], function () {
+
     Route::middleware('role:admin')->group(function () {
-        Route::get('/dashboard', function () {
-            return view('Admin.index');
-        })->name('dashboard');
 
 
+//dashboard
+    Route::get('/dashboard',[TrackController::class,'countUser'])->name('dashboard');
 ////////////////////////             Users Management             //////////////////////////////
 //users table (and trashed)
     Route::get('/admin/users', [UserController::class, 'show'])->name('users.show');

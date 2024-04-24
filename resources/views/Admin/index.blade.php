@@ -62,9 +62,9 @@
                 <div class="col-lg-3 col-sm-6">
                     <div class="card gradient-1">
                         <div class="card-body">
-                            <h3 class="card-title text-white">Products Sold</h3>
+                            <h3 class="card-title text-white">Products Count</h3>
                             <div class="d-inline-block">
-                                <h2 class="text-white">4565</h2>
+                                <h2 class="text-white">{{$productsCount}}</h2>
                                 <p class="text-white mb-0">Jan - March 2019</p>
                             </div>
                             <span class="float-right display-5 opacity-5"><i class="fa fa-shopping-cart"></i></span>
@@ -86,9 +86,9 @@
                 <div class="col-lg-3 col-sm-6">
                     <div class="card gradient-3">
                         <div class="card-body">
-                            <h3 class="card-title text-white">New Customers</h3>
+                            <h3 class="card-title text-white">Users Count</h3>
                             <div class="d-inline-block">
-                                <h2 class="text-white">4565</h2>
+                                <h2 class="text-white">{{$usersCount}}</h2>
                                 <p class="text-white mb-0">Jan - March 2019</p>
                             </div>
                             <span class="float-right display-5 opacity-5"><i class="fa fa-users"></i></span>
@@ -580,11 +580,15 @@
     Scripts
 ***********************************-->
 
-<script src="plugins/common/common.min.js"></script>
+<script src="{{url('plugins/common/common.min.js')}}"></script>
+<!-- Contains Jquery functions and event handlers -->
 <script src="js/custom.min.js"></script>
+<!-- settings of the fonction quixSettings and its prototype methods to manage various settings
+for a web application or website-->
 <script src="js/settings.js"></script>
+<!-- Control the settings for the theme and layout -->
 <script src="js/gleek.js"></script>
-<script src="js/styleSwitcher.js"></script>
+{{--<script src="js/styleSwitcher.js"></script>--}}
 
 <!-- Chartjs -->
 <script src="./plugins/chart.js/Chart.bundle.min.js"></script>

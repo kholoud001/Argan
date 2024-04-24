@@ -3,7 +3,9 @@
 <html class="no-js" lang="zxx">
 
 @include('components/head')
-{{--<script src="{{url('myJs/account.js')}}"></script>--}}
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="{{url('myJs/IsConected.js')}}"></script>
+
 <body>
 
 <!--== Wrapper Start ==-->

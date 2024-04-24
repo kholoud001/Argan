@@ -47,15 +47,7 @@ class UserController extends Controller
 
 
 
-//    public function destroy($id)
-//    {
-//        $user = User::find($id);
-//        if ($user) {
-//            $user->delete();
-//            return response()->json(['message' => 'User deleted successfully'], 200);
-//        }
-//        return response()->json(['message' => 'User not found'], 404);
-//    }
+
     public function destroy($id)
     {
         $user = User::find($id);
@@ -78,6 +70,8 @@ class UserController extends Controller
         }
         return redirect()->back()->with('error', 'User not found.');
     }
+
+
 
 
 }
