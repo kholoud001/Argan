@@ -226,6 +226,10 @@
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
 <!-- MyJS -->
+//navbar account
+<script src="{{url('myJs/account.js')}}"></script>
+
+
 //display cart items page
 <script>
     var token = localStorage.getItem("access_token");

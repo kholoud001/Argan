@@ -1,5 +1,5 @@
 <!--== Start Product Quick Wishlist Modal ==-->
-<aside class="product-action-modal modal fade" id="action-WishlistModal" tabindex="-1" aria-hidden="true">
+<aside class="product-action-modal modal fade" id="action-WishlistModal1" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-body">

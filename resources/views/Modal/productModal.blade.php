@@ -41,14 +41,14 @@
                                     </div>
                                     <div class="product-details-action">
                                         <h4 class="price">{{$product->price}} Dhs</h4>
-                                        <div class="product-details-cart-wishlist">
-                                            <button type="button" class="btn"
-                                                    onclick="addToCart('{{ $product->id }}')"
-                                                    data-bs-toggle="modal"
-                                                    data-bs-target="#action-CartAddModal1-{{$product->id}}">
-                                                Add to cart
-                                            </button>
-                                        </div>
+{{--                                        <div class="product-details-cart-wishlist">--}}
+{{--                                            <button type="button" class="btn"--}}
+{{--                                                    onclick="addToCart('{{ $product->id }}')"--}}
+{{--                                                    data-bs-toggle="modal"--}}
+{{--                                                    data-bs-target="#action-CartAddModal1-{{$product->id}}">--}}
+{{--                                                Add to cart--}}
+{{--                                            </button>--}}
+{{--                                        </div>--}}
                                     </div>
                                 </div>
                                 <!--== End Product Info Area ==-->

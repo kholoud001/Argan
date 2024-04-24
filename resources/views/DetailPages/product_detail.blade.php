@@ -68,16 +68,16 @@
                             <div class="product-details-action">
                                 <h4 class="price">{{ $productDetails->price }} Dhs</h4>
                                 <div class="product-details-cart-wishlist">
-                                    <button type="button" class="btn-wishlist"
-                                            onclick="addToWishList('{{ $productDetails->id }}')"
-                                            data-bs-toggle="modal"
-                                            data-bs-target="#action-WishlistModal">
-                                        <i class="fa fa-heart-o"></i>
-                                    </button>
+{{--                                    <button type="button" class="btn-wishlist"--}}
+{{--                                            onclick="addToWishList('{{ $productDetails->id }}')"--}}
+{{--                                            data-bs-toggle="modal"--}}
+{{--                                            data-bs-target="#action-WishlistModal">--}}
+{{--                                        <i class="fa fa-heart-o"></i>--}}
+{{--                                    </button>--}}
                                     <button type="button" class="btn ps-5"
                                             onclick="addToCart('{{ $productDetails->id }}')"
-                                            data-bs-toggle="modal"
-                                            data-bs-target="#action-CartAddModal">
+                                            data-bs-toggle="modal">
+{{--                                            data-bs-target="#action-CartAddModal">--}}
                                         Buy Now
                                     </button>
                                 </div>
@@ -225,7 +225,7 @@
                                     <div class="product-item product-st2-item">
                                         <div class="product-thumb">
                                             <a class="d-block" href="{{route('product.details',$product->id)}}">
-                                                <img src="{{ asset('storage/' . $product->image) }}" width="370" height="450" alt="{{$product->image}}">
+                                                <img src="{{ asset( $product->image) }}" width="370" height="450" alt="{{$product->image}}">
                                             </a>
                                             <span class="flag-new">{{ $product->category->name }}</span>
                                         </div>
@@ -250,7 +250,7 @@
                                                 <button type="button"
                                                         class="product-action-btn action-btn-cart"
                                                         data-bs-toggle="modal"
-                                                        data-bs-target="#action-CartAddModal1-{{$product->id}}"
+{{--                                                        data-bs-target="#action-CartAddModal1-{{$product->id}}"--}}
                                                         onclick="addToCart('{{ $product->id }}')"
                                                 >
 
@@ -266,7 +266,8 @@
                                                 <button type="button" class="product-action-btn action-btn-wishlist"
                                                         onclick="addToWishList('{{ $product->id }}')"
                                                         data-bs-toggle="modal"
-                                                        data-bs-target="#action-WishlistModal-{{$product->id}}">
+{{--                                                        data-bs-target="#action-WishlistModal-{{$product->id}}"--}}
+                                                >
                                                     <i class="fa fa-heart-o"></i>
                                                 </button>
                                             </div>
@@ -486,6 +487,8 @@
 </script>
 
 
+
+
 //add to cart
 <script>
     function addToCart(productId) {
@@ -493,43 +496,69 @@
         console.log(quantity);
         var token = localStorage.getItem("access_token");
 
-        axios.post(`/api/product/${productId}/addToCart`, {
-            _token: '{{ csrf_token() }}',
-            quantity: quantity
+        if (token == null) {
+            window.location.href = '/login';
+        } else {
+            axios.post(`/api/product/${productId}/addToCart`, {
+                _token: '{{ csrf_token() }}',
+                quantity: quantity
             }, {
-            headers: {
-                'Authorization': 'Bearer ' + token
-            }
-        })
-            .then(function (response) {
-                console.log(response);
+                headers: {
+                    'Authorization': 'Bearer ' + token
+                }
             })
-            .catch(function (error) {
-                console.error(error);
-            });
+                .then(function (response) {
+                    console.log(response);
+                    $('#action-CartAddModal1-' + productId).modal('show');
+                    $('#action-CartAddModal-' + productId).modal('show');
+
+
+                })
+                .catch(function(error) {
+                    if (error.response && error.response.status === 401) {
+                         window.location.href = '/login';
+                    } else {
+                        console.error('carterror', error);
+                    }
+                });
+        }
     }
 </script>
 
 //Add to wishlist
 <script>
+
     function addToWishList(productId) {
+        // $('#action-WishlistModal-' + productId).modal('hide');
+
         var token = localStorage.getItem("access_token");
 
-        axios.post(`/api/wishlist/${productId}/add`, {
-            _token: '{{ csrf_token() }}',
-        }, {
-            headers: {
-                'Authorization': 'Bearer ' + token
-            }
-        })
-            .then(function (response) {
-                console.log(response);
+        if (token === null ) {
+            window.location.href = '/login';
+        } else {
+            axios.post(`/api/wishlist/${productId}/add`, {
+                _token: '{{ csrf_token() }}',
+            }, {
+                headers: {
+                    'Authorization': 'Bearer ' + token
+                }
             })
-            .catch(function (error) {
-                console.error(error);
-            });
+                .then(function(response) {
+
+                    $('#action-WishlistModal-' + productId).modal('show');
+                    console.log('wish', response);
+                })
+                .catch(function(error) {
+                    if (error.response && error.response.status === 401) {
+                        window.location.href = '/login';
+                    } else {
+                        alert( error.response.data.message);
+                    }
+                });
+        }
     }
 </script>
+
 
 //display cart items
 <script>

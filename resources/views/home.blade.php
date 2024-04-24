@@ -148,7 +148,8 @@
                                                 data-bs-toggle="modal"
                                                 class="product-action-btn action-btn-cart"
                                                 onclick="addToCart('{{ $product->id }}')"
-                                                data-target="#action-CartAddModal1-{{ $product->id }}">
+{{--                                                data-target="#action-CartAddModal1-{{ $product->id }}"--}}
+                                        >
                                             <span>Add to cart</span>
                                         </button>
 
@@ -161,8 +162,8 @@
                                         <!--Add to wishlist-->
                                         <button type="button" class="product-action-btn action-btn-wishlist"
                                                 data-bs-toggle="modal"
-                                                onclick="addToWishList('{{ $product->id }}')"
-                                                data-bs-target="#action-WishlistModal-{{$product->id}}">
+                                                onclick="addToWishList('{{ $product->id }}')">
+{{--                                                data-bs-target="#action-WishlistModal-{{$product->id}}">--}}
                                             <i class="fa fa-heart-o"></i>
                                         </button>
                                     </div>
@@ -195,7 +196,7 @@
             <div class="container">
 
                 <!--== Start Product Category Item ==-->
-                <a href="product.html" class="product-banner-item">
+                <a href="{{route('products.collection')}}" class="product-banner-item">
                     <img src="{{url('assets/images/shop/banner/7.webp')}}" width="1170" height="240" alt="Image-HasTech">
                 </a>
                 <!--== End Product Category Item ==-->
@@ -390,8 +391,11 @@
                     $('#action-CartAddModal1-' + productId).modal('show');
                 })
                 .catch(function(error) {
-                    window.location.href = '/login';
-                   // console.error('hna',error);
+                    if (error.response && error.response.status === 401) {
+                         window.location.href = '/login';
+                    } else {
+                        console.error('carterror', error);
+                    }
                 });
         }
     }
@@ -402,11 +406,11 @@
 <script>
 
     function addToWishList(productId) {
-        $('#action-WishlistModal-' + productId).modal('hide');
-
+        // $('#action-WishlistModal-' + productId).modal('hide');
 
         var token = localStorage.getItem("access_token");
-        if (token == null) {
+
+        if (token === null ) {
             window.location.href = '/login';
         } else {
             axios.post(`/api/wishlist/${productId}/add`, {
@@ -417,12 +421,16 @@
                 }
             })
                 .then(function(response) {
+
                     $('#action-WishlistModal-' + productId).modal('show');
-                    console.log('wish',response);
+                    console.log('wish', response);
                 })
                 .catch(function(error) {
-                    ///window.location.href='/login';
-                    console.error('wish',error);
+                    if (error.response && error.response.status === 401) {
+                       window.location.href = '/login';
+                    } else {
+                        alert( error.response.data.message);
+                    }
                 });
         }
     }
