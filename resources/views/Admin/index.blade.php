@@ -1,8 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 @include('Admin/components/head')
-<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-<script src="{{url('myJs/IsConected.js')}}"></script>
+
+
+
+
 <body>
 
 <!--*******************
@@ -203,28 +205,7 @@
                     </div>
 
                 </div>
-{{--                <div class="col-lg-3 col-md-6">--}}
-{{--                    <div class="card">--}}
-{{--                        <div class="card-body px-0">--}}
-{{--                            <h4 class="card-title px-4 mb-3">Todo</h4>--}}
-{{--                            <div class="todo-list">--}}
-{{--                                <div class="tdl-holder">--}}
-{{--                                    <div class="tdl-content">--}}
-{{--                                        <ul id="todo_list">--}}
-{{--                                            <li><label><input type="checkbox"><i></i><span>Get up</span><a href='#' class="ti-trash"></a></label></li>--}}
-{{--                                            <li><label><input type="checkbox" checked><i></i><span>Stand up</span><a href='#' class="ti-trash"></a></label></li>--}}
-{{--                                            <li><label><input type="checkbox"><i></i><span>Don't give up the fight.</span><a href='#' class="ti-trash"></a></label></li>--}}
-{{--                                            <li><label><input type="checkbox" checked><i></i><span>Do something else</span><a href='#' class="ti-trash"></a></label></li>--}}
-{{--                                        </ul>--}}
-{{--                                    </div>--}}
-{{--                                    <div class="px-4">--}}
-{{--                                        <input type="text" class="tdl-new form-control" placeholder="Write new item and hit 'Enter'...">--}}
-{{--                                    </div>--}}
-{{--                                </div>--}}
-{{--                            </div>--}}
-{{--                        </div>--}}
-{{--                    </div>--}}
-{{--                </div>--}}
+
             </div>
 
             <!-- users list -->
@@ -577,6 +558,7 @@
 <!--**********************************
     My Scripts
 ***********************************-->
+
 {{--logout--}}
 <script src="myJs/logout.js"></script>
 

@@ -48,6 +48,8 @@ Route::namespace('Api')->group(function (){
 Route::group([
     'middleware'=> 'auth:api'
 ],function (){
+    //check admin
+    Route::get('/admin-check', [LoginController::class, 'checkAdmin']);
     //auth check
     Route::get('/auth-check', [LoginController::class, 'check']);
     //logout

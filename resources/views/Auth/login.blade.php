@@ -262,13 +262,14 @@
             // Form data
             var formData = {
                 email: email,
-                password: password
+                password: password,
+                role: 1
             };
 
             axios.post('/api/auth/login', formData)
                 .then(response => {
                     var data = response.data;
-                    console.log(data);
+                    //console.log(data);
 
                     if (data.errors && (data.errors.email || data.errors.password)) {
                         document.getElementById('email-error').textContent = data.errors.email ? data.errors.email[0] : '';
@@ -282,7 +283,7 @@
                     if (data.message === 'Login successful') {
                         var redirectUrl = data.role === 1 ? data.redirect_url_admin : data.redirect_url_user;
 
-                        redirectUrl += '?role=' + data.role;
+                        //redirectUrl += '?role=' + data.role;
                         window.location.href = redirectUrl;
 
                     } else {

@@ -1,6 +1,7 @@
 
 
 var token = localStorage.getItem("access_token");
+
 if(token == null){
     window.location.href = '/login';
 }else{

@@ -24,3 +24,6 @@
 
 
 </head>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="{{url('myJs/IsConected.js')}}"></script>
+<script src="{{url('myJs/Admin/IsAdmin.js')}}"></script>

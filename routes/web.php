@@ -18,6 +18,7 @@ use App\Http\Controllers\User\HomeController;
 use App\Http\Controllers\User\OrderController;
 use App\Http\Controllers\User\ReviewController;
 use App\Http\Controllers\User\WishlistController;
+use App\Http\Middleware\AuthenticateAPI;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -94,7 +95,7 @@ Route::post('/reset-password/{token}', [ForgotPasswordController::class, 'reset'
 |--------------------------------------------------------------------------
 */
 //should the admin be authentified
-Route::group(['middleware' => 'role:1'], function () {
+Route::middleware([])->group(function () {
 
 //    Route::middleware('role:1')->group(function () {
 

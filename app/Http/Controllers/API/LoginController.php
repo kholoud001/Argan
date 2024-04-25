@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use http\Env\Response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -72,4 +73,15 @@ class LoginController extends Controller
             return response()->json(['authenticated' => false]);
         }
     }
+
+    public function checkAdmin(Request $request){
+        $user = auth()->user();
+        if($user->role_id == 1){
+            return response()->json(true);
+        }
+        else{
+            return response()->json(false);
+        }
+    }
+
 }
