@@ -42,7 +42,6 @@ class Kernel extends HttpKernel
             // \Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class,
             'throttle:api',
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
-//            \App\Http\Middleware\CheckAdminRoleApi::class,
 
 
 
@@ -67,7 +66,6 @@ class Kernel extends HttpKernel
         'signed' => \App\Http\Middleware\ValidateSignature::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
-//        'check.admin' => \App\Http\Middleware\CheckAdminRoleApi::class,
         'role' =>\App\Http\Middleware\RoleMiddleware::class,
 
     ];

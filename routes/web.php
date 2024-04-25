@@ -94,9 +94,9 @@ Route::post('/reset-password/{token}', [ForgotPasswordController::class, 'reset'
 |--------------------------------------------------------------------------
 */
 //should the admin be authentified
-Route::group([], function () {
+Route::group(['middleware' => 'role:1'], function () {
 
-    Route::middleware('role:admin')->group(function () {
+//    Route::middleware('role:1')->group(function () {
 
 
 //dashboard
@@ -151,7 +151,7 @@ Route::group([], function () {
 //archive
     Route::delete('/orders/{id}/archive', [TrackController::class, 'archive'])->name('orders.archive');
 
-});
+//});
 });
 /*
 |--------------------------------------------------------------------------

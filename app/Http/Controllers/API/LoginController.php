@@ -44,7 +44,6 @@ class LoginController extends Controller
         // Generate token
         $token = $user->createToken('Access Token')->accessToken;
 
-        // Redirect admin
         if ($role === 1) {
             return response()->json([
                 'message' => 'Login successful',

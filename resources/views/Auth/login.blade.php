@@ -268,6 +268,7 @@
             axios.post('/api/auth/login', formData)
                 .then(response => {
                     var data = response.data;
+                    console.log(data);
 
                     if (data.errors && (data.errors.email || data.errors.password)) {
                         document.getElementById('email-error').textContent = data.errors.email ? data.errors.email[0] : '';
@@ -276,12 +277,14 @@
                     }
 
                     localStorage.setItem('access_token', data.token);
-                    // document.cookie = `access_token=${data.token}; `;
 
 
                     if (data.message === 'Login successful') {
                         var redirectUrl = data.role === 1 ? data.redirect_url_admin : data.redirect_url_user;
+
+                        redirectUrl += '?role=' + data.role;
                         window.location.href = redirectUrl;
+
                     } else {
                         document.getElementById('password-error').textContent = data.message;
                     }

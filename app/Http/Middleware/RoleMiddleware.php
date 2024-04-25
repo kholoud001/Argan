@@ -15,12 +15,16 @@ class RoleMiddleware
      * @param  \Closure(\Illuminate\Http\Request): (\Illuminate\Http\Response|\Illuminate\Http\RedirectResponse)  $next
      * @return \Illuminate\Http\Response|\Illuminate\Http\RedirectResponse
      */
-    public function handle(Request $request, Closure $next, $role)
+    public function handle($request, Closure $next)
     {
-        if ($request->user()->role->name !== $role) {
-            return redirect()->route('home');
+        $roleId = $request->query('role');
+
+        if ($roleId != 1) {
+            return redirect()->route('login');
         }
+
         return $next($request);
     }
+
 
 }
