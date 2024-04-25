@@ -68,10 +68,10 @@ Route::get('auth/facebook/callback', [FacebookController::class, 'callbackFacebo
 
 // Route for showing the form to enter the email
 Route::get('/forgot-password', [ForgotPasswordLinkController::class, 'create'])
-    ->name('password.request')->middleware('guest');
+    ->name('password.request');
 // Route for handling form submission
 Route::post('/forgot-password', [ForgotPasswordLinkController::class, 'store'])
-    ->name('password.email')->middleware('guest');
+    ->name('password.email');
 //success page
 Route::get('/check-your-inbox', [ForgotPasswordLinkController::class, 'show'])
     ->name('success');

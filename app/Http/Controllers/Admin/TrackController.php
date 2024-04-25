@@ -53,9 +53,10 @@ class TrackController extends Controller
 
         $usersCount= User::all()->count();
         $productsCount =Product::all()->count();
+        $ordersCount = Order::all()->count();
 
 
-        return view('Admin.index',compact('usersCount','productsCount'));
+        return view('Admin.index',compact('usersCount','productsCount','ordersCount'));
 
     }
 

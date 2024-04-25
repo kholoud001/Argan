@@ -33,10 +33,13 @@ class ForgotPasswordLinkController extends Controller
 
         $status = Password::sendResetLink($request->only('email'));
 
-        return $status === Password::RESET_LINK_SENT
-            ? redirect()->route('success')
-            : back()->withInput($request->only('email'))->withErrors(['email' => __($status)]);
+        if ($status === Password::RESET_LINK_SENT) {
+            return back()->with('success', 'Password reset link sent successfully.');
+        } else {
+            return back()->withInput($request->only('email'))->withErrors(['email' => __($status)]);
+        }
     }
+
 
     /**
      * Display the success page

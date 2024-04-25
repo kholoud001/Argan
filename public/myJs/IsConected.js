@@ -1,7 +1,6 @@
 
 
 var token = localStorage.getItem("access_token");
-console.log('imad');
 if(token == null){
     window.location.href = '/login';
 }else{
@@ -11,7 +10,7 @@ if(token == null){
         }
     })
         .then(function(response) {
-        
+
         })
         .catch(function(error) {
             window.location.href = '/login';
@@ -19,5 +18,5 @@ if(token == null){
 
 }
 
-     
+
 

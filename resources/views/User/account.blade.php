@@ -25,7 +25,7 @@
                     <div class="col-md-5">
                         <div class="page-header-st3-content text-center text-md-start">
                             <ol class="breadcrumb justify-content-center justify-content-md-start">
-                                <li class="breadcrumb-item"><a class="text-dark" href="index.html">Home</a></li>
+                                <li class="breadcrumb-item"><a class="text-dark" href="{{route('home')}}">Home</a></li>
                                 <li class="breadcrumb-item active text-dark" aria-current="page">My Account</li>
                             </ol>
                             <h2 class="page-header-title">My Account</h2>
@@ -202,6 +202,7 @@
 
     <!--== Scroll Top Button ==-->
     <div id="scroll-to-top" class="scroll-to-top"><span class="fa fa-angle-up"></span></div>
+    <!--== End Scroll Top Button ==-->
 
 
 
@@ -228,7 +229,6 @@
             </div>
         </div>
     </aside>
-
     <!--== End Aside Search Form ==-->
 
 
