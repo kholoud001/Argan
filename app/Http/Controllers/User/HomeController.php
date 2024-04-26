@@ -16,7 +16,12 @@ class HomeController extends Controller
     /////////////////////////////////////   home page
     public function index()
     {
-        $recentProducts = Product::with('category')->orderBy('created_at', 'desc')->take(6)->get();
+        $recentProducts = Product::with('category')
+            ->where('quantity', '>', 0)
+            ->orderBy('created_at', 'desc')
+            ->take(6)
+            ->get();
+
         $posts=Blog::with('categories')->orderBy('created_at','desc')->take(3)->get();
         return view('home', compact('recentProducts','posts'));
     }
@@ -25,7 +30,10 @@ class HomeController extends Controller
     public function getProductDetails($id)
     {
         $productDetails = Product::with('category')->findOrFail($id);
-        $latestProducts = Product::with('category')->orderBy('created_at', 'desc')->take(3)->get();
+
+        $latestProducts = Product::with('category')
+            ->where('quantity', '>', 0)
+            ->orderBy('created_at', 'desc')->take(3)->get();
         $reviews = Review::with('user')
             ->where('product_id', $id)
             ->latest()
@@ -79,9 +87,14 @@ class HomeController extends Controller
     ///
     public function ProductCatalogue()
     {
-        $latestProducts = Product::with('category')->orderBy('created_at', 'desc')->take(3)->get();
+        $latestProducts = Product::with('category')
+            ->where('quantity', '>', 0)
+            ->orderBy('created_at', 'desc')
+            ->take(3)
+            ->get();
 
         $products = Product::with('category')
+            ->where('quantity', '>', 0)
             ->orderBy('created_at', 'desc')
             ->paginate(9);
 
@@ -95,6 +108,7 @@ class HomeController extends Controller
         $searchQuery = $request->input('search_query');
 
         $products = Product::with('category')
+            ->where('quantity', '>', 0)
             ->where('name', 'like', '%' . $searchQuery . '%')
             ->paginate(9);
 
