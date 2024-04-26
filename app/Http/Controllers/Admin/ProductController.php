@@ -3,10 +3,13 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Mail\SubscriptionConfirmation;
 use App\Models\Blog;
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\Subscription;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class ProductController extends Controller
 {
@@ -43,6 +46,16 @@ class ProductController extends Controller
            'image' => $save_url,
            'category_id' => $request->category_id,
        ]);
+
+        $subscriptions = Subscription::all();
+        foreach ($subscriptions as $subscription) {
+            try {
+                Mail::to($subscription->email)->send(new SubscriptionConfirmation());
+               // echo "Email sent to: " . $subscription->email . "<br>";
+            } catch (\Exception $e) {
+              //  echo "Failed to send email to: " . $subscription->email . ". Error: " . $e->getMessage() . "<br>";
+            }
+        }
 
         return redirect()->route('products.show')->with('success', 'Product created successfully.');
     }
