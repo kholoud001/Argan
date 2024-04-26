@@ -138,7 +138,7 @@
         <!--== Start News Letter Area Wrapper ==-->
         <section class="section-space pt-0">
             <div class="container">
-                <div class="newsletter-content-wrap" data-bg-img="assets/images/photos/bg1.webp">
+                <div class="newsletter-content-wrap" data-bg-img="{{url('assets/images/photos/bg1.webp')}}">
                     <div class="newsletter-content">
                         <div class="section-title mb-0">
                             <h2 class="title">Join with us</h2>

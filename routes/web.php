@@ -152,6 +152,11 @@ Route::middleware([])->group(function () {
 //archive
     Route::delete('/orders/{id}/archive', [TrackController::class, 'archive'])->name('orders.archive');
 
+    //////////////////////////////   Comments Management   //////////////////////////////////////
+    Route::get('/admin/comments',[TrackController::class,'commentsControl'])->name('comments.show');
+    Route::delete('/comments/{id}', [TrackController::class, 'deleteComments'])->name('comments.destroy');
+
+
 //});
 });
 /*

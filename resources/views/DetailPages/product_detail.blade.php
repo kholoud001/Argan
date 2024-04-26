@@ -60,11 +60,7 @@
                                 <button type="button" class="product-review-show">150 reviews</button>
                             </div>
                             <p class="mb-7">{{ $productDetails->description }}</p>
-                            <div class="product-details-pro-qty">
-                                <div class="pro-qty">
-                                    <input type="text" id="quantityInput" title="Quantity" value="01">
-                                </div>
-                            </div>
+
                             <div class="product-details-action">
                                 <h4 class="price">{{ $productDetails->price }} Dhs</h4>
                                 <div class="product-details-cart-wishlist">

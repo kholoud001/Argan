@@ -41,6 +41,13 @@
                 </a>
 
             </li>
+            {{--                Comments--}}
+            <li>
+                <a  href="{{route('comments.show')}}" aria-expanded="false">
+                    <i class=" icon-menu menu-icon"></i><span class="nav-text">Orders</span>
+                </a>
+
+            </li>
         </ul>
     </div>
 </div>

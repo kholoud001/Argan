@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Blog;
+use App\Models\Comment;
 use App\Models\Order;
 use App\Models\Product;
 use App\Models\User;
@@ -12,6 +14,9 @@ use Illuminate\Support\Facades\Redirect;
 class TrackController extends Controller
 {
 
+    ////////////////////////////////         Orders
+    ///
+    ///
     public function index()
     {
         $orders = Order::with('items')
@@ -47,7 +52,8 @@ class TrackController extends Controller
     }
 
 
-    ////////////////////////  Dashboard
+    ////////////////////////////////////         Dashboard
+    ///
     ///
     public function countUser(){
 
@@ -71,6 +77,24 @@ class TrackController extends Controller
 
         return view('Admin.index',compact('usersCount','productsCount',
             'pendingOrders','topProduct','ordersCount','labels','salesCounts'));
+
+    }
+
+
+    //////////////////////////////////////       Comments
+    ///
+    public function commentsControl(){
+        $comments = Comment::with('user','blog')->paginate(8);
+        $users = User::all();
+        $blogs= Blog::all();
+
+        return view('Admin.comments',compact('comments','users','blogs'));
+    }
+
+    public function deleteComments($id){
+        $comment = Comment::find($id);
+        $comment->delete();
+        return redirect()->back()->with('success', 'Comment deleted successfully.');
 
     }
 
