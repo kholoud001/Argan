@@ -51,12 +51,26 @@ class TrackController extends Controller
     ///
     public function countUser(){
 
-        $usersCount= User::all()->count();
-        $productsCount =Product::all()->count();
-        $ordersCount = Order::all()->count();
+        $usersCount= User::count();
+        $productsCount =Product::count();
+        $ordersCount = Order::count();
+        $topProduct = Product::orderBy('sales_count', 'desc')->first()->name;
+
+        //get pending Order
+        $pendingOrders = Order::where('status', 'pending')
+            ->whereNull('deleted_at')
+            ->paginate(4);
 
 
-        return view('Admin.index',compact('usersCount','productsCount','ordersCount'));
+        $productsWithSalesCount = Product::all();
+
+        //  data for Chart.js
+        $labels = $productsWithSalesCount->pluck('name')->toArray();
+        $salesCounts = $productsWithSalesCount->pluck('sales_count')->toArray();
+
+
+        return view('Admin.index',compact('usersCount','productsCount',
+            'pendingOrders','topProduct','ordersCount','labels','salesCounts'));
 
     }
 

@@ -7,7 +7,7 @@ axios.get('/api/admin-check', {
     }
 })
     .then(response => {
-        console.log(response)
+        //console.log(response)
         if (response.data === true) {
             console.log('User is an admin.');
         } else {

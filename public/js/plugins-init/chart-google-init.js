@@ -136,6 +136,6 @@
         drawChart1();
         drawChart2();
     });
-    
-    
+
+
 })(jQuery);
