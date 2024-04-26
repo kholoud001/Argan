@@ -31,7 +31,7 @@ class SubscriptionConfirmation extends Mailable
     public function envelope()
     {
         return new Envelope(
-            subject: 'Subscription Confirmation',
+            subject: 'Subscription New Product Added',
         );
     }
 
